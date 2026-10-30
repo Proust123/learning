@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trie/Prefix Tree</title>
+  </head>
+  <body>
+    <script>
+      // Implement Trie (Prefix Tree)
+      // A prefix tree (also known as a trie) is a tree data structure used to efficiently store and retrieve keys in a
+      // set of strings. Some applications of this data structure include auto-complete and spell checker systems.
+      // Implement the PrefixTree class:
+      // PrefixTree() Initializes the prefix tree object.
+      // void insert(String word) Inserts the string word into the prefix tree.
+      // boolean search(String word) Returns true if the string word is in the prefix tree (i.e., was inserted before),
+      // and false otherwise.
+      // boolean startsWith(String prefix) Returns true if there is a previously inserted string word that has the prefix
+      // prefix, and false otherwise.
+
+      // Example 1:
+      // Input:
+      // ["Trie", "insert", "dog", "search", "dog", "search", "do", "startsWith", "do", "insert", "do", "search", "do"]
+      // Output:
+      // [null, null, true, false, true, null, true]
+      // Explanation:
+      // PrefixTree prefixTree = new PrefixTree();
+      // prefixTree.insert("dog");
+      // prefixTree.search("dog");    // return true
+      // prefixTree.search("do");     // return false
+      // prefixTree.startsWith("do"); // return true
+      // prefixTree.insert("do");
+      // prefixTree.search("do");     // return tr
+
+      // class TrieNode {
+      //     constructor () {
+      //         this.children = new Map()
+      //         this.endsWith = false
+      //     }
+      // }
+
+      // class PrefixTree {
+      //     constructor () {
+      //         this.root = new TrieNode()
+      //     }
+
+      //     insert(word) {
+      //         let curr = this.root
+
+      //         for(let c of word) {
+      //             if(!curr.children.has(c)) {
+      //                 curr.children.set(c, new TrieNode())
+      //             }
+      //             curr = curr.children.get(c)
+      //         }
+      //         curr.endsWith = true
+      //     }
+
+      //     search(word) {
+      //         let curr = this.root
+
+      //         for(let c of word) {
+      //             if(!curr.children.has(c)) {
+      //                 return false
+      //             }
+      //             curr = curr.children.get(c)
+      //         }
+      //         return curr.endsWith
+      //     }
+
+      //     startsWith(prefix) {
+      //         let curr = this.root
+
+      //         for(let c of prefix) {
+      //             if(!curr.children.has(c)) {
+      //                 return false
+      //             }
+      //             curr = curr.children.get(c)
+      //         }
+
+      //         return true
+      //     }
+      // }
+
+      // let prefixTree = new PrefixTree();
+      // prefixTree.insert("dog");
+      // console.log(prefixTree.search("dog"));
+      // console.log(prefixTree.search("do"));
+      // console.log(prefixTree.startsWith("do"));
+      // prefixTree.insert("do");
+      // console.log(prefixTree.search("do"));
+
+      // Design Add and Search Word Data Structure
+      // Design a data structure that supports adding new words and searching for existing words.
+      // Implement the WordDictionary class:
+      // void addWord(word) Adds word to the data structure.
+      // bool search(word) Returns true if there is any string in the data structure that matches word or false otherwise.
+      // word may contain dots '.' where dots can be matched with any letter.
+
+      // Example 1:
+      // Input:
+      // ["WordDictionary", "addWord", "day", "addWord", "bay", "addWord", "may", "search", "say", "search", "day", "search", ".ay", "search", "b.."]
+      // Output:
+      // [null, null, null, null, false, true, true, true]
+      // Explanation:
+      // WordDictionary wordDictionary = new WordDictionary();
+      // wordDictionary.addWord("day");
+      // wordDictionary.addWord("bay");
+      // wordDictionary.addWord("may");
+      // wordDictionary.search("say"); // return false
+      // wordDictionary.search("day"); // return true
+      // wordDictionary.search(".ay"); // return true
+      // wordDictionary.search("b.."); // return true
+
+      // class TrieNode {
+      //     constructor () {
+      //         this.children = new Map()
+      //         this.endsWith = false
+      //     }
+      // }
+
+      // class WordDictionary {
+      //     constructor () {
+      //         this.root = new TrieNode()
+      //     }
+
+      //     addWord(word) {
+      //         let curr = this.root
+
+      //         for(let c of word) {
+      //             if(!curr.children.has(c)) {
+      //                 curr.children.set(c, new TrieNode())
+      //             }
+      //             curr = curr.children.get(c)
+      //         }
+
+      //         curr.endsWith = true
+      //     }
+
+      //     search(word) {
+      //         function dfs(j, root) {
+      //             let curr = root
+
+      //             for(let i = j; i < word.length; i++) {
+      //                 let c = word[i]
+
+      //                 if(c === '.') {
+
+      //                     for(let child of curr.children.values()) {
+      //                         if(dfs(i+1, child)) {
+      //                             return true
+      //                         }
+      //                     }
+      //                     return false
+
+      //                 }else{
+      //                     if(!curr.children.has(c)) {
+      //                         return false
+      //                     }
+      //                     curr = curr.children.get(c)
+      //                 }
+      //             }
+
+      //             return curr.endsWith
+      //         }
+
+      //         return dfs(0, this.root)
+      //     }
+      // }
+
+      // let wordDictionary = new WordDictionary();
+      // wordDictionary.addWord("day");
+      // wordDictionary.addWord("bay");
+      // wordDictionary.addWord("may");
+      // console.log(wordDictionary.search("say")) // return false
+      // console.log(wordDictionary.search("day")) // return true
+      // console.log(wordDictionary.search(".ay")) // return true
+      // console.log(wordDictionary.search("b..")) // return true
+
+      // Word Search II
+      // Given a 2-D grid of characters board and a list of strings words, return all words that are present in the grid.
+      // For a word to be present it must be possible to form the word with a path in the board with horizontally or
+      // vertically neighboring cells. The same cell may not be used more than once in a word.
+
+      // Example 1:
+      // Input:
+      // board = [
+      // ["a","b","c","d"],
+      // ["s","a","a","t"],
+      // ["a","c","k","e"],
+      // ["a","c","d","n"]
+      // ],
+      // words = ["bat","cat","back","backend","stack"]
+      // Output: ["cat","back","backend"]
+
+      // Example 2:
+      // Input:
+      // board = [
+      // ["x","o"],
+      // ["x","o"]
+      // ],
+      // words = ["xoxo"]
+      // Output: []
+
+      // class TrieNode {
+      //     constructor () {
+      //         this.children = new Map()
+      //         this.endsWith = false
+      //     }
+
+      //     addWord(word) {
+      //         let curr = this
+
+      //         for(let c of word) {
+      //             if(!curr.children.has(c)) {
+      //                 curr.children.set(c, new TrieNode())
+      //             }
+
+      //             curr = curr.children.get(c)
+      //         }
+
+      //         curr.endsWith = true
+      //     }
+      // }
+
+      // class Solution {
+      //     findWords(board, words) {
+      //         let root = new TrieNode()
+
+      //         for(let word of words) {
+      //             root.addWord(word)
+      //         }
+
+      //         let ROWS = board.length, COLS = board[0].length
+      //         let res = new Set(), visited = new Set()
+
+      //         function backtrack(r, c, node, word) {
+      //             if(
+      //                 r < 0 || c < 0 ||
+      //                 r >= ROWS || c >= COLS ||
+      //                 visited.has(`${r}, ${c}`) ||
+      //                 !node.children.has(board[r][c])
+      //             ) {return false}
+
+      //             visited.add(`${r}, ${c}`)
+
+      //             node = node.children.get(board[r][c])
+      //             word += board[r][c]
+
+      //             if(node.endsWith) {
+      //                 res.add(word)
+      //             }
+
+      //             backtrack(r+1, c, node, word);
+      //             backtrack(r-1, c, node, word);
+      //             backtrack(r, c+1, node, word);
+      //             backtrack(r, c-1, node, word);
+
+      //             visited.delete(`${r}, ${c}`)
+      //         }
+
+      //         for(let r = 0; r < ROWS; r++) {
+      //             for(let c = 0; c < COLS; c++) {
+      //                 backtrack(r, c, root, "")
+      //             }
+      //         }
+
+      //         return Array.from(res)
+      //     }
+
+      // }
+
+      // let sol = new Solution()
+      // console.log(sol.findWords([["a","b","c","d"],["s","a","a","t"],["a","c","k","e"],["a","c","d","n"]],
+      //     ["bat","cat","back","backend","stack"]
+      // ));
+
+      // Implement Trie (Prefix Tree)
+      // A prefix tree (also known as a trie) is a tree data structure used to efficiently store and retrieve keys in a
+      // set of strings. Some applications of this data structure include auto-complete and spell checker systems.
+
+      // Implement the PrefixTree class:
+      // PrefixTree() Initializes the prefix tree object.
+      // void insert(String word) Inserts the string word into the prefix tree.
+      // boolean search(String word) Returns true if the string word is in the prefix tree (i.e., was inserted before),
+      // and false otherwise. boolean startsWith(String prefix) Returns true if there is a previously inserted string word
+      // that has the prefix prefix, and false otherwise.
+
+      // Example 1:
+      // Input:
+      // ["Trie", "insert", "dog", "search", "dog", "search", "do", "startsWith", "do", "insert", "do", "search", "do"]
+      // Output:
+      // [null, null, true, false, true, null, true]
+
+      // Explanation:
+      // PrefixTree prefixTree = new PrefixTree();
+      // prefixTree.insert("dog");
+      // prefixTree.search("dog");    // return true
+      // prefixTree.search("do");     // return false
+      // prefixTree.startsWith("do"); // return true
+      // prefixTree.insert("do");
+      // prefixTree.search("do");     // return true
+
+      // class TrieNode {
+      //     constructor () {
+      //         this.children = new Map()
+      //         this.endsWith = false
+      //     }
+      // }
+
+      // class PrefixTree {
+      //     constructor () {
+      //         this.root = new TrieNode
+      //     }
+
+      //     insert(word) {
+      //         let curr = this.root
+
+      //         for(let c of word) {
+      //             if(!curr.children.has(c)) {
+      //                 curr.children.set(c, new TrieNode())
+      //             }
+
+      //             curr = curr.children.get(c)
+      //         }
+
+      //         curr.endsWith = true
+      //     }
+
+      //     search(word) {
+      //         let curr = this.root
+
+      //         for(let c of word) {
+      //             if(!curr.children.has(c)) {
+      //                 return false
+      //             }
+      //             curr = curr.children.get(c)
+      //         }
+
+      //         return curr.endsWith
+      //     }
+
+      //     startsWith(word) {
+      //         let curr = this.root
+
+      //         for(let c of word) {
+      //             if(!curr.children.has(c)) {
+      //                 return false
+      //             }
+
+      //             curr = curr.children.get(c)
+      //         }
+
+      //         return true
+      //     }
+      // }
+
+      // let prefixTree = new PrefixTree();
+      // prefixTree.insert("dog");
+      // console.log(prefixTree.search("dog"));
+      // console.log(prefixTree.search("do"));
+      // console.log(prefixTree.startsWith("do"));
+      // prefixTree.insert("do");
+      // console.log(prefixTree.search("do"));
+
+      // Design Add and Search Word Data Structure
+      // Design a data structure that supports adding new words and searching for existing words.
+
+      // Implement the WordDictionary class:
+      // void addWord(word) Adds word to the data structure.
+      // bool search(word) Returns true if there is any string in the data structure that matches word or false otherwise.
+      // word may contain dots '.' where dots can be matched with any letter.
+
+      // Example 1:
+      // Input:
+      // ["WordDictionary", "addWord", "day", "addWord", "bay", "addWord", "may", "search", "say", "search", "day", "search", ".ay", "search", "b.."]
+      // Output:
+      // [null, null, null, null, false, true, true, true]
+      // Explanation:
+      // WordDictionary wordDictionary = new WordDictionary();
+      // wordDictionary.addWord("day");
+      // wordDictionary.addWord("bay");
+      // wordDictionary.addWord("may");
+      // wordDictionary.search("say"); // return false
+      // wordDictionary.search("day"); // return true
+      // wordDictionary.search(".ay"); // return true
+      // wordDictionary.search("b.."); // return true
+
+      // class TrieNode {
+      //     constructor () {
+      //         this.children = new Map()
+      //         this.endsWith = false
+      //     }
+      // }
+
+      // class WordDictionary {
+      //     constructor () {
+      //         this.root = new TrieNode()
+      //     }
+
+      //     addWord(word) {
+      //         let curr = this.root
+
+      //         for(let c of word) {
+      //             if(!curr.children.has(c)) {
+      //                 curr.children.set(c, new TrieNode())
+      //             }
+      //             curr = curr.children.get(c)
+      //         }
+
+      //         curr.endsWith = true
+      //     }
+
+      //     search(word) {
+      //         function dfs(j, root) {
+      //             let curr = root
+
+      //             for(let i = j; i < word.length; i++) {
+      //                 let c = word[i]
+
+      //                 if(c === '.') {
+      //                     for(let child of curr.children.values()) {
+      //                         if(dfs(i+1, child)) {
+      //                             return true
+      //                         }
+      //                     }
+      //                     return false
+      //                 }else{
+      //                     if(!curr.children.has(c)) {
+      //                         return false
+      //                     }
+      //                     curr = curr.children.get(c)
+      //                 }
+      //             }
+
+      //             return curr.endsWith
+      //         }
+
+      //         return dfs(0, this.root)
+      //     }
+      // }
+
+      // let wordDictionary = new WordDictionary();
+      // wordDictionary.addWord("day");
+      // wordDictionary.addWord("bay");
+      // wordDictionary.addWord("may");
+      // console.log(wordDictionary.search("say")) // return false
+      // console.log(wordDictionary.search("day")) // return true
+      // console.log(wordDictionary.search(".ay")) // return true
+      // console.log(wordDictionary.search("b..")) // return true
+
+      // class TrieNode {
+      //     constructor() {
+      //         this.children = new Map()
+      //         this.endsWith = false
+      //     }
+      // }
+
+      // class WordDictionary {
+      //     constructor() {
+      //         this.root = new TrieNode()
+      //     }
+
+      //     addWord(word) {
+      //         let curr = this.root
+
+      //         for(let c of word) {
+      //             if(!curr.children.has(c)) {
+      //                 curr.children.set(c, new TrieNode())
+      //             }
+      //             curr = curr.children.get(c)
+      //         }
+
+      //         curr.endsWith = true
+      //     }
+
+      //     search(word) {
+      //         function dfs(j, root) {
+      //             let curr = root
+
+      //             for(let i = j; i < word.length; i++) {
+      //                 let c = word[i]
+
+      //                 if(c === ".") {
+      //                     for(let child of curr.children.values()) {
+      //                         if(dfs(i + 1, child)) {
+      //                             return true
+      //                         }
+      //                     }
+
+      //                     return false
+      //                 }else{
+      //                     if(!curr.children.has(c)){
+      //                         return false
+      //                     }
+      //                     curr = curr.children.get(c)
+      //                 }
+      //             }
+
+      //             return curr.endsWith
+      //         }
+
+      //         return dfs(0, this.root)
+      //     }
+      // }
+
+      // let wordDictionary = new WordDictionary();
+      // wordDictionary.addWord("day");
+      // wordDictionary.addWord("bay");
+      // wordDictionary.addWord("may");
+      // console.log(wordDictionary.search("say")) // return false
+      // console.log(wordDictionary.search("day")) // return true
+      // console.log(wordDictionary.search(".ay")) // return true
+      // console.log(wordDictionary.search("b..")) // return true
+
+      // Word Search II
+      // Given a 2-D grid of characters board and a list of strings words, return all words that are present in the grid.
+      // For a word to be present it must be possible to form the word with a path in the board with horizontally or
+      // vertically neighboring cells. The same cell may not be used more than once in a word.
+
+      // Example 1:
+      // Input:
+      // board = [
+      // ["a","b","c","d"],
+      // ["s","a","a","t"],
+      // ["a","c","k","e"],
+      // ["a","c","d","n"]
+      // ],
+      // words = ["bat","cat","back","backend","stack"]
+      // Output: ["cat","back","backend"]
+
+      // Example 2:
+      // Input:
+      // board = [
+      // ["x","o"],
+      // ["x","o"]
+      // ],
+      // words = ["xoxo"]
+      // Output: []
+
+      // class TrieNode {
+      //     constructor() {
+      //         this.children = new Map()
+      //         this.endsWith = false
+      //     }
+
+      //     addWord(word) {
+      //         let curr = this
+
+      //         for(let c of word) {
+      //             if(!curr.children.has(c)) {
+      //                 curr.children.set(c, new TrieNode())
+      //             }
+      //             curr = curr.children.get(c)
+      //         }
+
+      //         curr.endsWith = true
+      //     }
+      // }
+
+      // class Solution {
+      //     findWords(board, words) {
+      //         let root = new TrieNode()
+
+      //         for(let word of words) {
+      //             root.addWord(word)
+      //         }
+
+      //         let ROWS = board.length, COLS = board[0].length
+      //         let res = new Set(), visited = new Set()
+
+      //         function dfs(r, c, node, word) {
+      //             if(
+      //                 r < 0 || c < 0 ||
+      //                 r >= ROWS || c >= COLS ||
+      //                 visited.has(`${r}, ${c}`) ||
+      //                 !node.children.has(board[r][c])
+      //             ) return
+
+      //             visited.add(`${r}, ${c}`)
+
+      //             node = node.children.get(board[r][c])
+      //             word += board[r][c]
+
+      //             if(node.endsWith) {
+      //                 res.add(word)
+      //             }
+
+      //             dfs(r+1, c, node, word);
+      //             dfs(r-1, c, node, word);
+      //             dfs(r, c+1, node, word);
+      //             dfs(r, c-1, node, word);
+
+      //             visited.delete(`${r}, ${c}`)
+      //         }
+
+      //         for(let r = 0; r < ROWS; r++) {
+      //             for(let c = 0; c < COLS; c++) {
+      //                 dfs(r, c, root, "")
+      //             }
+      //         }
+
+      //         return Array.from(res)
+      //     }
+      // }
+
+      // let sol = new Solution()
+      // console.log(sol.findWords([["a","b","c","d"],["s","a","a","t"],["a","c","k","e"],["a","c","d","n"]],
+      //     ["bat","cat","back","backend","stack"]
+      // ));
+
+      // Design Add and Search Word Data Structure
+      // Design a data structure that supports adding new words and searching for existing words.
+      // Implement the WordDictionary class:
+      // void addWord(word) Adds word to the data structure.
+      // bool search(word) Returns true if there is any string in the data structure that matches word or false otherwise.
+      // word may contain dots '.' where dots can be matched with any letter.
+
+      // Example 1:
+      // Input:
+      // ["WordDictionary", "addWord", "day", "addWord", "bay", "addWord", "may", "search", "say", "search", "day",
+      // "search", ".ay", "search", "b.."]
+      // Output:
+      // [null, null, null, null, false, true, true, true]
+
+      // Explanation:
+      // WordDictionary wordDictionary = new WordDictionary();
+      // wordDictionary.addWord("day");
+      // wordDictionary.addWord("bay");
+      // wordDictionary.addWord("may");
+      // wordDictionary.search("say"); // return false
+      // wordDictionary.search("day"); // return true
+      // wordDictionary.search(".ay"); // return true
+      // wordDictionary.search("b.."); // return true
+
+      // class TrieNode {
+      //   constructor() {
+      //     this.children = new Map();
+      //     this.endsWith = false;
+      //   }
+      // }
+
+      // class WordDictionary {
+      //   constructor() {
+      //     this.root = new TrieNode();
+      //   }
+
+      //   addWord(word) {
+      //     let curr = this.root;
+
+      //     for (let c of word) {
+      //       if (!curr.children.has(c)) {
+      //         curr.children.set(c, new TrieNode());
+      //       }
+
+      //       curr = curr.children.get(c);
+      //     }
+
+      //     curr.endsWith = true;
+      //   }
+
+      //   search(word) {
+      //     function dfs(i, node) {
+      //       console.log(
+      //         `dfs called at index: ${i}, char: '${word[i] || 'END'}'`,
+      //       );
+
+      //       let curr = node;
+
+      //       for (let j = i; j < word.length; j++) {
+      //         let c = word[j];
+      //         console.log(`  At index ${j}, char = '${c}'`);
+
+      //         if (c === '.') {
+      //           console.log(
+      //             `  Found '.', exploring all children from this node: [${[
+      //               ...curr.children.keys(),
+      //             ].join(', ')}]`,
+      //           );
+
+      //           for (let [key, child] of curr.children.entries()) {
+      //             console.log(`  → Going down child '${key}' for '.'`);
+      //             if (dfs(j + 1, child)) {
+      //               console.log(
+      //                 `  ✅ Match found via child '${key}' at index ${j}`,
+      //               );
+      //               return true;
+      //             }
+      //           }
+
+      //           console.log(`  ❌ No match found for '.' at index ${j}`);
+      //           return false;
+      //         } else {
+      //           if (!curr.children.has(c)) {
+      //             console.log(`  ❌ No child '${c}' at index ${j}`);
+      //             return false;
+      //           }
+      //           console.log(`  → Moving to child '${c}'`);
+      //           curr = curr.children.get(c);
+      //         }
+      //       }
+
+      //       console.log(`Reached end of word, endsWith = ${curr.endsWith}`);
+      //       return curr.endsWith;
+      //     }
+
+      //     console.log(`\n🔍 Searching for word: '${word}'`);
+      //     let result = dfs(0, this.root);
+      //     console.log(`🔹 Final Result for '${word}' = ${result}\n`);
+      //     return result;
+      //   }
+      // }
+
+      // let wordDictionary = new WordDictionary();
+      // wordDictionary.addWord('day');
+      // wordDictionary.addWord('bay');
+      // wordDictionary.addWord('may');
+      // console.log(wordDictionary.search('say')); // return false
+      // console.log(wordDictionary.search('day')); // return true
+      // console.log(wordDictionary.search('.ay')); // return true
+      // console.log(wordDictionary.search('b..')); // return true
+
+
+
+
+      // Word Search II
+      // Given a 2-D grid of characters board and a list of strings words, return all words that are present in the grid.
+      // For a word to be present it must be possible to form the word with a path in the board with horizontally or 
+      // vertically neighboring cells. The same cell may not be used more than once in a word.
+
+      // Example 1:
+      // Input:
+      // board = [
+      //   ["a","b","c","d"],
+      //   ["s","a","a","t"],
+      //   ["a","c","k","e"],
+      //   ["a","c","d","n"]
+      // ],
+      // words = ["bat","cat","back","backend","stack"]
+      // Output: ["cat","back","backend"]
+
+      // Example 2:
+      // Input:
+      // board = [
+      //   ["x","o"],
+      //   ["x","o"]
+      // ],
+      // words = ["xoxo"]
+      // Output: []
+
+      
+      
+      
+      let sol = new Solution()
+        console.log(sol.findWords([["a","b","c","d"],["s","a","a","t"],["a","c","k","e"],["a","c","d","n"]],
+            ["bat","cat","back","backend","stack"]
+        ));
+
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree</title>
+</head>
+<body>
+    
+
+    <script>
+
+        // 1-Invert Binary Tree
+ 
+        // You are given the root of a binary tree root. Invert the binary tree and return its root.
+
+        // Example 1:
+        // Input: root = [1,2,3,4,5,6,7]
+        // Output: [1,3,2,7,6,5,4]
+
+        // Example 2:
+        // Input: root = [3,2,1]
+        // Output: [3,1,2]
+
+        // Example 3:
+        // Input: root = []
+        // Output: []
+
+
+        // function invertTree(root) {
+        //     if(!root) return null
+
+        //     let stack = [root]
+
+        //     while(stack.length > 0) {
+        //         let current = stack.pop();
+
+        //         [current.left, current.right] = [current.right, current.left];
+
+        //         if(current.right) {
+        //             stack.push(current.right)
+        //         }
+
+        //         if(current.left) {
+        //             stack.push(current.left)
+        //         }
+        //     }
+
+        //     return root
+        // }
+
+
+        // 2-Maximum Depth of Binary Tree
+ 
+        // Given the root of a binary tree, return its depth.
+        // The depth of a binary tree is defined as the number of nodes along the longest path from the root node down 
+        // to the farthest leaf node.
+
+        // Example 1:
+        // Input: root = [1,2,3,null,null,4]
+        // Output: 3
+
+        // Example 2:
+        // Input: root = []
+        // Output: 0
+
+        // //SOLUTION-1 => DEPTH-FIRST-SEARCH - RECURSIVE
+        // function maxDepth(root) {
+        //     if(!root) return 0
+
+
+        //     let leftDepth = maxDepth(root.left)
+        //     let rightDepth = maxDepth(root.right)
+
+        //     return Math.max(leftDepth, rightDepth) + 1        
+        // }
+
+
+
+        // //SOLUTION-2 => BREADTH-FIRST-SEARCH
+        // function maxDepth(root) {
+        //     if(!root) return 0
+
+        //     let queue = [root]
+        //     let level = 0
+
+        //     while(queue.length > 0) {
+        //         let length = queue.length
+
+        //         for(let i = 0; i < length; i++) {
+        //             //yahan shift method use krna hai kyu k first element remove hota hai incase of queue 
+        //             let curr = queue.shift()
+
+        //             if(curr.left) queue.push(curr.left)
+        //             if(curr.right) queue.push(curr.right)
+        //         }
+
+        //         level++
+        //     }
+
+        //     return level
+        // }
+
+        // //SOLUTION-3 => PRE-ORDER TRAVERSAL DFS === ROOT - LEFT - RIGHT
+        // function maxDepth(root) {
+        //     let stack = [[root, 1]]
+        //     let res = 0
+
+        //     while(stack.length > 0) {
+        //         let current = stack.pop()
+        //         let node = current[0]
+        //         let depth = current[1]
+
+        //         while(node) {
+        //             res = Math.max(res, depth)
+        //             stack.push([node.right, depth + 1])
+        //             stack.push([node.left, depth + 1])
+        //         }
+        //     }
+
+        //     return res
+        // }
+
+        // //IN-ORDER TRAVERSAL OF TREE => LEFT - ROOT - RIGHT
+        // //ITERATIVE VERSION
+        // //iss mein pehle left node ki depth tk jana hai phr process krna hai left pe jo deep most node hai aur
+        // //phr right pe jana hai
+        // function inOrderTraversal(root) {
+        //     let stack = []
+        //     let res = []
+        //     let current = root
+
+        //     while(current !== null || stack.length > 0) {
+                
+        //         // 1. Go left as far as possible and push nodes on the stack
+        //         //left ki depth tk jana hai
+        //         while(current) {
+        //             stack.push(current)
+        //             current = current.left
+        //         }
+
+        //         // 2. Now pop the top node (leftmost), process it
+        //         //abb process krna hai node
+        //         current = stack.pop()
+        //         res.push(current.val)
+
+        //         // 3. Then move to the right subtree
+        //         //abb right pe jana hai
+        //         current = current.right
+        //     }
+
+        //     return res
+        // }
+
+
+
+        // 3-Same Binary Tree
+ 
+        // Given the roots of two binary trees p and q, return true if the trees are equivalent, otherwise return false.
+        // Two binary trees are considered equivalent if they share the exact same structure and the nodes have the same 
+        // values.
+
+        // Example 1:
+        // Input: p = [1,2,3], q = [1,2,3]
+        // Output: true
+
+        // Example 2:
+        // Input: p = [4,7], q = [4,null,7]
+        // Output: false
+
+        // Example 3:
+        // Input: p = [1,2,3], q = [1,3,2]
+        // Output: false
+
+        // //SOLUTION-1 => DFS-RECURSIVE
+        // function isSameTree(p, q) {
+        //     //matlab agar dono input null hain tou same tree hai
+        //     if(!p && !q) return true
+            
+        //     //agar koi aik tree missing hai aur agar p ki value different hai q sy tou false
+        //     if(!p || !q || p.val !== q.val) {
+        //         return false
+        //     }
+
+        //     //yahan recursively call karon ga left aur right branch of tree pe
+        //     return isSameTree(p.left, q.left) && isSameTree(p.right, q.right)
+        // }
+
+
+        // //SOLUTION-2 DFS-ITERATIVE
+        // function isSameTree(p, q) {
+        //     let stack = [[p, q]]
+
+        //     while(stack.length > 0) {
+        //         let [node1, node2] = stack.pop()
+
+        //         if(!node1 && !node2) continue
+
+        //         if(!node1 || !node2 || node1.val !== node2.val) {
+        //             return false
+        //         }
+
+        //         stack.push([node1.right, node2.right])
+        //         stack.push([node1.left, node2.left])
+        //     }
+
+        //     return true
+        // }
+
+
+        // //SOLUTION-3 VERSION-1 BFS-ITERATIVE
+        // //iss version mein for-loop use ho rha hai jo level by level check karay ga 
+        // function isSameTree(p, q) {
+        //     let queue = [[p, q]]
+
+        //     while(queue.length > 0) {
+        //         let length = queue.length
+
+        //         for(let i = 0; i < length; i++) {
+        //             let [nodeP, nodeQ] = queue.shift()
+
+        //             if(!nodeP && !nodeQ) continue
+        //             if(!nodeP || !nodeQ || nodeP.val !== nodeQ.val) return false
+
+        //             queue.push([nodeP.left, nodeQ.left])
+        //             queue.push([nodeP.right, nodeQ.right])
+        //         }
+        //     }
+
+        //     return true
+        // }
+
+        // //SOLUTION-3 VERSION-2 BFS-ITERATIVE
+        // //iss version mein for-loop nai use ho rha hai  
+        // function isSameTree(p, q) {
+        //     let queue = [[p, q]]
+
+        //     while(queue.length > 0) {
+        //         let length = queue.length
+
+        //         let [nodeP, nodeQ] = queue.shift()
+
+        //         if(!nodeP && !nodeQ) continue
+        //         if(!nodeP || !nodeQ || nodeP.val !== nodeQ.val) return false
+
+        //         queue.push([nodeP.left, nodeQ.left])
+        //         queue.push([nodeP.right, nodeQ.right])
+        //     }
+
+        //     return true
+        // }
+
+
+
+        // 4-Subtree of Another Tree
+ 
+        // Given the roots of two binary trees root and subRoot, return true if there is a subtree of root with 
+        // the same structure and node values of subRoot and false otherwise.
+        // A subtree of a binary tree tree is a tree that consists of a node in tree and all of this node's descendants. 
+        // The tree tree could also be considered as a subtree of itself.
+
+        // Example 1:
+        // Input: root = [1,2,3,4,5], subRoot = [2,4,5]
+        // Output: true
+
+        // Example 2:
+        // Input: root = [1,2,3,4,5,null,null,6], subRoot = [2,4,5]
+        // Output: false
+
+        // //SOLUTION-1
+        // function isSubtree(root, subRoot) {
+
+        //     if(!subRoot) return true
+        //     if(!root) return false
+
+        //     if(isSameTree(root, subRoot)) {
+        //         return true
+        //     }
+
+        //     //yahan check kr rha hn k subRoot either left ka part hai or right ka
+        //     return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot)
+
+        //     function isSameTree(root, subRoot) {
+        //         if(!root && !subRoot) return true
+
+        //         if(!root || !subRoot || root.val !== subRoot.val) {
+        //             return false
+        //         }
+        
+        //         return isSameTree(root.left, subRoot.left) && isSameTree(root.right && subRoot.right)
+        //     }
+        // }
+
+
+        // 5-Lowest Common Ancestor in Binary Search Tree
+        // Given a binary search tree (BST) where all node values are unique, and two nodes from the tree p and q, 
+        // return the lowest common ancestor (LCA) of the two nodes.
+        // The lowest common ancestor between two nodes p and q is the lowest node in a tree T such that both p and q 
+        // as descendants. The ancestor is allowed to be a descendant of itself.
+
+        // Example 1:
+        // Input: root = [5,3,8,1,4,7,9,null,2], p = 3, q = 8
+        // Output: 5
+
+        // Example 2:
+        // Input: root = [5,3,8,1,4,7,9,null,2], p = 3, q = 4
+        // Output: 3
+        // Explanation: The LCA of nodes 3 and 4 is 3, since a node can be a descendant of itself.
+
+
+        //TREE EXAMPLE
+        //       6
+        //      / \
+        //     2   8
+        //    / \
+        //   0   4
+        
+
+        // 1-What is an Ancestor?
+        // An ancestor of a node is any node that lies on the path from the root to that node, 
+        // including the root itself but excluding the node itself.
+        // In this tree:
+        // Ancestors of 4 are: 2, 6
+        // Ancestors of 2 are: 6
+
+        // 2-What is a Descendant?
+        // A descendant of a node is any node that is downstream in the tree from that node, including children, 
+        // grandchildren, etc.
+        // In the same tree:
+        // Descendants of 6 are: 2, 0, 4, 8
+        // Descendants of 2 are: 0, 4
+
+        // 3-What is the Lowest Common Ancestor?
+        // The lowest common ancestor (LCA) of two nodes p and q is the lowest node in the tree (i.e., the node 
+        // that is farthest from the root) that is an ancestor of both p and q.
+        // In the tree above:
+        // LCA of 0 and 4 is 2
+        // LCA of 0 and 8 is 6
+        // LCA of 2 and 8 is 6
+
+        //important: What if both nodes are the same?
+        //Say we want the LCA of node 2 and node 2. The function returns 2, which is correct, since a node is its own 
+        // ancestor.
+
+        // //SOULTION-1
+        // function lowestCommonAncestor(root, p, q) {
+        //     let curr = root
+
+        //     while(curr) {
+        //         //travering left subtree
+        //         if(p.val < curr.val && q.val < curr.val) {
+        //             curr = curr.left
+        //         }else if(p.val > curr.val && q.val > curr.val) { //travering right subtree
+        //             curr = curr.right
+        //         }else{
+        //             //at the split, jahan dono nodes opposite direction mein ja rhay hain
+        //             //If nodes are on different sides OR one equals the current node
+        //             return curr
+        //         }
+        //     }
+
+        //     return null
+        // }
+
+
+
+        // 6-Binary Tree Level Order Traversal
+        // Given a binary tree root, return the level order traversal of it as a nested list, where each sublist 
+        // contains the values of nodes at a particular level in the tree, from left to right.
+
+        // Example 1:
+        // Input: root = [1,2,3,4,5,6,7]
+        // Output: [[1],[2,3],[4,5,6,7]]
+
+        // Example 2:
+        // Input: root = [1]
+        // Output: [[1]]
+
+        // Example 3:
+        // Input: root = []
+        // Output: []
+
+
+        // function levelOrder(root) {
+        //     if(!root) return []
+
+        //     let queue = [root]
+        //     let res = []
+
+        //     while(queue.length > 0) {
+        //         let length = queue.length
+        //         let arr = []
+
+        //         for(let i = 0; i < length; i++) {
+        //             let curr = queue.shift()
+
+        //             arr.push(curr.val)
+
+        //             if(curr.left) queue.push(curr.left)
+        //             if(curr.right) queue.push(curr.right)
+        //         }
+
+        //         res.push(arr)
+        //     }
+
+        //     return res
+        // }
+
+
+        // 7-Valid Binary Search Tree
+        // Given the root of a binary tree, return true if it is a valid binary search tree, otherwise return false.
+        // A valid binary search tree satisfies the following constraints:
+        // The left subtree of every node contains only nodes with keys less than the node's key.
+        // The right subtree of every node contains only nodes with keys greater than the node's key.
+        // Both the left and right subtrees are also binary search trees.
+
+        // Example 1:
+        // Input: root = [2,1,3]
+        // Output: true
+
+        // Example 2:
+        // Input: root = [1,2,3]
+        // Output: false
+        // Explanation: The root node's value is 1 but its left child's value is 2 which is greater than 1.
+
+
+        // function isValidBST(root) {
+        //     function isValidSubTree(node, min, max) {
+        //         if(!node) return true
+
+        //         if((min !== null && node.val <= min) || (max !== null && node.val >= max)) {
+        //             return false
+        //         }
+
+        //         return isValidSubTree(node.left, min, node.val) && isValidSubTree(node.right, node.val, max)
+        //     }
+
+        //     return isValidSubTree(root, null, null)
+        // }
+
+        // //USING QUEUE
+        // function isValidBST(root) {
+        //     if(!root) return true
+        //     console.log(typeof null);
+            
+        //     const queue = [[root, null, null]]
+
+        //     while(queue.length > 0) {
+        //         const [node, left, right] = queue.shift()
+
+        //         if(
+        //             left !== null && left >= node.val ||
+        //             right !== null && node.val >= right
+                
+        //         ) {
+        //             return false
+        //         }
+
+        //         if(node.left) queue.push([node.left, left, node.val])
+        //         if(node.right) queue.push([node.right, node.val, right])
+        //     }
+
+        //     return true
+        // }
+
+        // isValidBST([2,1,3])
+
+        // 8-Kth Smallest Integer in BST
+        // Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) in the tree.
+
+        // A binary search tree satisfies the following constraints:
+        // The left subtree of every node contains only nodes with keys less than the node's key.
+        // The right subtree of every node contains only nodes with keys greater than the node's key.
+        // Both the left and right subtrees are also binary search trees.
+
+        // Example 1:
+        // Input: root = [2,1,3], k = 1
+        // Output: 1
+
+        // Example 2:
+        // Input: root = [4,3,5,2,null], k = 4
+        // Output: 5
+
+        // //SOLUTION-1 => IN-ORDER TRAVERSAL
+        // function kthSmallest(root, k) {
+        //     let arr = []
+        //     function traverse(node) {
+        //         if(!node) return null
+
+        //         traverse(node.left)
+        //         arr.push(node.val)
+        //         traverse(node.right)
+        //     }
+        //     traverse(root)
+
+        //     return arr[k-1]
+        // }
+
+
+        // //SOLUTION-2 =>IN-ORDER TRAVERSAL -> iss version mein sb values store nai kr rha, sirf wohi value
+        // // return karon ga jo k index pe ho gi
+        // function kthSmallest(root, k) {
+        //     let count = 0
+        //     let res = ''
+
+        //     function traverse(node) {
+        //         if(!node || !res) return null
+
+        //         traverse(node.left)
+
+        //         count++
+        //         if(count === k) {
+        //             res = node.val
+        //             return
+        //         }
+
+        //         traverse(node.right)
+        //     }
+
+        //     traverse(root)
+        //     return res
+        // }
+
+
+        // //SOUTION-3 => IN-ORDER TRAVERSAL ITERATIVE
+        // function kthSmallest(root, k) {
+        //     let count = 0
+        //     let stack = []
+        //     let curr = root
+
+        //     while(curr !== null || stack.length > 0) {
+                
+        //         while(curr) {
+        //             stack.push(curr)
+        //             curr = curr.left
+        //         }
+
+        //         curr = stack.pop()
+        //         count++
+        //         if(count === k) {
+        //             return curr.val
+        //         }
+
+        //         curr = curr.right
+        //     }
+        // }
+
+
+
+        // 9-Construct Binary Tree from Preorder and Inorder Traversal
+        // You are given two integer arrays preorder and inorder.
+
+        // preorder is the preorder traversal of a binary tree
+        // inorder is the inorder traversal of the same tree
+        // Both arrays are of the same size and consist of unique values.
+        // Rebuild the binary tree from the preorder and inorder traversals and return its root.
+
+        // Example 1:
+        // Input: preorder = [1,2,3,4], inorder = [2,1,3,4]
+        // Output: [1,2,3,null,null,null,4]
+
+        // Example 2:
+        // Input: preorder = [1], inorder = [1]
+        // Output: [1]
+
+
+        // //SOLUTION-1
+        // function buildTree(preorder, inorder) {
+        //     if(!preorder.length || !inorder.length) {
+        //         return null
+        //     }
+
+        //     let root = new TreeNode(preorder[0])
+        //     let mid = inorder.indexOf(preorder[0])
+
+        //     root.left = buildTree(preorder.slice(1, mid+1), inorder.slice(0, mid))
+        //     root.right = buildTree(preorder.slice(mid+1), inorder.slice(mid+1))
+
+        //     return root
+        // }
+
+        // preorder = [3,9,20,15,7]
+        // inorder = [9,3,15,20,7]
+        // output = [3,9,20,null,null,15,7]
+
+        // let preorder = [1,2,3,4], inorder = [2,1,3,4]
+        // console.log(inorder.indexOf(preorder[0]));
+        
+
+        // EXAMPLE EXPLANATION: preorder = [1,2,3,4], inorder = [2,1,3,4]
+        //    1
+        //   /  \
+        //  2    3
+        //        \
+        //         4
+
+        //First-step: 
+        //root = new TreeNode(preorder[0]), mid = inorder.indexOf(preorder[0])
+        //root = 1, mid = 1 
+
+        //root.left = buildTree(preorder.slice(1, mid+1), inorder.slice(0, mid)) => 
+        //root.left = buildTree(preorder.slice(1, 2), inorder.slice(0, 1)) => 
+        //root.left = buildTree([2], [2]) 
+        
+        //root.right = buildTree(preorder.slice(mid+1), inorder.slice(mid+1)) =>
+        //root.right = buildTree(preorder.slice(2), inorder.slice(2)) =>
+        //root.right = buildTree([3, 4], [3, 4])
+
+        //root = 1, root.left = buildTree([2], [2]), root.right = buildTree([3, 4], [3, 4])
+        
+        //CALL: buildTree([2], [2]) => build left subtree
+        //root = new TreeNode(preorder[0]), mid = inorder.indexOf(preorder[0])
+        //root = 2, mid = 0
+
+        //root.left = buildTree(preorder.slice(1, mid+1), inorder.slice(0, mid)) =>
+        //root.left = buildTree(preorder.slice(1, 1), inorder.slice(0, 0)) =>
+        //root.left = buildTree(null, null)
+
+        //root.right = buildTree(preorder.slice(mid+1), inorder.slice(mid+1)) =>
+        //root.right = buildTree(preorder.slice(1), inorder.slice(1)) =>
+        //root.right = buildTree(null, null) 
+
+        //root = 2, root.left = null, root.right = null
+
+
+        //CALL: buildTree([3, 4], [3, 4]) => build right subtree
+        //root = new TreeNode(preorder[0]), mid = inorder.indexOf(preorder[0])
+        //root = 3, mid = 0
+
+        //root.left = buildTree(preorder.slice(1, mid+1), inorder.slice(0, mid)) =>
+        //root.left = buildTree(preorder.slice(1, 1), inorder.slice(0, 0)) =>
+        //root.left = buildTree(null, null)
+
+        //root.right = buildTree(preorder.slice(mid+1), inorder.slice(mid+1)) =>
+        //root.right = buildTree(preorder.slice(1), inorder.slice(1)) => 
+        //root.right = buildTree([4], [4])
+
+        //root = 3, root.left = null, root.right = buildTree([4], [4])
+
+        //    1
+        //   /  \
+        //  2    3
+        //        \
+        //         4
+
+
+        //SOLUTION-2
+        // function buildTree(preorder, inorder) {
+        //     let preIdx = 0, inIdx = 0
+
+        //     function dfs(limit) {
+        //         if(preIdx >= preorder.length) return null
+        //         if(inorder[inIdx] === limit) {
+        //             inIdx++
+        //             return null
+        //         } 
+
+        //         let root = new TreeNode(preorder[preIdx])
+        //         preIdx++
+        //         root.left = dfs(root.val)
+        //         root.right = dfs(limit)
+
+        //         return root
+        //     }
+
+        //     return dfs(Infinity)
+        // }
+
+        //OPTIMAL SOLUTION USING DFS & HASH MAP 
+        //ISS SOLUTION MEIN INORDER ARRAY SY INDICES NIKALAY AUR UNN INDICES KO AS BOUNDARIES USE KIYA IN DFS
+        //TO MAKE LEFT AND RIGHT SUBTREE -- YE SOLUTION 0(n) TIME COMPLEXITY KA HAI BECAUSE ISS MEIN indexOf() 
+        //AUR slice() METHODS NAI USE HO RAHAY
+        // function buildTree(preorder, inorder) {
+        //     let inIndex = new Map()
+        //     inorder.forEach((val, i) => {
+        //         inIndex.set(val, i)
+        //     })
+        //     // console.log(inIndex);
+            
+        //     let preIdx = 0
+        //     function dfs(left, right) {
+        //         if(left > right) return null
+
+        //         let rootVal = preorder[preIdx]
+        //         preIdx++
+        //         let root = new TreeNode(rootVal)
+
+        //         let mid = inIndex.get(rootVal)
+
+        //         root.left = dfs(left, mid-1)
+        //         root.right = dfs(mid+1, right)
+
+        //         return root
+        //     }
+
+        //     return dfs(0, preorder.length - 1)
+        // }
+         
+        // console.log(buildTree([1,2,3,4], [2,1,3,4]));
+        
+
+        // preorder = [3, 9, 20, 15, 7]
+        // inorder  = [9, 3, 15, 20, 7]
+
+        //SOLUTION EXPLAINATION
+        //indices => {9 => 0, 3 => 1, 15 => 2, 20 => 3, 7 => 4}
+        //preIdx = 0
+
+        //First-call => dfs(0, 4)
+        //0 > 4 => false
+        //rootVal = preorder[preIdx] === preorder[0] => 3
+        //preIdx++ => 1
+        //root = new TreeNode(3)
+        //mid = indices.get(rootVal) === indices.get(3) => 1
+        //root.left = dfs(left, mid-1) === dfs(0, 0)
+        //root.right = dfs(mid+1, right) === dfs(2, 4)
+
+        //Second-call => dfs(0, 0)
+        //0 > 0 => false
+        //rootVal = preorder[preIdx] === preorder[1] => 9
+        //preIdx++ => 2
+        //root = new TreeNode(9)
+        //mid = indices.get(rootVal) === indices.get(9) => 0
+        //root.left = dfs(left, mid-1) === dfs(0, -1)
+        //root.right = dfs(mid+1, right) === dfs(1, 0)
+
+        //Third-call => dfs(0, -1)
+        //0 > -1 => true => return null
+
+        //Fourth-call => dfs(1, 4)
+        //1 > 0 => true => return null
+
+        //Fifth-call => dfs(2, 4)
+        //2 > 4 => false
+        //rootVal = preorder[preidx] === preorder[2] => 20
+        //preIdx++ => 3
+        //root = new TreeNode(20)
+        //mid = indices.get(rootVal) === indices.get(20) => 3
+        //root.left = dfs(left, mid-1) === dfs(2, 2)
+        //root.right = dfs(mid+1, right) === dfs(4, 4)
+        
+        //Sixth-call => dfs(2, 2)
+        //2 > 2 => false
+        //rootVal = preorder[preIdx] === preorder[3] => 15
+        //preIdx++ => 4
+        //root = new TreeNode(15)
+        //mid = indices.get(rootVal) === indices.get(15) => 2
+        //root.left = dfs(left, mid-1) === dfs(2, 1)
+        //root.right = dfs(mid+1, right) === dfs(3, 2)
+
+        //Seventh-call => dfs(2, 1)
+        //2 > 1 => true => return null
+        
+        //Eighth-call => dfs(3, 2)
+        //3 > 2 => true => return null
+
+        //Nineth-call => dfs(4, 4)
+        //4 > 4 => false
+        //rootVal => preorder[preIdx] === preorder[4] => 7
+        //preIdx++ => 5
+        //root = new TreeNode(7)
+        //mid = indices.get(rootVal) === indices.get(7) => 4
+        //root.left = dfs(left, mid-1) === dfs(4, 3) 
+        //root.right = dfs(mid+1, right) === dfs(5, 4) 
+
+        //Tenth-call => dfs(4, 3)
+        //4 > 3 => true => return null
+
+        //eleventh-call => dfs(5, 4)
+        //5 > 4 => true => return null
+        
+
+        // 10-Binary Tree Maximum Path Sum
+        // Given the root of a non-empty binary tree, return the maximum path sum of any non-empty path.
+        // A path in a binary tree is a sequence of nodes where each pair of adjacent nodes has an edge connecting them. 
+        // A node can not appear in the sequence more than once. The path does not necessarily need to include the root.
+        // The path sum of a path is the sum of the node's values in the path.
+
+        // Example 1:
+        // Input: root = [1,2,3]
+        // Output: 6
+        // Explanation: The path is 2 -> 1 -> 3 with a sum of 2 + 1 + 3 = 6.
+
+        // Example 2:
+        // Input: root = [-15,10,20,null,null,15,5,-5]
+        // Output: 40
+        // Explanation: The path is 15 -> 20 -> 5 with a sum of 15 + 20 + 5 = 40.
+
+
+        // function maxPathSum(root) {
+        //     let maxSum = -Infinity
+
+        //     function dfs(node) {
+        //         if(!node) return 0
+
+        //         let left = Math.max(0, dfs(node.left))
+        //         let right = Math.max(0, dfs(node.right))
+
+        //         //ye maxsum calculate ho rha hai with split of tree, matlab root, left aur right ko add kr rha hn
+        //         maxSum = Math.max(maxSum, (node.val + left + right))
+        
+        //         //pr value jo return ho gi to parent without split ho gi
+        //         //return ka maqsad yahan recursion ko continue rkhna hai, neechay example explained hai.
+        //         //aur ye POSTORDER  traversal hai -> LEFT - RIGHT - NODE-
+        //         return node.val + Math.max(left, right)
+        //     }
+        //     dfs(root)
+
+        //     return maxSum
+        // }
+
+
+        //EXAMPLE EXPLAINATION:
+        
+        //      -10
+        //      /  \
+        //     9   20
+        //         / \
+        //        15  7
+
+        //maxSum = -Inifinity
+
+        //INITIAL-CALL: dfs(-10)
+        //left = Math.max(0, dfs(node.left)) => Math.max(0, dfs(9))
+        //right = Math.max(0, dfs(node.right)) => Math.max(0, dfs(20))
+
+        //LEFT: INITIAL-CALL dfs(9)
+        //left = Math.max(0, dfs(node.left)) => Math.max(0, dfs(null))
+        //right = Math.max(0, dfs(node.right)) => Math.max(0, dfs(null))
+        //maxSum = Math.max(maxSum, node.val+left+right) => Math.max(-Inifinity, 9+0+0)
+        //maxSum = 9
+        //return node.val + Math.max(left, right) => 9 + 0 = 9
+
+        //RIGHT: INITIAL-CALL dfs(20)
+        //left = Math.max(0, dfs(node.left)) => Math.max(0, dfs(15))
+        //right = Math.max(0, dfs(node.right)) => Math.max(0, dfs(7))
+
+        //LEFT OF NODE-20: INITIAL-CALL dfs(15)
+        //left = Math.max(0, dfs(node.left)) => Math.max(0, dfs(null))
+        //right = Math.max(0, dfs(node.right)) => Math.max(0, dfs(null))
+        //maxSum = Math.max(maxSum, node.val+left+right) => Math.max(9, 15+0+0)
+        //maxSum = 15
+        //return node.val + Math.max(left, right) => 15 + 0 = 15
+
+        //RIGHT OF NODE-20: INITIAL-CALL dfs(7)
+        //left = Math.max(0, dfs(node.left)) => Math.max(0, dfs(null))
+        //right = Math.max(0, dfs(node.right)) => Math.max(0, dfs(null))
+        //maxSum = Math.max(maxSum, node.val+left+right) => Math.max(15, 7+0+0)
+        //maxSum = 15
+        //return node.val + Math.max(left, right) => 7 + 0 = 7
+
+        //CALCULATING NODE-20
+        //LEFT = 15
+        //RIGHT = 7
+        //maxSum = Math.max(maxSum, node.val+left+right) => Math.max(15, 20+15+7)
+        //maxSum = 42
+        //return node.val + Math.max(left, right) => 20 + 15 = 35
+
+        //CALCULATING NODE- -10
+        //LEFT = 9
+        //RIGHT = 35
+        //maxSum = Math.max(maxSum, node.val+left+right) => Math.max(42, -10,9,35)
+        //maxSum = 42
+        //return node.val + Math.max(left, right) => -10 + 35 = 25
+
+
+
+
+        // 11-Serialize and Deserialize Binary Tree
+        // Implement an algorithm to serialize and deserialize a binary tree.
+        // Serialization is the process of converting an in-memory structure into a sequence of bits so that it can be 
+        // stored or sent across a network to be reconstructed later in another computer environment.
+        // You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized 
+        // to the original tree structure. There is no additional restriction on how your serialization/deserialization 
+        // algorithm should work.
+
+        // Note: The input/output format in the examples is the same as how NeetCode serializes a binary tree. You do not necessarily need to follow this format.
+
+        // Example 1:
+        // Input: root = [1,2,3,null,null,4,5]
+        // Output: [1,2,3,null,null,4,5]
+
+        // Example 2:
+        // Input: root = []
+        // Output: []
+
+
+        // class Codec{
+            
+        //     serialize(root) {
+        //         let res = []
+
+        //         function dfs(node) {
+        //             if(!node) {
+        //                 res.push("N")
+        //                 return 
+        //             }
+
+        //             res.push(String(node.val))
+
+        //             dfs(node.left)
+        //             dfs(node.right)
+        //         }
+        //         dfs(root)
+
+        //         return res.join(',')
+        //     }
+
+
+        //     deserialize(data) {
+        //         let values = data.split(',')
+        //         let index = 0
+
+        //         function buildTree() {
+        //             if(values[index] === "N") {
+        //                 index++
+        //                 return null
+        //             }
+
+        //             let node = new TreeNode(+values[index])
+        //             index++
+
+        //             node.left = buildTree()
+        //             node.right = buildTree()
+
+        //             return node
+        //         }
+
+        //         return buildTree()
+        //     }
+
+        // }
+
+
+    
+
+
+    </script>
+
+
+</body>
+</html>

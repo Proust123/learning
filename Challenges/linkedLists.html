@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linked Lists</title>
+</head>
+<body>
+
+    <script>
+
+
+        // Merge K Sorted Linked Lists
+ 
+        // You are given an array of k linked lists lists, where each list is sorted in ascending order.
+        // Return the sorted linked list that is the result of merging all of the individual linked lists.
+
+        // Example 1:
+        // Input: lists = [[1,2,4],[1,3,5],[3,6]]
+        // Output: [1,1,2,3,3,4,5,6]
+
+        // Example 2:
+        // Input: lists = []
+        // Output: []
+
+        // Example 3:
+        // Input: lists = [[]]
+        // Output: []
+
+
+        // function mergeKLists(lists) {
+        //     if(!lists || lists.length === 0) return null
+            
+        //     while(lists.length > 1) {
+        //         let merged = []
+        //         for(let i = 0; i < lists.length; i+=2) {
+        //             let list1 = lists[i]
+        //             let list2 = (i+1) > lists.length ? null : lists[i+1]
+
+        //             merged.push(mergeTwoLists(list1, list2))
+        //         }
+        //         lists = merged
+        //     }
+        //     return lists[0]
+
+        //     function mergeTwoLists(list1, list2) {
+        //         let dummy = {val: 0, next: null}
+        //         let node = dummy
+
+        //         while(list1 && list2) {
+        //             if(list1.val <= list2.val) {
+        //                 node.next = list1
+        //                 list1 = list1.next
+        //             }else{
+        //                 node.next = list2
+        //                 list2 = list2.next
+        //             }
+        //             node = node.next
+        //         }
+
+        //         node.next = list1 ? list1 : list2
+        //         return dummy.next
+        //     }
+        // }
+
+        // function buildList(arr) {
+        //     let dummy = {val: 0, next: null}
+        //     let node = dummy
+
+        //     for(let num of arr) {
+        //         node.next = {val: num, next: null}
+        //         node = node.next
+        //     }
+
+        //     return dummy.next
+        // }
+
+        // function printList(list) {
+        //     let curr = list
+        //     let arr = []
+
+        //     while(curr) {
+        //         arr.push(curr.val)
+        //         curr = curr.next
+        //     }
+
+        //     return arr.join(' -> ')
+        // }
+
+        // //SOLUTION USING RECURSION --- DIVIDE & CONQUER METHOD
+        // function mergeKLists(lists) {
+        //     if(!lists || lists.length === 0) return null
+
+        //     return divide(lists, 0, lists.length-1)
+        // }
+
+        // function divide(lists, l, r) {
+        //     if(l > r) return null
+        //     if(l === r) return lists[l]
+
+        //     let mid = Math.floor(l + (r - l)/2)
+        //     let left = divide(lists, l, mid)
+        //     let right = divide(lists, mid+1, r)
+
+        //     return conquer(left, right)
+        // }
+
+        // function conquer(l1, l2) {
+        //     if(!l1) return l2
+        //     if(!l2) return l1
+
+        //     let dummy = {val: 0, next: null}
+        //     let curr = dummy
+
+        //     while(l1 && l2) {
+        //         if(l1.val <= l2.val) {
+        //             curr.next = l1
+        //             l1 = l1.next
+        //         }else{
+        //             curr.next = l2
+        //             l2 = l2.next
+        //         }
+        //         curr = curr.next
+        //     }
+
+        //     curr.next = l1 ? l1 : l2
+
+        //     return dummy.next
+        // }
+
+
+        // let lists = [buildList([1,2,4]), buildList([1,3,5]), buildList([3,6])]
+        // let merged = mergeKLists(lists)
+        // console.log(printList(merged));
+
+
+
+
+
+        // Remove Node From End of Linked List
+ 
+        // You are given the beginning of a linked list head, and an integer n.
+        // Remove the nth node from the end of the list and return the beginning of the list.
+
+        // Example 1:
+        // Input: head = [1,2,3,4], n = 2
+        // Output: [1,2,4]
+
+        // Example 2:
+        // Input: head = [5], n = 1
+        // Output: []
+
+        // Example 3:
+        // Input: head = [1,2], n = 2
+        // Output: [2]
+
+
+        // function removeNthFromEnd(head, n) {
+        //     let dummy = {val: 0, next: head}
+        //     let left = dummy
+        //     let right = head
+
+        //     while(n > 0) {
+        //         right = right.next
+        //         n--
+        //     }
+
+        //     while(right !== null) {
+        //         right = right.next
+        //         left = left.next
+        //     }
+
+        //     left.next = left.next.next
+
+        //     return dummy.next
+        // }
+
+        // function buildList(arr) {
+        //     let dummy = {val: 0, next: null}
+        //     let node = dummy
+
+        //     for(let num of arr) {
+        //         node.next = {val: num, next: null}
+        //         node = node.next
+        //     }
+
+        //     return dummy.next
+        // }
+
+        // function printList(list) {
+        //     let curr = list
+        //     let arr = []
+
+        //     while(curr) {
+        //         arr.push(curr.val)
+        //         curr = curr.next
+        //     }
+
+        //     return arr.join(' -> ')
+        // }
+
+        // let list = buildList([1,2,3,4])
+        // let newList = removeNthFromEnd(list, 2)
+        // console.log(printList(newList));
+
+
+
+        // Reorder Linked List
+ 
+        // You are given the head of a singly linked-list.
+        // The positions of a linked list of length = 7 for example, can intially be represented as:
+        // [0, 1, 2, 3, 4, 5, 6]
+
+        // Reorder the nodes of the linked list to be in the following order:
+        // [0, 6, 1, 5, 2, 4, 3]
+
+        // Notice that in the general case for a list of length = n the nodes are reordered to be in the following order:
+        // [0, n-1, 1, n-2, 2, n-3, ...]
+
+        // You may not modify the values in the list's nodes, but instead you must reorder the nodes themselves.
+
+        // Example 1:
+        // Input: head = [2,4,6,8]
+        // Output: [2,8,4,6]
+
+        // Example 2:
+        // Input: head = [2,4,6,8,10]
+        // Output: [2,10,4,8,6]
+
+
+        // This function modifies the list in-place and doesn't return anything
+        // function reorderList(head) { 
+        //     let slow = head
+        //     let fast = head
+
+        //     while(fast !== null && fast.next !== null) {
+        //         slow = slow.next
+        //         fast = fast.next.next
+        //     }
+
+        //     let second = slow.next
+        //     slow.next = null
+        //     let prev = null
+
+        //     while(second) {
+        //         let temp = second.next
+        //         second.next = prev
+        //         prev = second
+        //         second = temp
+        //     }
+
+        //     let first = head
+        //     second = prev
+
+        //     while(second) {
+        //         let temp1 = first.next, temp2 = second.next
+        //         first.next = second
+        //         second.next = temp1
+        //         first = temp1
+        //         second = temp2
+        //     }
+
+        // }
+
+        
+
+        // function buildList(arr) {
+        //     let dummy = {val: 0, next: null}
+        //     let node = dummy
+
+        //     for(let num of arr) {
+        //         node.next = {val: num, next: null}
+        //         node = node.next
+        //     }
+
+        //     return dummy.next
+        // }
+
+        // function printList(list) {
+        //     let curr = list
+        //     let arr = []
+
+        //     while(curr) {
+        //         arr.push(curr.val)
+        //         curr = curr.next
+        //     }
+
+        //     return arr.join(' -> ')
+        // }
+
+
+        // let list = buildList([2,4,6,8,10])
+        // reorderList(list)  // This function modifies the list in-place and doesn't return anything, iss liye ksi 
+        // //variable ko assign nai kiya iss ko..
+        // console.log(printList(list));
+
+
+
+        // Linked List Cycle Detection
+ 
+        // Given the beginning of a linked list head, return true if there is a cycle in the linked list. 
+        // Otherwise, return false. There is a cycle in a linked list if at least one node in the list can be visited 
+        // again by following the next pointer. Internally, index determines the index of the beginning of the cycle, 
+        // if it exists. The tail node of the list will set it's next pointer to the index-th node. If index = -1, 
+        // then the tail node points to null and no cycle exists.
+        // Note: index is not given to you as a parameter.
+
+        // Example 1:
+        // Input: head = [1,2,3,4], index = 1
+        // Output: true
+        // Explanation: There is a cycle in the linked list, where the tail connects to the 1st node (0-indexed).
+
+        // Example 2:
+        // Input: head = [1,2], index = -1
+        // Output: false
+
+
+        // function hasCycle(head) {
+        //     let slow = head, fast = head
+
+        //     while(fast !== null && fast.next !== null) {
+        //         slow = slow.next
+        //         fast = fast.next.next
+
+        //         if(slow === fast) {
+        //             return true
+        //         }
+        //     }
+
+        //     return false
+        // }
+
+
+
+        // Merge Two Sorted Linked Lists
+ 
+        // You are given the heads of two sorted linked lists list1 and list2.
+        // Merge the two lists into one sorted linked list and return the head of the new sorted linked list.
+        // The new list should be made up of nodes from list1 and list2.
+
+        // Example 1:
+        // Input: list1 = [1,2,4], list2 = [1,3,5]
+        // Output: [1,1,2,3,4,5]
+
+        // Example 2:
+        // Input: list1 = [], list2 = [1,2]
+        // Output: [1,2]
+
+        // Example 3:
+        // Input: list1 = [], list2 = []
+        // Output: []
+
+
+        // function mergeTwoLists(list1, list2) {
+        //     let dummy = {val: 0, next: null}
+        //     let currNode = dummy
+            
+        //     while(list1 && list2) {
+        //         if(list1.val <= list2.val) {
+        //             currNode.next = list1
+        //             list1 = list1.next
+        //         }else{
+        //             currNode.next = list2
+        //             list2 = list2.next
+        //         }
+        //         currNode = currNode.next
+        //     }
+
+        //     currNode.next = list1 ? list1 : list2
+
+        //     return dummy.next
+        // }
+
+        // function buildList(arr) {
+        //     let dummy = {val: 0, next: null}
+        //     let curr = dummy
+
+        //     for(let num of arr) {
+        //         curr.next = {val: num, next: null}
+        //         curr = curr.next
+        //     }
+
+        //     return dummy.next
+        // }
+
+        // function printList(list) {
+        //     let curr = list
+        //     let arr = []
+
+        //     while(curr) {
+        //         arr.push(curr.val)
+        //         curr = curr.next
+        //     }
+
+        //     return arr.join(' -> ')
+        // }
+
+        // let list1 = buildList([1,2,4]) 
+        // let list2 = buildList([1,3,5])
+        // let mergedList = mergeTwoLists(list1, list2)
+        // console.log(printList(mergedList));
+        
+
+
+        // Reverse Linked List
+
+        // Given the beginning of a singly linked list head, reverse the list, and return the new beginning of the list.
+
+        // Example 1:
+        // Input: head = [0,1,2,3]
+        // Output: [3,2,1,0]
+
+        // Example 2:
+        // Input: head = []
+        // Output: []
+
+
+        // function reverseList(head) {
+        //     if(!head) return null
+
+        //     let curr = head, prev = null
+
+        //     while(curr) {
+        //         let temp = curr.next
+        //         curr.next = prev
+        //         prev = curr
+        //         curr = temp
+        //     }
+
+        //     return prev
+        // }
+
+        // function buildList(arr) {
+        //     let dummy = {val: 0, next: null}
+        //     let curr = dummy
+
+        //     for(let num of arr) {
+        //         curr.next = {val: num, next: null}
+        //         curr = curr.next
+        //     }
+
+        //     return dummy.next
+        // }
+
+        // function printList(list) {
+        //     let curr = list
+        //     let arr = []
+
+        //     while(curr) {
+        //         arr.push(curr.val)
+        //         curr = curr.next
+        //     }
+
+        //     return arr.join(' -> ')
+        // }
+
+
+        // let list = buildList([0,1,2,3])
+        // let reversed = reverseList(list)
+        // console.log(printList(reversed));
+        
+
+
+    </script>
+    
+</body>
+</html>

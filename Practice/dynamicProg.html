@@ -1,0 +1,2569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Programming</title>
+</head>
+<body>
+
+    <script>
+
+        // //1- 0/1-KNAPSACK => RECURSIVE APPROACH
+        // let weights = [1, 3, 4, 5];
+        // let values  = [1, 4, 5, 7];
+        // let w = 7;
+        // let n = weights.length;
+
+        // function knapSack(wt, val, w, n) {
+        //     if(w === 0 || n === 0) {
+        //         return 0
+        //     }
+
+        //     if(wt[n-1] <= w) {
+        //         return Math.max(
+        //             val[n-1] + knapSack(wt, val, w-wt[n-1], n-1), 
+        //             knapSack(wt, val, w, n-1)
+        //         )
+        //     }else{
+        //         return knapSack(wt, val, w, n-1)
+        //     }
+        // }
+
+        // console.log(knapSack(weights, values, w, n));
+        
+
+        // // 0/1-KNAPSACK => MEMOIZATION/TOP-DOWN APPROACH
+        // const weights = [1, 3, 4, 5];
+        // const values  = [1, 4, 5, 7];
+        // const w = 7;
+        // let n = weights.length;
+        // const dp = Array.from({length: n+1}, () => Array(w+1).fill(-1))
+
+        // function knapSack(wt, val, w, n, dp) {
+        //     if(w === 0 || n === 0) return 0
+
+        //     if(dp[n][w] !== -1) {
+        //         return dp[n][w]
+        //     }
+
+        //     if(wt[n-1] <= w) {
+        //         dp[n][w] = Math.max(val[n-1] + knapSack(wt, val, w-wt[n-1], n-1, dp), knapSack(wt, val, w, n-1, dp))
+        //     }else{
+        //         dp[n][w] = knapSack(wt, val, w, n-1, dp)
+        //     }
+
+        //     return dp[n][w]
+        // }
+
+        // console.log(knapSack(weights, values, w, n, dp));
+        
+
+        // // 0/1-KNAPSACK => TABULAR/BOTTOM-UP APPROACH
+        // const weights = [1, 3, 4, 5];
+        // const values  = [1, 4, 5, 7];
+        // const w = 7;
+        // let n = weights.length;
+        // const dp = []
+        
+        
+        // function knapSack(wt, val, w, n, dp) {
+        //     for(let i = 0; i <= n; i++) {
+        //         dp[i] = []
+        //         for(let j = 0; j <= w; j++) {
+        //             if(i === 0 || j === 0) {
+        //                 dp[i][j] = 0
+        //             }
+        //             if(wt[i-1] <= j) {
+        //                 dp[i][j] = Math.max(val[i-1] + dp[i-1][j-wt[i-1]], dp[i-1][j])
+        //             }else if(wt[i-1] > j){
+        //                 dp[i][j] = dp[i-1][j]
+        //             }
+        //         }
+        //     }
+
+        //     return dp[n][w]
+        // }
+
+        // console.log(knapSack(weights, values, w, n, dp));
+
+        
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // //2-SUBSET SUM => RECURSIVE APPROACH
+
+        // const arr = [2, 3, 7, 8, 10], sum = 10
+        // let n = arr.length
+
+        // function subsetSum(arr, sum, n) {
+        //     if(sum === 0) return true
+        //     if(n === 0) return false
+
+        //     if(arr[n-1] <= sum) {
+        //         return (subsetSum(arr, sum, n-1) || subsetSum(arr, sum-arr[n-1], n-1))
+        //     }else if(arr[n-1] > sum) {
+        //         return subsetSum(arr, sum, n-1)
+        //     }
+        // } 
+
+        // console.log(subsetSum(arr, sum, n));
+
+
+
+        // //2-SUBSET SUM => MEMOIZATION/TOP-DOWN APPROACH
+
+        // const arr = [2, 3, 7, 8, 10], sum = 16
+        // let n = arr.length
+        
+        // function subsetSum(arr, sum, n) {
+        //     const dp = Array.from({length: n+1}, () => Array(sum+1).fill(-1))
+        //     if(n === 0) dp[n][sum] = false
+        //     if(sum === 0) dp[n][sum] = true
+            
+
+        //     if(dp[n][sum] !== -1) {
+        //         return dp[n][sum]
+        //     }
+
+        //     if(arr[n-1] <= sum) {
+        //         dp[n][sum] = subsetSum(arr, sum, n-1) || subsetSum(arr, sum - arr[n-1], n-1)
+        //     }else if(arr[n-1] > sum) {
+        //         dp[n][sum] = subsetSum(arr, sum, n-1)
+        //     }
+        //     // console.log(dp);
+
+        //     return dp[n][sum]
+        // }
+
+
+        // console.log(subsetSum(arr, sum, n));
+
+
+
+        // //2-SUBSET SUM => TABULAR/BOTTOM-UP APPROACH
+        // const arr = [2, 3, 7, 8, 10], sum = 19
+        // let n = arr.length
+        
+        // function subsetSum(arr, sum) {
+        //     const dp = []
+        //     for(let i = 0; i <= arr.length; i++) {
+        //         dp[i] = []
+        //         for(let j = 0; j <= sum; j++) {
+        //             if(i === 0) dp[i][j] = false
+        //             if(j === 0) dp[i][j] = true
+
+        //             if(arr[i-1] <= j) {
+        //                 dp[i][j] = dp[i-1][j] || dp[i-1][j-arr[i-1]]
+        //             }else if(arr[i-1] > j){
+        //                 dp[i][j] = dp[i-1][j]
+        //             }
+        //         }
+        //     }
+        //     console.log(dp);
+            
+
+        //     return dp[arr.length][sum]
+        // }
+
+        // console.log(subsetSum(arr, sum));
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        // //3- EQUAL SUM PARTITION
+        // const arr = [1, 5, 11, 5]
+
+        // function equalSumPart(arr) {
+        //     let sum = 0
+        //     for(let i = 0; i < arr.length; i++) {
+        //         sum += arr[i]
+        //     }
+        //     // console.log(sum);
+
+        //     if(sum % 2 !== 0) {
+        //         return false
+        //     }else if(sum % 2 === 0) {
+        //         return subsetSum(arr, sum/2)
+        //     }
+            
+        // }
+
+        // function subsetSum(arr, sum) {
+        //     const dp = []
+        //     for(let i = 0; i <= arr.length; i++) {
+        //         dp[i] = []
+        //         for(let j = 0; j <= sum; j++) {
+        //             if(i === 0) dp[i][j] = false
+        //             if(j === 0) dp[i][j] = true
+
+        //             if(arr[i-1] <= j) {
+        //                 dp[i][j] = dp[i-1][j] || dp[i-1][j - arr[i-1]]
+        //             }else if(arr[i-1] > j) {
+        //                 dp[i][j] = dp[i-1][j]
+        //             }
+        //         }
+        //     }
+
+        //     return dp[arr.length][sum]
+        // }
+
+        // console.log(equalSumPart(arr));
+        
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // //4-COUNT OF SUBSET SUM
+
+        // //RECURSIVE APPROACH
+        // const arr = [2, 3, 5, 7, 8, 10], sum = 10
+        // const n = arr.length
+
+        // function countSubsetSum(arr, sum, n) {
+        //     if(sum === 0) return 1
+        //     if(n === 0) return 0
+
+        //     if(arr[n-1] <= sum) {
+        //         return countSubsetSum(arr, sum, n-1) + countSubsetSum(arr, sum - arr[n-1], n-1)
+        //     }else if(arr[n-1] > sum) {
+        //         return countSubsetSum(arr, sum, n-1)
+        //     }
+        // }
+
+
+        // console.log(countSubsetSum(arr, sum, n));
+
+
+
+        // //MEMOIZATION/TOP-DOWN APPROACH
+        
+        // const arr = [2, 3, 5, 7, 8, 10], sum = 10
+        // const n = arr.length
+        // const dp = Array.from({length: n+1}, () => Array(sum+1).fill(-1))
+        // function countSubsetSum(arr, sum, n) {
+        //     if(sum === 0) return  1
+        //     else if(n === 0) return 0
+
+        //     if(dp[n][sum] !== -1) {
+        //         return dp[n][sum]
+        //     }
+
+        //     if(arr[n-1] <= sum) {
+        //         dp[n][sum] = countSubsetSum(arr, sum, n-1) + countSubsetSum(arr, sum-arr[n-1], n-1) 
+        //     }else if(arr[n-1] > sum) {
+        //         dp[n][sum] = countSubsetSum(arr, sum, n-1)
+        //     }
+        //     console.log(dp);
+            
+
+        //     return dp[n][sum]
+        // }
+
+        // console.log(countSubsetSum(arr, sum, n));
+
+
+
+        // //TABULAR/BOTTOM-UP APPROACH
+
+        // const arr = [2, 3, 5, 7, 8, 10], sum = 10
+        // const n = arr.length
+
+        // function countSubsetSum(arr, sum) {
+        //     const dp = []
+        //     for(let i = 0; i <= arr.length; i++) {
+        //         dp[i] = []
+        //         for(let j = 0; j <= sum; j++) {
+        //             if(j === 0) dp[i][j] = 1
+        //             else if(i === 0) dp[i][j] = 0
+
+        //             if(arr[i-1] <= j) {
+        //                 dp[i][j] = dp[i-1][j] + dp[i-1][j-arr[i-1]]
+        //             }else if(arr[i-1] > j) {
+        //                 dp[i][j] = dp[i-1][j]
+        //             }
+        //         }
+        //     }
+
+        //     return dp[arr.length][sum]
+        // }
+
+
+        // console.log(countSubsetSum(arr, sum));
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // //5-MINIMUM SUBSET DIFFERENCE
+        
+        // const arr = [1, 2, 7]
+
+        // function minimumDifference(arr) {
+        //     let sum = 0, min = Infinity
+        //     for(let i = 0; i < arr.length; i++) {
+        //         sum += arr[i]
+        //     }
+        //     // console.log(sum);
+            
+        //     const dp = []
+        //     function subsetSum(arr, sum) {
+        //         for(let i = 0; i <= arr.length; i++) {
+        //             dp[i] = []
+        //             for(let j = 0; j <= sum; j++) {
+        //                 if(i === 0) dp[i][j] = false
+        //                 if(j === 0) dp[i][j] = true
+
+        //                 if(arr[i-1] <= sum) {
+        //                     dp[i][j] = dp[i-1][j] || dp[i-1][j-arr[i-1]]
+        //                 }else if(arr[i-1] > sum) {
+        //                     dp[i][j] = dp[i-1][j]
+        //                 }
+        //             }
+        //         }
+        //         // console.log(dp);
+                
+
+        //         // return dp[arr.length][sum]
+        //     }
+
+        //     subsetSum(arr, sum)
+
+        //     for(let k = 0; k <= Math.floor(sum/2); k++) {
+        //         // console.log(k, dp[arr.length][k] === true); 
+        //         if(dp[arr.length][k] === true) {
+        //             min = Math.min(min, sum - 2*k)
+        //             // console.log(min);
+        //         }
+        //     }
+
+        //     return min
+        // }
+
+        // console.log(minimumDifference(arr));
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // //Partitions with Given Difference
+        // //Given an array arr[] and an integer diff, count the number of ways to partition the array into two subsets 
+        // //such that the difference between their sums is equal to diff.
+
+        // //Note: A partition in the array means dividing an array into two subsets say S1 and S2 such that the union 
+        // //of S1 and S2 is equal to the original array and each element is present in only one of the subsets.
+        // const arr = [1,1,2,3], diff = 1
+        
+        // function countSubsetSumWithDiff(arr, diff) {
+        //     let total = 0
+        //     for(let i = 0; i < arr.length; i++) {
+        //         total += arr[i]
+        //     }
+        //     // console.log(total);
+        //     let sum = Math.floor(diff + total / 2)
+        //     // console.log(sum);
+            
+        //     function countSubsetSum(arr, sum) {
+        //         const dp = []
+        //         for(let i = 0; i <= arr.length; i++) {
+        //             dp[i] = []
+        //             for(let j = 0; j <= sum; j++) {
+        //                 if(j === 0) dp[i][j] = 1
+        //                 else if(i === 0) dp[i][j] = 0
+        //             }
+        //         }
+
+        //         for(let i = 1; i <= arr.length; i++) {
+        //             for(let j = 1; j <= sum; j++) {
+        //                 if(arr[i-1] <= j) {
+        //                     dp[i][j] = dp[i-1][j] + dp[i-1][j-arr[i-1]]
+        //                 }else{
+        //                     dp[i][j] = dp[i-1][j]
+        //                 }
+        //             }
+        //         }
+
+        //         return dp[arr.length][sum]
+        //     }
+
+        //     return countSubsetSum(arr, sum)
+        // }
+
+        // console.log(countSubsetSumWithDiff(arr, diff));
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // //Target Sum Problem
+        // //Given a list of non-negative integers, a1, a2, ..., an, and a target, S. Now you have 2 symbols + and -. 
+        // //For each integer, you should choose one from + and - as its new symbol.
+        // //Find out how many ways to assign symbols to make sum of integers equal to target S.
+        
+        // //THIS PROBLEM IS SAME AS "Partitions with Given Difference", SAME CODE WOULD BE USED, IT'S ONLY 
+        // //DIFFERENT IN THE WAY SATETMENT IS WRITTEN 
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // // 1-Rod Cutting Problem --- RECURSIVE APPROACH
+        // //Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller 
+        // //than n.Determine the  maximum value obtainable by cutting up the rod and selling the pieces. 
+        // //Example: 
+        // //if length of the rod is 8 and the values of different pieces are given as following, then the maximum 
+        // //obtainable value is 22 (by cutting in two pieces of lengths 2 and 6)
+
+        // // ---->>> SIMILAR TO UNBOUNDED KNAPSACK
+
+        // const len = [1,2,3,4,5,6,7,8], prices = [1,5,8,9,10,17,17,20], size = 8, n = len.length
+
+        // function rodCutting(len, prices, size, n) {
+        //     const dp = []
+        //     for(let i = 0; i <= n; i++) {
+        //         dp[i] = []
+        //         for(let j = 0; j <= size; j++) {
+        //             if(i === 0 || j === 0) dp[i][j] = 0
+        //         }
+        //     }
+
+        //     for(let i = 1; i <= n; i++) {
+        //         for(j = 1; j <= size; j++) {
+        //             if(len[i-1] <= j) {
+        //                 dp[i][j] = Math.max(
+        //                     dp[i-1][j],
+        //                     prices[i-1] + dp[i][j-len[i-1]]
+        //                 )
+        //             }else{
+        //                 dp[i][j] = dp[i-1][j]
+        //             }
+        //         }
+        //     }
+
+        //     return dp[n][size]
+        // }
+
+        // console.log(rodCutting(len, prices, size, n));
+        
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // //Coin Change Problem Maximum Number of ways
+        // //Given a value N, if we want to make change for N cents, and we have infinite supply of each of 
+        // //S = { S1, S2, .. , Sm} valued coins, how many ways can we make the change? The order of coins 
+        // //doesn’t matter.
+        // // ---->>> SIMILAR TO COUNT SUBSET SUM
+
+        // const coin = [1, 2, 3], sum = 5, n = coin.length
+
+        // function coinChangeMax(coin, sum, n) {
+        //     const dp = []
+        //     for(let i = 0; i <= n; i++) {
+        //         dp[i] = []
+        //         for(let j = 0; j <= sum; j++) {
+        //             if(j === 0) dp[i][j] = 1
+        //             else if(i === 0) dp[i][j] = 0
+        //         }
+        //     }
+
+        //     for(let i = 1; i <= n; i++) {
+        //         for(let j = 1; j <= sum; j++) {
+        //             if(coin[i-1] <= j) {
+        //                 dp[i][j] = dp[i-1][j] + dp[i][j-coin[i-1]]
+        //             }else{
+        //                 dp[i][j] = dp[i-1][j]
+        //             }
+        //         }
+        //     }
+
+        //     return dp[n][sum]
+        // }
+
+        // console.log(coinChangeMax(coin, sum, n));
+        
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // //Coin Change Problem: Minimum Numbers of coins
+        // //Given a value V, if we want to make change for V cents, and we have infinite supply of each of 
+        // //C = { C1, C2, .. , Cm} valued coins, what is the minimum number of coins to make the change?
+    
+        // //Example:
+        // //Input: coins[] = {25, 10, 5}, V = 30
+        // //Output: Minimum 2 coins required
+        // //We can use one coin of 25 cents and one of 5 cents 
+
+
+        
+        // const coins = [25, 10, 5], sum = 30, n = coins.length
+        // const coins = [1, 2, 3], sum = 5, n = coins.length
+        // const coins = [2, 5, 2], sum = 5, n = coins.length
+        // const coins = [2, 4, 5], sum = 5, n = coins.length
+        // function coinChangeMin(coins, sum, n) {
+        //     const dp = []
+        //     for(let i = 0; i <= n; i++) {
+        //         dp[i] = []
+        //         for(let j = 0; j <= sum; j++) {
+        //             dp[i][j] = 0
+        //         }
+        //     }
+
+        //     // //FILLING FIRST-ROW
+        //     for(j = 1; j <= sum; j++) {
+        //         dp[0][j] = Infinity
+        //     }
+            
+        //     // //FILLING SECOND ROW
+        //     for(let j = 1; j <= sum; j++) {
+        //         if(j % coins[0] === 0) {
+        //             dp[1][j] = j/coins[0]
+        //         }else{
+        //             dp[1][j] = Infinity
+        //         }
+        //     }
+
+        //     for(let i = 2; i <= n; i++) {
+        //         for(let j = 1; j <= sum; j++) {
+        //             if(coins[i-1] <= j) {
+        //                 dp[i][j] = Math.min(
+        //                     dp[i-1][j],
+        //                     1 + dp[i][j-coins[i-1]]
+        //                 )
+        //             }else{
+        //                 dp[i][j] = dp[i-1][j]
+        //             }
+        //         }
+        //     }
+
+        //     return dp[n][sum]
+        // }
+
+
+        // console.log(coinChangeMin(coins, sum, n));
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // //Longest Common Subsequence Problem solution using RECURSION
+        // //Given two sequences, find the length of longest subsequence present in both of them.
+        // //A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous. 
+        // //For example, “abc”,  “abg”, “bdf”, “aeg”,  ‘”acefg”, .. etc are subsequences of “abcdefg”.
+
+        // const s1 = "abcdgh", s2 = "abedfhr"
+        // const m = s1.length, n = s2.length
+        // function LCS(s1, s2, m, n) {
+        //     const dp = []
+        //     for(let i = 0; i <= m; i++) {
+        //         dp[i] = []
+        //         for(let j = 0; j <= n; j++) {
+        //             if(i === 0 || j === 0) dp[i][j] = 0
+        //         }
+        //     }
+
+        //     for(let i = 1; i <= m; i++) {
+        //         for(let j = 1; j <= n; j++) {
+        //             if(s1[i-1] === s2[j-1]) {
+        //                 dp[i][j] = 1 + dp[i-1][j-1]
+        //             }else{
+        //                 dp[i][j] = Math.max(
+        //                     dp[i-1][j], dp[i][j-1]
+        //                 )
+        //             }
+        //         }
+        //     }
+
+        //     return dp[m][n]
+        // }
+        
+        // console.log(LCS(s1, s2, m, n));
+        
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //Longest Common Substring(Dynamic Programming)
+        //Given two strings ‘X’ and ‘Y’, find the length of the longest common substring.
+        //Examples:
+        //Input : X = “GeeksforGeeks”, y = “GeeksQuiz”
+        //Output : 5
+        //The longest common substring is “Geeks” and is of length 5.
+
+
+        // const str1 = "GeeksforGeeks", str2 = "GeeksQuiz"
+        // const str1 = "XYZABC", str2 = "ABCXYZ"
+        // const m = str1.length, n = str2.length
+        // let count = 0
+
+        // function LCSubstr(str1, str2, m, n, count) {
+        //     const dp = []
+        //     for(let i = 0; i <= m; i++) {
+        //         dp[i] = []
+        //         for(let j = 0; j <= n; j++) {
+        //             if(i === 0 || j === 0) dp[i][j] = 0
+        //         }
+        //     }
+
+        //     for(let i = 1; i <= m; i++) {
+        //         for(let j = 1; j <= n; j++) {
+        //             if(str1[i-1] === str2[j-1]) {
+        //                 dp[i][j] = 1 + dp[i-1][j-1]
+        //             }else{
+        //                 dp[i][j] = 0
+        //             }
+        //             count = Math.max(count, dp[i][j])
+        //         }
+        //     }
+
+        //     return count
+        // }
+
+        // console.log(LCSubstr(str1, str2, m, n, count));
+        
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // //Printing Longest Common Subsequence
+        // //Given two sequences, print the longest subsequence present in both of them.
+        // //Example:
+        // //LCS for input Sequences “ABCDGH” and “AEDFHR” is “ADH” of length 3. 
+        
+        // const str1 = "acbcf", str2 = "abcdaf"
+        // const m = str1.length, n = str2.length 
+        // function printLCS (str1, str2, m, n) {
+        //     const dp = []
+        //     for(let i = 0; i <= m; i++) {
+        //         dp[i] = []
+        //         for(let j = 0; j <= n; j++) {
+        //             if(i === 0 || j === 0) dp[i][j] = 0
+        //         }
+        //     }
+
+        //     for(let i = 1; i <= m; i++) {
+        //         for(let j = 1; j <= n; j++) {
+        //             if(str1[i-1] === str2[j-1]) {
+        //                 dp[i][j] = 1 + dp[i-1][j-1]
+        //             }else{
+        //                 dp[i][j] = Math.max(
+        //                     dp[i-1][j], dp[i][j-1]
+        //                 )
+        //             }
+        //         }
+        //     }
+
+        //     // return dp[m][n]
+        //     let str = ""
+        //     while(m > 0 && n > 0) {
+        //         if(str1[m-1] === str2[n-1]) {
+        //             str += str1[m-1]
+        //             m--, n--
+        //         }else{
+        //             if(dp[m-1][n] > dp[m][n-1]) {
+        //                 m--
+        //             }else{
+        //                 n--
+        //             }
+        //         }
+        //     }
+
+        //     return str.split('').reverse().join('')
+        // }
+        // console.log(printLCS (str1, str2, m, n));
+        
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////Shortest Common SuperSequence///////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // //Shortest Common SuperSequence
+        // //Given two strings str1 and str2, find the shortest string that has both str1 and str2 as subsequences.
+        // //Examples:
+        // //Input:   str1 = "geek",  str2 = "eke"
+        // //Output: "geeke"
+               
+        // const str1 = "geek", str2 = "eke"
+        // // const str1 = "AGGTAB", str2 = "GXTXAYB"
+        // const m = str1.length, n = str2.length
+
+        // function SCSS (str1, str2, m, n) {
+        //     function LCS(str1, str2, m, n) {
+        //         const dp = []
+        //         for(let i = 0; i <= m; i++) {
+        //             dp[i] = []
+        //             for(let j = 0; j <= n; j++) {
+        //                 if(i === 0 || j === 0) {
+        //                     dp[i][j] = 0
+        //                 }
+        //             }
+        //         }
+
+        //         for(let i = 1; i <= m; i++) {
+        //             for(let j = 1; j <= n; j++) {
+        //                 if(str1[i-1] === str2[j-1]) {
+        //                     dp[i][j] = 1 + dp[i-1][j-1]
+        //                 }else{
+        //                     dp[i][j] = Math.max(
+        //                         dp[i-1][j],
+        //                         dp[i][j-1]
+        //                     )
+        //                 }
+        //             }
+        //         }
+
+        //         return dp[m][n]
+        //     }
+        //     let lcs = LCS(str1, str2, m, n)
+
+        //     return (m + n) - lcs
+        // }
+        
+
+        // console.log(SCSS (str1, str2, m, n));
+        
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////Minimum Number Of Deletions And Insertions/////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // //Minimum number of deletions and insertions to transform one string into another
+        // //Given two strings ‘str1’ and ‘str2’ of size m and n respectively. The task is to remove/delete and insert 
+        // //minimum number of characters from/in str1 so as to transform it into str2. It could be possible that the 
+        // //same character needs to be removed/deleted from one point of str1 and inserted to some another point.
+        // //Example:
+        // //Input : str1 = "geeksforgeeks", str2 = "geeks"
+        // //Output : Minimum Deletion = 8, Minimum Insertion = 0 
+
+        // const str1 = "heap", str2 = "tea"
+        // // const str1 = "geeksforgeeks", str2 = "geeks"
+        // const m = str1.length, n = str2.length
+        // // // console.log(m, n);
+        
+        // function minDelAndInsert (str1, str2, m, n) {
+        //     function LCS (str1, str2, m, n) {
+        //         const dp = []
+        //         for(let i = 0; i <= m; i++) {
+        //             dp[i] = []
+        //             for(let j = 0; j <= n; j++) {
+        //                 if(i === 0 || j === 0) {
+        //                     dp[i][j] = 0
+        //                 }
+        //             }
+        //         }
+
+        //         for(let i = 1; i <= m; i++) {
+        //             for(let j = 1; j <= n; j++) {
+        //                 if(str1[i-1] === str2[j-1]) {
+        //                     dp[i][j] = 1 + dp[i-1][j-1]
+        //                 }else{
+        //                     dp[i][j] = Math.max(
+        //                         dp[i-1][j],
+        //                         dp[i][j-1]
+        //                     )
+        //                 }
+        //             }
+        //         }
+        //         return dp[m][n];
+        //     }
+        //     let lcs = LCS (str1, str2, m, n)
+
+        //     let deletions = str1.length - lcs
+        //     let insertions = str2.length - lcs
+
+        //     return {deletions, insertions}
+        // }
+
+
+        // console.log(minDelAndInsert (str1, str2, m, n));
+        
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////Longest Palindromic Subsequence//////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // //Longest Palindromic Subsequence
+        // //Given a sequence, find the length of the longest palindromic subsequence in it.
+        // //Example :
+        // //Input:"bbbab"
+        // //Output:4
+
+        // const str = "agbcba"
+        // // const str = "bbbab"
+    
+        // function LPS (str) {
+        //     const str2 = str.split('').reverse().join('')
+        //     // console.log(str2);
+            
+        //     const m = str.length, n = str2.length
+        //     function LCS (str, str2, m, n) {
+        //         const dp = []
+        //         for(let i = 0; i <= m; i++) {
+        //             dp[i] = []
+        //             for(let j = 0; j <= n; j++) {
+        //                 if(i === 0 || j === 0) {
+        //                     dp[i][j] = 0
+        //                 }
+        //             }
+        //         }
+
+        //         for(let i = 1; i <= m; i++) {
+        //             for(let j = 1; j <= n; j++) {
+        //                 if(str[i-1] === str2[j-1]) {
+        //                     dp[i][j] = 1 + dp[i-1][j-1]
+        //                 }else{
+        //                     dp[i][j] = Math.max(
+        //                         dp[i-1][j],
+        //                         dp[i][j-1]
+        //                     )
+        //                 }
+        //             }
+        //         }
+
+        //         return dp[m][n]
+        //     }
+
+        //     return LCS (str, str2, m, n)
+        // }
+
+        // console.log(LPS (str));
+        
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////Minimum Number Of Deletions To Make A String Palindrome///////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // //Minimum number of deletions to make a string palindrome
+        // //Given a string of size ‘n’. The task is to remove or delete minimum number of characters from the string 
+        // //so that the resultant string is palindrome.
+        // //Examples :
+        // //Input : aebcbda
+        // //Output : 2
+
+        // // const str = "aebcbda"
+        // const str = "agbcba"
+
+        // function minDeletions (str) {
+        //     function LPS(str) {
+        //         const str2 = str.split('').reverse().join('')
+        //         const m = str.length, n = str2.length
+
+        //         function LCS(str, str2, m, n) {
+        //             const dp = []
+        //             for(let i = 0; i <= m; i++) {
+        //                 dp[i] = []
+        //                 for(let j = 0; j <= n; j++) {
+        //                     if(i === 0 || j === 0) {
+        //                         dp[i][j] = 0
+        //                     }
+        //                 }
+        //             }
+
+        //             for(let i = 1; i <= m; i++) {
+        //                 for(let j = 1; j <= n; j++) {
+        //                     if(str[i-1] === str2[j-1]) {
+        //                         dp[i][j] = 1 + dp[i-1][j-1]
+        //                     }else{
+        //                         dp[i][j] = Math.max(
+        //                             dp[i-1][j],
+        //                             dp[i][j-1]
+        //                         )
+        //                     }
+        //                 }
+        //             }
+
+        //             return dp[m][n]
+        //         }
+
+        //         return LCS(str, str2, m, n)
+        //     }
+        //     const lps = LPS(str)
+
+        //     return str.length - lps
+        // }
+
+        
+        // console.log(minDeletions (str));
+        
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////Print Shortest Common SuperSequence////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // //Print Shortest Common SuperSequence
+        // //Given two strings X and Y, print the shortest string that has both X and Y as subsequences. If 
+        // //multiple shortest supersequence exists, print any one of them.
+
+        // //Examples:
+        // //Input: X = "AGGTAB",  Y = "GXTXAYB"
+        // //Output: "AGXGTXAYB" OR "AGGXTXAYB" 
+        // //OR Any string that represents shortest supersequence of X and Y
+
+        // //Input: X = "HELLO",  Y = "GEEK"
+        // //Output: "GEHEKLLO" OR "GHEEKLLO" 
+        // //OR Any string that represents shortest supersequence of X and Y
+
+        // const str1 = "AGGTAB", str2 = "GXTXAYB"
+        // // const str1 = "HELLO", str2 = "GEEK"
+        // const m = str1.length, n = str2.length
+
+        // function printSCS(str1, str2, m, n) {
+        //     let str = ""
+        //     const dp = []
+        //     function LCS(str1, str2, m, n) {
+        //         for(let i = 0; i <= m; i++) {
+        //             dp[i] = []
+        //             for(let j = 0; j <= n; j++) {
+        //                 if(i === 0 || j === 0) {
+        //                     dp[i][j] = 0
+        //                 }
+        //             }
+        //         }
+
+        //         for(let i = 1; i <= m; i++) {
+        //             for(let j = 1; j <= n; j++) {
+        //                 if(str1[i-1] === str2[j-1]) {
+        //                     dp[i][j] = 1 + dp[i-1][j-1]
+        //                 }else{
+        //                     dp[i][j] = Math.max(
+        //                         dp[i-1][j],
+        //                         dp[i][j-1]
+        //                     )
+        //                 }
+        //             }
+        //         }
+
+        //     }
+            
+        //     LCS(str1, str2, m, n)
+            
+        //     let i = m, j = n
+        //     while(i > 0 && j > 0) {
+        //         if(str1[i-1] === str2[j-1]) {
+        //             str += str1[i-1]
+        //             i--, j--
+        //         }else if(dp[i-1][j] > dp[i][j-1]) {
+        //             str += str1[i-1]
+        //             i--
+        //         }else {
+        //             str += str2[j-1]
+        //             j--
+        //         }
+        //     }
+
+        //     while(i > 0) {
+        //         str += str1[i-1]
+        //         i--
+        //     }
+            
+        //     while(j > 0) {
+        //         str += str2[j-1]
+        //         j--
+        //     }
+
+        //     return str.split('').reverse().join('')
+        // }
+
+        // console.log(printSCS(str1, str2, m, n));
+        
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////Longest Repeating Subsequence////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // //Longest Repeating Subsequence
+        // //Given a string, print the longest repeating subsequence such that the two subsequence don’t have same 
+        // //string character at same position, i.e., any i’th character in the two subsequences shouldn’t have the 
+        // //same index in the original string.
+        // //Example:
+        // //Input: str = "aab"
+        // //Output: "a"
+
+        // const str = "AABCBEDD"
+        // const str = "aab"
+
+        // function LRS(str) {
+        //     const str2 = str
+        //     const m = str.length, n = str2.length
+        //     // console.log(str, str2);
+            
+        //     function LCS(str, str2, m, n) {
+        //         const dp = []
+        //         for(let i = 0; i <= m; i++) {
+        //             dp[i] = []
+        //             for(let j = 0; j <= n; j++) {
+        //                 if(i === 0 || j === 0) {
+        //                     dp[i][j] = 0
+        //                 }
+        //             }
+        //         }
+
+        //         for(let i = 1; i <= m; i++) {
+        //             for(let j = 1; j <= n; j++) {
+        //                 if(str[i-1] === str2[j-1] && i !== j) {
+        //                     dp[i][j] = 1 + dp[i-1][j]
+        //                 }else{
+        //                     dp[i][j] = Math.max(
+        //                         dp[i-1][j],
+        //                         dp[i][j-1]
+        //                     )
+        //                 }
+        //             }
+        //         }
+
+        //         let res = ""
+        //         let i = m, j = n
+
+        //         while(i > 0 && j > 0) {
+        //             if(str[i-1] === str2[j-1] && i !== j) {
+        //                 res += str[i-1]
+        //                 i--, j--
+        //             }else if(dp[i-1][j] > dp[i][j-1]) {
+        //                 i--
+        //             }else{
+        //                 j--
+        //             }
+        //         }
+
+        //         return res.split('').reverse().join('')
+        //     }
+
+        //     return LCS(str, str2, m, n)
+        // }
+
+        // console.log(LRS(str));
+        
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////Subsequence Pattern Matching/////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // //Given two strings s and t, return true if s is a subsequence of t, or false otherwise.
+
+        // //A subsequence of a string is a new string that is formed from the original string by deleting some 
+        // //(can be none) of the characters without disturbing the relative positions of the remaining characters. 
+        // //(i.e., "ace" is a subsequence of "abcde" while "aec" is not).
+
+        // //Example 1:
+        // //Input: s = "abc", t = "ahbgdc"
+        // //Output: true
+
+        // //Example 2:
+        // //Input: s = "axc", t = "ahbgdc"
+        // //Output: false
+
+        // const s = "abc", t = "ahbgdc"
+        // const s = "axc", t = "ahbgdc"
+
+        // function SPM(s, t) {
+        //     const m = s.length, n = t.length
+        //     function LCS(s, t, m, n) {
+        //         const dp = []
+        //         for(let i = 0; i <= m; i++) {
+        //             dp[i] = []
+        //             for(let j = 0; j <= n; j++) {
+        //                 if(i === 0 || j === 0) {
+        //                     dp[i][j] = 0
+        //                 }
+        //             }
+        //         }
+
+        //         for(let i = 1; i <= m; i++) {
+        //             for(let j = 1; j <= n; j++) {
+        //                 if(s[i-1] === t[j-1]) {
+        //                     dp[i][j] = 1 + dp[i-1][j-1]
+        //                 }else{
+        //                     dp[i][j] = Math.max(
+        //                         dp[i-1][j],
+        //                         dp[i][j-1]
+        //                     )
+        //                 }
+        //             }
+        //         }
+
+        //         return dp[m][n]
+        //     }
+
+        //     let lcs = LCS(s, t, m, n)
+
+        //     if(s.length === lcs) {
+        //         return true
+        //     }else{
+        //         return false
+        //     }
+        // }
+
+
+        // console.log(SPM(s, t));
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////Minimum Number Of Insertions To Make A String Palindrome//////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // //Minimum number of insertions to make a string palindrome
+        // //Given a string, find the minimum number of characters to be inserted to form Palindrome string out of 
+        // //given string
+
+        // //Examples:
+        // //ab: Number of insertions required is 1. bab
+        // //aa: Number of insertions required is 0. aa
+
+        // const str = "ab"
+        // const str = "aa"
+        // const str = "aebcbda"
+        // const str = "agbcba"
+
+        // function minInsertions(str) {
+        //     function LPS(str) {
+        //         const reversedStr = str.split('').reverse().join('')
+        //         const m = str.length, n = reversedStr.length
+                
+        //         function LCS(str, reversedStr, m, n) {
+        //             const dp = []
+        //             for(let i = 0; i <= m; i++) {
+        //                 dp[i] = []
+        //                 for(let j = 0; j <= n; j++) {
+        //                     if(i === 0 || j === 0) {
+        //                         dp[i][j] = 0
+        //                     }
+        //                 }
+        //             }
+
+        //             for(let i = 1; i <= m; i++) {
+        //                 for(let j = 1; j <= n; j++) {
+        //                     if(str[i-1] === reversedStr[j-1]) {
+        //                         dp[i][j] = 1 + dp[i-1][j-1]
+        //                     }else{
+        //                         dp[i][j] = Math.max(
+        //                             dp[i-1][j],
+        //                             dp[i][j-1]
+        //                         )
+        //                     }
+        //                 }
+        //             }
+
+        //             return dp[m][n]
+        //         }
+        //         return LCS(str, reversedStr, m, n) 
+        //     }
+        //     let lps = LPS(str)
+
+        //     return str.length - lps
+        // }
+
+        // console.log(minInsertions(str));
+        
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////MATRIX CHAIN MULTIPLICATION VARIATION PROBLEMS/////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////MATRIX CHAIN MULTIPLICATION RECURSIVE////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+
+        // Matrix Chain Multiplication using Recursion
+        // Given a sequence of matrices, find the most efficient way to multiply these matrices together. 
+        // The problem is not actually to  perform the multiplications, but merely to decide in which order to 
+        // perform the multiplications. 
+
+        // const arr = [40, 20, 30, 10, 30]
+        // const i = 1, j = arr.length - 1
+        // // console.log(arr.length, arr.length-1);
+        
+
+        // function MCM (arr, i, j) {
+        //     if(i >= j) return 0
+
+        //     let min = Infinity
+
+        //     // for(let k = i; k < j; k++) {
+        //     //     let temp = MCM(arr, i, k) + MCM(arr, k+1, j) + arr[i-1] * arr[k] * arr[j]
+
+        //     //     min = Math.min(min, temp)
+        //     // }
+
+        //     for(let k = i+1; k <= j; k++) {
+        //         let temp = MCM(arr, i, k-1) + MCM(arr, k, j) + arr[i-1] * arr[k-1] * arr[j]
+
+        //         min = Math.min(min, temp)
+        //     }
+
+        //     return min
+        // }
+        
+        // console.log(MCM (arr, i, j));
+        
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////MATRIX CHAIN MULTIPLICATION MEMOIZED/////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+
+        // //Matrix Chain Multiplication using Memoization
+        // //Given a sequence of matrices, find the most efficient way to multiply these matrices together. 
+        // //The problem is not actually to perform the multiplications, but merely to decide in which order to 
+        // //perform the multiplications. 
+
+
+        // const arr = [40, 20, 30, 10, 30]
+        // const i = 1, j = arr.length - 1, n = arr.length
+        // const dp = Array.from({length: n+1}, () => Array(n+1).fill(-1))
+
+        // function memoMCM(arr, i, j, dp) {
+        //     if(i >= j) return 0
+
+        //     let min = Infinity
+
+        //     if(dp[i][j] !== -1) {
+        //         return dp[i][j]
+        //     }
+
+        //     // //for(let k = i; k < j; k++) {
+        //     // //    let temp = memoMCM(arr, i, k, dp) + memoMCM(arr, k+1, j, dp) + arr[i-1] * arr[k] * arr[j]
+                
+        //     // //    min = Math.min(min, temp)
+        //     // //}
+
+        //     for(let k = i; k < j; k++) {
+        //         let left, right;
+        //         dp[i][k] !== -1 ? left = dp[i][k] : left = memoMCM(arr, i, k, dp)
+        //         dp[k+1][j] !== -1 ? right = dp[k+1][j] : right = memoMCM(arr, k+1, j, dp)
+
+        //         let cost = arr[i-1] * arr[k] * arr[j]
+
+        //         let temp = left + right + cost
+
+        //         min = Math.min(min, temp)
+        //     }
+
+        //     dp[i][j] = min
+
+        //     return dp[i][j]
+        // }
+
+        // console.log(memoMCM(arr, i, j, dp));
+        
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////Palindrome Partitioning Recursion///////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        // //Palindrome Partitioning using Recursion
+        // //Given a string, a partitioning of the string is a palindrome partitioning if every substring of the 
+        // //partition is a palindrome. 
+        // //Example:
+        // //“aba|b|bbabb|a|b|aba” is a palindrome partitioning of “ababbbabbababa”.
+
+
+        // const str = "nitin"
+        // const str = "ababbbabbababa"
+        // // const i = 1, j = 3
+        // const i = 0, j = str.length-1
+
+        // function palinPartition(str, i, j) {
+        //     if( i >= j ) return 0
+        //     if(isPalindrome(str, i, j)) {
+        //         return 0
+        //     }
+
+        //     let min = Infinity
+
+        //     for(let k = i; k < j; k++) {
+        //         let left = palinPartition(str, i, k)
+        //         let right = palinPartition(str, k+1, j)
+        //         // let cost = 1
+
+        //         let temp = left+right+1
+
+        //         min = Math.min(min, temp)
+        //     }
+
+        //     return min
+        // }
+
+        // function isPalindrome(str, i, j) {
+        //     while(i < j) {
+        //         if(str[i] !== str[j]) {
+        //             return false
+        //         }
+        //         i++, j--
+        //     }
+
+        //     return true
+        // }
+
+        // // console.log(isPalindrome(str, i, j));
+        
+        // console.log(palinPartition(str, i, j));
+        
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////Evaluate Expression To True / Boolean Parenthesization Recursive/////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // Evaluate Expression To True-Boolean Parenthesization Recursion
+        // Given a boolean expression with following symbols.
+        // Symbols
+        //     'T' --- true 
+        //     'F' --- false 
+        // And following operators filled between symbols
+        // Operators
+        //     &   ---boolean AND
+        //     |   --- boolean OR
+        //     ^   --- boolean XOR 
+        // Count the number of ways we can parenthesize the expression so that the value of expression evaluates to true.
+        // Example:
+        // Input: symbol[]    = {T, F, T}
+        //     operator[]  = {^, &}
+        // Output: 2
+        // The given expression is "T ^ F & T", it evaluates true
+        // in two ways "((T ^ F) & T)" and "(T ^ (F & T))"
+
+        // const str = "T^F&T"
+        // const i = 0, j = str.length-1
+
+
+        // function evalExpression (str, i, j, isBoolean) {
+        //     if(i > j) return 0
+
+        //     if(i === j) {
+        //         if(isBoolean) {
+        //             return str[i] === "T" ? 1 : 0
+        //         }else{
+        //             return str[i] === "F" ? 1 : 0
+        //         }
+        //     }
+
+        //     let ans = 0
+
+        //     for(let k = i+1; k < j; k+=2) {
+        //         let lt = evalExpression(str, i, k-1, true)
+        //         let lf = evalExpression(str, i, k-1, false)
+        //         let rt = evalExpression(str, k+1, j, true)
+        //         let rf = evalExpression(str, k+1, j, false)
+
+        //         if(str[k] === "^") {
+        //             if(isBoolean) {
+        //                 ans = ans + (lt*rf) + (lf*rt)
+        //             }else{
+        //                 ans = ans + (lt*rt) + (lf*rf)
+        //             }
+        //         }
+
+        //         if(str[k] === "|") {
+        //             if(isBoolean) {
+        //                 ans = ans + (lt*rt) + (lt*rf) + (lf*rt)
+        //             }else{
+        //                 ans = ans + (lf*rf)
+        //             }
+        //         }
+
+        //         if(str[k] === "&") {
+        //             if(isBoolean) {
+        //                 ans = ans + (lt*rt)
+        //             }else{
+        //                 ans = ans + (lt*rf) + (lf*rt) + (lf*rf)
+        //             }
+        //         }
+        //     }
+
+        //     return ans
+        // }
+
+
+
+        // console.log(evalExpression (str, i, j, true));
+
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////Evaluate Expression To True / Boolean Parenthesization Memoization///////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // Evaluate Expression To True-Boolean Parenthesization Memoized
+        // Given a boolean expression with following symbols.
+        // Symbols
+        //     'T' --- true 
+        //     'F' --- false 
+        // And following operators filled between symbols
+        // Operators
+        //     &   ---boolean AND
+        //     |   --- boolean OR
+        //     ^   --- boolean XOR 
+        // Count the number of ways we can parenthesize the expression so that the value of expression evaluates to true.
+        // Example:
+        // Input: symbol[]    = {T, F, T}
+        //     operator[]  = {^, &}
+        // Output: 2
+        // The given expression is "T ^ F & T", it evaluates true
+        // in two ways "((T ^ F) & T)" and "(T ^ (F & T))"
+
+        // const str = "T^F&T"
+        // const i = 0, j = str.length-1
+        // const dp = Array.from({length: j+1}, () => Array.from({length: j+1}, () => Array(2).fill(-1)))
+
+        // function evalExpression (str, i, j, isBoolean) {
+        //     if(i > j) return 0
+
+        //     if(i === j) {
+        //         if(isBoolean) {
+        //             return str[i] === "T" ? 1 : 0
+        //         }else{
+        //             return str[i] === "F" ? 1 : 0
+        //         }
+        //     }
+
+        //     if(dp[i][j][+isBoolean] !== -1) {
+        //         return dp[i][j][+isBoolean]
+        //     }
+
+        //     let ans = 0
+
+        //     for(let k = i+1; k < j; k+=2) {
+        //         let lt = evalExpression(str, i, k-1, true)
+        //         let lf = evalExpression(str, i, k-1, false)
+        //         let rt = evalExpression(str, k+1, j, true)
+        //         let rf = evalExpression(str, k+1, j, false)
+
+        //         if(str[k] === "^") {
+        //             if(isBoolean) {
+        //                 ans = ans + (lt*rf) + (lf*rt)
+        //             }else{
+        //                 ans = ans + (lt*rt) + (lf*rf)
+        //             }
+        //         }
+
+        //         if(str[k] === "|") {
+        //             if(isBoolean) {
+        //                 ans = ans + (lt*rt) + (lt*rf) + (lf*rt)
+        //             }else{
+        //                 ans = ans + (lf*rf)
+        //             }
+        //         }
+
+        //         if(str[k] === "&") {
+        //             if(isBoolean) {
+        //                 ans = ans + (lt*rt)
+        //             }else{
+        //                 ans = ans + (lt*rf) + (lf*rt) + (lf*rf)
+        //             }
+        //         }
+        //     }
+
+        //     dp[i][j][+isBoolean] = ans
+
+        //     // return dp[i][j][+isBoolean]
+        //     return ans
+        // }
+
+
+
+        // console.log(evalExpression (str, i, j, true));
+        
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////Evaluate Expression To True / Boolean Parenthesization Optimization//////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // Evaluate Expression To True-Boolean Parenthesization Optimized
+        // Given a boolean expression with following symbols.
+        // Symbols
+        //     'T' --- true 
+        //     'F' --- false 
+        // And following operators filled between symbols
+        // Operators
+        //     &   ---boolean AND
+        //     |   --- boolean OR
+        //     ^   --- boolean XOR 
+        // Count the number of ways we can parenthesize the expression so that the value of expression evaluates to true.
+        // Example:
+        // Input: symbol[]    = {T, F, T}
+        //     operator[]  = {^, &}
+        // Output: 2
+        // The given expression is "T ^ F & T", it evaluates true
+        // in two ways "((T ^ F) & T)" and "(T ^ (F & T))"
+
+        // const str = "T^F&T"
+        // const i = 0, j = str.length-1
+        // const dp = Array.from({length: j+1}, () => Array.from({length: j+1}, () => Array(2).fill(-1)))
+
+        // function evalExpression (str, i, j, isBoolean) {
+        //     if(i > j) return 0
+
+        //     if(i === j) {
+        //         if(isBoolean) {
+        //             return str[i] === "T" ? 1 : 0
+        //         }else{
+        //             return str[i] === "F" ? 1 : 0
+        //         }
+        //     }
+
+        //     if(dp[i][j][+isBoolean] !== -1) {
+        //         return dp[i][j][+isBoolean]
+        //     }
+
+        //     let ans = 0
+
+        //     for(let k = i+1; k < j; k+=2) {
+        //         let lt, lf, rt, rf 
+
+        //         if(dp[i][k-1][1] !== -1) {
+        //             lt = dp[i][k-1][1]
+        //         }else{
+        //             lt = evalExpression(str, i, k-1, true)
+        //             dp[i][k-1][1] = lt
+        //         }
+
+        //         if(dp[i][k-1][0] !== -1) {
+        //             lf = dp[i][k-1][0]
+        //         }else{
+        //             lf = evalExpression(str, i, k-1, false)
+        //             dp[i][k-1][0] = lf
+        //         }
+
+        //         if(dp[k+1][j][1] !== -1) {
+        //             rt = dp[k+1][j][1]
+        //         }else{
+        //             rt = evalExpression(str, k+1, j, true)
+        //             dp[k+1][j][1] = rt
+        //         }
+
+        //         if(dp[k+1][j][0] !== -1) {
+        //             rf = dp[k+1][j][0]
+        //         }else{
+        //             rf = evalExpression(str, k+1, j, false)
+        //             dp[k+1][j][0] = rf
+        //         }
+
+        //         if(str[k] === "^") {
+        //             if(isBoolean) {
+        //                 ans = ans + (lt*rf) + (lf*rt)
+        //             }else{
+        //                 ans = ans + (lt*rt) + (lf*rf)
+        //             }
+        //         }
+
+        //         if(str[k] === "|") {
+        //             if(isBoolean) {
+        //                 ans = ans + (lt*rt) + (lt*rf) + (lf*rt)
+        //             }else{
+        //                 ans = ans + (lf*rf)
+        //             }
+        //         }
+
+        //         if(str[k] === "&") {
+        //             if(isBoolean) {
+        //                 ans = ans + (lt*rt)
+        //             }else{
+        //                 ans = ans + (lt*rf) + (lf*rt) + (lf*rf)
+        //             }
+        //         }
+        //     }
+
+        //     dp[i][j][+isBoolean] = ans
+
+        //     // return dp[i][j][+isBoolean]
+        //     return ans
+        // }
+
+
+
+        // console.log(evalExpression (str, i, j, true));
+        
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////Evaluate Expression To True / Boolean Parenthesization Memoization Using Map///////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // Evaluate Expression To True-Boolean Parenthesization Memoized
+        // Given a boolean expression with following symbols.
+        // Symbols
+        //     'T' --- true 
+        //     'F' --- false 
+        // And following operators filled between symbols
+        // Operators
+        //     &   ---boolean AND
+        //     |   --- boolean OR
+        //     ^   --- boolean XOR 
+        // Count the number of ways we can parenthesize the expression so that the value of expression evaluates to true.
+        // Example:
+        // Input: symbol[]    = {T, F, T}
+        //     operator[]  = {^, &}
+        // Output: 2
+        // The given expression is "T ^ F & T", it evaluates true
+        // in two ways "((T ^ F) & T)" and "(T ^ (F & T))"
+
+        // const str = "T^F&T"
+        // const i = 0, j = str.length-1
+        // const map = new Map()
+
+        // function evalExpression (str, i, j, isBoolean) {
+        //     if(i > j) return 0
+
+        //     if(i === j) {
+        //         if(isBoolean) {
+        //             return str[i] === "T" ? 1 : 0
+        //         }else{
+        //             return str[i] === "F" ? 1 : 0
+        //         }
+        //     }
+
+        //     let key = `${i}::${j}::${+isBoolean}`
+
+        //     if(map.has(key)) {
+        //         return map.get(key)
+        //     }
+
+        //     let ans = 0
+
+        //     for(let k = i+1; k < j; k+=2) {
+        //         let lt = evalExpression(str, i, k-1, true)
+        //         let lf = evalExpression(str, i, k-1, false)
+        //         let rt = evalExpression(str, k+1, j, true)
+        //         let rf = evalExpression(str, k+1, j, false)
+
+        //         if(str[k] === "^") {
+        //             if(isBoolean) {
+        //                 ans = ans + (lt*rf) + (lf*rt)
+        //             }else{
+        //                 ans = ans + (lt*rt) + (lf*rf)
+        //             }
+        //         }
+
+        //         if(str[k] === "|") {
+        //             if(isBoolean) {
+        //                 ans = ans + (lt*rt) + (lt*rf) + (lf*rt)
+        //             }else{
+        //                 ans = ans + (lf*rf)
+        //             }
+        //         }
+
+        //         if(str[k] === "&") {
+        //             if(isBoolean) {
+        //                 ans = ans + (lt*rt)
+        //             }else{
+        //                 ans = ans + (lt*rf) + (lf*rt) + (lf*rf)
+        //             }
+        //         }
+        //     }
+
+        //     map.set(key, ans)
+
+        //     // return map.get(key)
+        //     return ans
+        // }
+
+
+
+        // console.log(evalExpression (str, i, j, true));
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////Scramble String using Recursive//////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // Scramble String using Recursive
+        // Given a string s1, we may represent it as a binary tree by partitioning it to two non-empty substrings 
+        // recursively.
+        // Below is one possible representation of A = “great”:
+
+        //      great
+        //     /    \
+        //    gr    eat
+        //   / \    /  \
+        //  g   r  e    at
+        //             / \
+        //            a   t
+        // To scramble the string, we may choose any non-leaf node and swap its two children.
+
+        // For example, if we choose the node “gr” and swap its two children, it produces a scrambled string “rgeat”.
+
+        //     rgeat
+        //    /    \
+        //   rg    eat
+        //  / \    /  \
+        // r   g  e   at
+        //           / \
+        //          a   t
+        // We say that “rgeat” is a scrambled string of “great”.
+
+        // Similarly, if we continue to swap the children of nodes “eat” and “at”, it produces a scrambled string “rgtae”.
+
+        //     rgtae
+        //    /    \
+        //   rg    tae
+        //  / \    /  \
+        // r   g  ta  e
+        //        / \
+        //       t   a
+        // We say that “rgtae” is a scrambled string of “great”.
+       
+        // const a = "great", b = "eatgr"
+        // const a = "great", b = "rgtae"
+        // const a = "great", b = "rgte"
+        // // // let n = a.length, i = 2
+        // // // console.log(a.slice(0, i), b.slice(n - i));
+        // // // console.log(a.slice(i), b.slice(0, n - i));
+        
+        
+        // function scrambledStrs (a, b) {
+        //     if(a.length !== b.length) return false
+
+        //     if(a.length === 0 && b.length === 0) return true
+
+        //     function solve(a, b) {
+        //         if(a === b) return true
+
+        //         if(a.length <= 1 || b.length <= 1) return false
+
+        //         let n = a.length
+
+        //         for(let i = 1; i < n; i++) {
+        //             //SWAPPED
+        //             let cond1 = solve(a.slice(0, i), b.slice(n-i)) && solve(a.slice(i), b.slice(0, n-i))
+        //             //UNSWAPPED
+        //             let cond2 = solve(a.slice(0, i), b.slice(0, i)) && solve(a.slice(i), b.slice(i))
+                    
+        //             if(cond1 || cond2) {
+        //                 return true
+        //             }
+        //         }
+
+        //         return false
+        //     }
+
+        //     return solve(a, b)
+        // }
+
+
+        // console.log(scrambledStrs (a, b));
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////Scramble String MEMOIZED USING MAP////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // Scramble String MEMOIZED USING MAP
+        // Given a string s1, we may represent it as a binary tree by partitioning it to two non-empty substrings 
+        // recursively.
+        // Below is one possible representation of A = “great”:
+
+        //      great
+        //     /    \
+        //    gr    eat
+        //   / \    /  \
+        //  g   r  e    at
+        //             / \
+        //            a   t
+        // To scramble the string, we may choose any non-leaf node and swap its two children.
+
+        // For example, if we choose the node “gr” and swap its two children, it produces a scrambled string “rgeat”.
+
+        //     rgeat
+        //    /    \
+        //   rg    eat
+        //  / \    /  \
+        // r   g  e   at
+        //           / \
+        //          a   t
+        // We say that “rgeat” is a scrambled string of “great”.
+
+        // Similarly, if we continue to swap the children of nodes “eat” and “at”, it produces a scrambled string “rgtae”.
+
+        //     rgtae
+        //    /    \
+        //   rg    tae
+        //  / \    /  \
+        // r   g  ta  e
+        //        / \
+        //       t   a
+        // We say that “rgtae” is a scrambled string of “great”.
+       
+        // const a = "great", b = "eatgr"
+        // const a = "great", b = "rgtae"
+        // // const a = "great", b = "rgte"
+        // // // let n = a.length, i = 2
+        // // // console.log(a.slice(0, i), b.slice(n - i));
+        // // // console.log(a.slice(i), b.slice(0, n - i));
+        // const map = new Map()
+        
+        // function scrambledStrs (a, b) {
+        //     if(a.length !== b.length) return false
+        //     if(a.length === 0 && b.length === 0) return true
+
+        //     function solve(a, b) {
+        //         if(a === b) return true
+        //         if(a.length <= 1 || b.length <= 1) return false
+
+        //         let key = `${a}::${b}`
+
+        //         if(map.has(key)) {
+        //             return map.get(key)
+        //         }
+
+        //         let n = a.length
+
+        //         for(let i = 1; i < n; i++) {
+        //             //SWAPPED
+        //             let cond1 = solve(a.slice(0, i), b.slice(n-i)) && solve(a.slice(i), b.slice(0, n-i))
+        //             //UNSWAPPED
+        //             let cond2 = solve(a.slice(0, i), b.slice(0, i)) && solve(a.slice(i), b.slice(i))
+
+        //             if(cond1 || cond2) {
+        //                 map.set(key, true)
+        //                 return true
+        //             }
+        //         }
+
+        //         map.set(key, false)
+        //         return false
+        //     }
+
+        //     return solve(a, b)
+        // }
+
+
+        // console.log(scrambledStrs (a, b));
+        
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////Egg Dropping Using Recursion////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        // //Egg Dropping using Recursion
+        // //Problem statement: You are given N floor and K eggs. You have to minimize the number of times you have 
+        // //to drop the eggs to find the critical floor where critical floor means the floor beyond which eggs start 
+        // //to break. Assumptions of the problem:
+
+        // //If egg breaks at ith floor then it also breaks at all greater floors.
+        // //If egg does not break at ith floor then it does not break at all lower floors.
+        // //Unbroken egg can be used again.
+        // //Note: You have to find minimum trials required to find the critical floor not the critical floor.
+
+        // //Example:
+        // //Input:
+        // //    4
+        // //   2
+        // //Output:
+        // //Number of trials when number of eggs is 2 and number of floors is 4: 3
+
+
+        // const f = 3, e = 2
+        // const f = 5, e = 3
+
+        // function eggDrop(e, f) {
+        //     if(e === 1) return f
+        //     if(f <= 1) return f
+
+        //     let min = Infinity
+
+        //     for(let k = 1; k < f; k++) {
+        //         let temp = 1 + Math.max(
+        //             eggDrop(e-1, k-1), eggDrop(e, f-k)
+        //         )
+
+        //         min = Math.min(min, temp)
+        //     }
+
+        //     return min
+        // }
+
+
+        // console.log(eggDrop(e, f));
+
+        // //e = 3, f = 5
+        // //k=1 => 1 + Math.max(eggDrop(2, 0), eggDrop(3, 4))
+        // // -- eggDrop(2, 0) = 0
+        // // -- eggDrop(3, 4) => 
+        // //k=1 => 1 + Math.max(eggDrop(2, 0), eggDrop(3, 3))
+        // // -- eggDrop(2, 0) = 0
+        // // -- eggDrop(3, 3) =>
+        // //k=1 => 1 + Math.max(eggDrop(2, 0), eggDrop(3, 2))
+        // // -- eggDrop(2, 0) = 0
+        // // -- eggDrop(3, 2) =>
+        // //k=1 => 1 + Math.max(eggDrop(2, 0), eggDrop(3, 1))
+        // // -- eggDrop(2, 0) = 0
+        // // -- eggDrop(3, 1) => 1
+        // //k=1 => 1 + Math.max(eggDrop(2, 0), eggDrop(3, 1)) => 1 + Math.max(0, 1) => 2
+        // //k=1 => 1 + Math.max(eggDrop(2, 0), eggDrop(3, 2)) => 1 + Math.max(0, 2) => 3
+        // //k=1 => 1 + Math.max(eggDrop(2, 0), eggDrop(3, 3)) => 1 + Math.max(0, 3) => 4
+        // //k=1 => 1 + Math.max(eggDrop(2, 0), eggDrop(3, 4)) => 1 + Math.max(0, 4) => 5
+        // // --- min = 5
+
+
+        // //k=2 => 1 + Math.max(eggDrop(2, 1), eggDrop(3, 3))
+        // // -- eggDrop(2, 1) = 1
+        // // -- eggDrop(3, 3) => 
+        // //k=2 => 1 + Math.max(eggDrop(2, 1), eggDrop(3, 1))
+        // // -- eggDrop(2, 1) = 1
+        // // -- eggDrop(3, 1) => 1
+        // //k=2 => 1 + Math.max(eggDrop(2, 1), eggDrop(3, 1)) => 1 + Math.max(1, 1) = 2
+        // //k=2 => 1 + Math.max(eggDrop(2, 1), eggDrop(3, 3)) => 1 + Math.max(1, 2) = 3
+        // // --- min = 3
+
+        // //k=3 => 1 + Math.max(eggDrop(2, 2), eggDrop(3, 2))
+        // // -- eggDrop(2, 2) =>
+        // // k=1 => 1 + Math.max(eggDrop(1, 0), eggDrop(2, 1))
+        // // -- eggDrop(1, 0) = 0
+        // // -- eggDrop(2, 1) => 1 
+        // // k=1 => 1 + Math.max(eggDrop(1, 0), eggDrop(2, 1)) => 1 + Math.max(0, 1) = 2
+        // // -- eggDrop(2, 2) => 2
+        // // -- eggDrop(3, 2) =>
+        // // k=1 => 1 + Math.max(eggDrop(2, 1), eggDrop(3, 1))
+        // // -- eggDrop(2, 1) => 1
+        // // -- eggDrop(3, 1) => 1
+        // // k=1 => 1 + Math.max(eggDrop(2, 1), eggDrop(3, 1)) => 1 + Math.max(1, 1) = 2
+        // // -- eggDrop(3, 2) => 2
+        // //k=3 => 1 + Math.max(eggDrop(2, 2), eggDrop(3, 2)) => 1 + Math.max(2, 2) = 3
+        // // --- min = 3
+
+        // //k=4 => 1 + Math.max(eggDrop(2, 3), eggDrop(3, 1))
+        // // -- eggDrop(2, 3) => 
+        // //k=1 => 1 + Math.max(eggDrop(1, 2), eggDrop(2, 2))
+        // // -- eggDrop(1, 2) => 2
+        // // -- eggDrop(2, 2) => 
+        // //k=1 => 1 + Math.max(eggDrop(1,1), eggDrop(2, 1))
+        // // -- eggDrop(1, 1) => 1
+        // // -- eggDrop(2, 1) => 1
+        // //k=1 => 1 + Math.max(eggDrop(1,1), eggDrop(2, 1)) =>  1 + Math.max(1, 1) = 2
+        // // -- eggDrop(2, 2) => 2
+        // //k=1 => 1 + Math.max(eggDrop(1, 2), eggDrop(2, 2)) =>  1 + Math.max(2, 2) = 3
+        // // -- eggDrop(2, 3) => 3
+        // // -- eggDrop(3, 1) => 1
+        // //k=4 => 1 + Math.max(eggDrop(2, 3), eggDrop(3, 1)) =>  1 + Math.max(3, 1) = 4
+        // // --- min = 3
+
+        // //k=5 => 1 + Math.max(eggDrop(2, 4), eggDrop(3, 0))
+        // // -- eggDrop(2, 4) => 
+        // //k=1 => 1 + Math.max(eggDrop(1, 3), eggDrop(2, 3))
+        // // -- eggDrop(1, 3) = 3
+        // // -- eggDrop(2, 3) =>
+        // //k=1 => 1 + Math.max(eggDrop(1, 2), eggDrop(2, 2))
+        // // -- eggDrop(1, 2) = 2
+        // // -- eggDrop(2, 2) =>
+        // //k=1 => 1 + Math.max(eggDrop(1, 1), eggDrop(2, 1))
+        // // -- eggDrop(1, 1) = 1
+        // // -- eggDrop(2, 1) = 1
+        // //k=1 => 1 + Math.max(eggDrop(1, 1), eggDrop(2, 1)) => 1 + Math.max(1, 1) = 2
+        // // -- eggDrop(2, 2) => 2
+        // //k=1 => 1 + Math.max(eggDrop(1, 2), eggDrop(2, 2)) => 1 + Math.max(2, 2) = 3
+        // // -- eggDrop(2, 3) = 3
+        // //k=1 => 1 + Math.max(eggDrop(1, 3), eggDrop(2, 3)) => 1 + Math.max(3, 2) = 4
+        // // -- eggDrop(2, 4) = 4
+        // // -- eggDrop(3, 0) = 0
+        // //k=5 => 1 + Math.max(eggDrop(2, 4), eggDrop(3, 0)) => 1 + Math.max(4, 0) = 5
+        // // --- min = 3
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////Egg Dropping Using Memoization///////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        // //Egg Dropping using Memoization
+        // //Problem statement: You are given N floor and K eggs. You have to minimize the number of times you have 
+        // //to drop the eggs to find the critical floor where critical floor means the floor beyond which eggs start 
+        // //to break. Assumptions of the problem:
+
+        // //If egg breaks at ith floor then it also breaks at all greater floors.
+        // //If egg does not break at ith floor then it does not break at all lower floors.
+        // //Unbroken egg can be used again.
+        // //Note: You have to find minimum trials required to find the critical floor not the critical floor.
+
+        // //Example:
+        // //Input:
+        // //    4
+        // //   2
+        // //Output:
+        // //Number of trials when number of eggs is 2 and number of floors is 4: 3
+
+
+        // const f = 3, e = 2
+        // const f = 5, e = 3
+        // const dp = Array.from({length: e+1}, () => Array(f+1).fill(-1))
+
+        // function eggDrop(e, f) {
+        //     if(e === 1) return f
+        //     if(f <= 1) return f
+
+        //     let min = Infinity
+
+        //     if(dp[e][f] !== -1) {
+        //         return dp[e][f]
+        //     }
+
+        //     for(let k = 1; k < f; k++) {
+        //         let temp = 1 + Math.max(
+        //             eggDrop(e-1, k-1), eggDrop(e, f-k)
+        //         )
+
+        //         min = Math.min(min, temp)
+        //     }
+
+        //     dp[e][f] = min
+
+        //     return min
+        // }
+
+
+        // console.log(eggDrop(e, f));
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////Egg Dropping Using Optimization//////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        // //Egg Dropping using Optimization
+        // //Problem statement: You are given N floor and K eggs. You have to minimize the number of times you have 
+        // //to drop the eggs to find the critical floor where critical floor means the floor beyond which eggs start 
+        // //to break. Assumptions of the problem:
+
+        // //If egg breaks at ith floor then it also breaks at all greater floors.
+        // //If egg does not break at ith floor then it does not break at all lower floors.
+        // //Unbroken egg can be used again.
+        // //Note: You have to find minimum trials required to find the critical floor not the critical floor.
+
+        // //Example:
+        // //Input:
+        // //    4
+        // //   2
+        // //Output:
+        // //Number of trials when number of eggs is 2 and number of floors is 4: 3
+
+
+        // const f = 3, e = 2
+        // const f = 5, e = 3
+        // const dp = Array.from({length: e+1}, () => Array(f+1).fill(-1))
+
+        // function eggDrop(e, f) {
+        //     if(e === 1) return f
+        //     if(f <= 1) return f
+
+        //     if(dp[e][f] !== -1) return dp[e][f]
+
+        //     let min = Infinity
+
+        //     for(let k = 1; k < f; k++) {
+        //         let low, high
+
+        //         if(dp[e-1][k-1] !== -1) {
+        //             low = dp[e-1][k-1]
+        //         }else{
+        //             low = eggDrop(e-1, k-1)
+        //             dp[e-1][k-1] = low
+        //         }
+
+        //         if(dp[e][f-k] !== -1) {
+        //             high = dp[e][f-k]
+        //         }else{
+        //             high = eggDrop(e, f-k)
+        //             dp[e][f-k] = high
+        //         }
+
+        //         let temp = 1 + Math.max(low, high)
+
+        //         min = Math.min(min, temp)
+        //     }
+
+        //     dp[e][f] = min
+
+        //     return min
+        // }
+
+
+        // console.log(eggDrop(e, f));
+        
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////DYNAMIC PROGRAMMING ON BINARY TREE PROBLEMS///////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////DIAMETER OF BINARY TREE RECURSIVE//////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        // //Diameter of Tree
+        // //Given a binary tree, you need to compute the length of the diameter of the tree. The diameter of a binary 
+        // //tree is the length of the longest path between any two nodes in a tree. This path may or may not pass 
+        // //through the root.
+
+        // //Example:
+        // //Given a binary tree
+        // //          1
+        // //         / \
+        // //        2   3
+        // //       / \     
+        // //      4   5    
+        // //Return 3, which is the length of the path [4,2,1,3] or [5,2,1,3].
+
+
+        // const root = [4,2,1,3]
+
+        // class Node{
+        //     constructor(value){
+        //         this.value = value
+        //         this.left = null
+        //         this.right = null
+        //     }
+        // }
+
+        // let root = new Node(1)
+        // root.left = new Node(2)
+        // root.right = new Node(3)
+        // root.left.left = new Node(4)
+        // root.left.right = new Node(5)
+
+
+        // function treeDia(root) {
+        //     let res = 0
+
+        //     function solve(node) {
+        //         if(node === null) return 0
+
+        //         let left = solve(node.left)
+        //         let right = solve(node.right)
+
+        //         let temp = 1 + Math.max(left, right)
+        //         let ans = Math.max(temp, 1+left+right)
+
+        //         res = Math.max(res, ans)
+
+        //         return temp
+        //     }
+        //     solve(root)
+
+        //     return res
+        // }
+
+
+
+        // console.log(treeDia(root));
+        
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////MAXIMUM PATH SUM RECURSIVE//////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        // //Given a non-empty binary tree, find the maximum path sum.
+        // //For this problem, a path is defined as any sequence of nodes from some starting node to any node in the 
+        // //tree along the parent-child connections. The path must contain at least one node and does not need to go 
+        // //through the root.
+
+        // //Example 1:
+        // //Input: [1,2,3]
+
+        // //      1
+        // //     / \
+        // //    2   3
+
+        // //Output: 6
+        // //Example 2:
+
+        // //Input: [-10,9,20,null,null,15,7]
+
+        // //     -10
+        // //     / \
+        // //    9  20
+        // //   /     \
+        // //  15      7
+
+        // //Output: 41
+
+        
+        // class Node{
+        //     constructor(val) {
+        //         this.val = val
+        //         this.left = null
+        //         this.right = null
+        //     }
+        // }
+
+        // const root = new Node(-10)
+        // root.left = new Node(9)
+        // root.right = new Node(20)
+        // root.left.left = new Node(15)
+        // root.right.right = new Node(7)
+
+        // const root = new Node(1)
+        // root.left = new Node(2)
+        // root.right = new Node(3)
+       
+
+
+        // function maxPathSum(root) {
+        //     let maxSum = 0
+
+        //     function solve(node) {
+        //         if(node === null) return 0
+
+        //         let left = solve(node.left)
+        //         let right = solve(node.right)
+
+        //         let temp = Math.max(Math.max(left, right)+node.val, node.val) 
+        //         let ans = Math.max(temp, left+right+node.val)
+
+        //         maxSum = Math.max(maxSum, ans)
+
+        //         return temp
+        //     }
+        //     solve(root)
+
+        //     return maxSum
+        // }
+
+
+        // console.log(maxPathSum(root));
+        
+
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////MAXIMUM PATH SUM FROM LEAF TO LEAF//////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+        // //Maximum path sum from leaf to leaf
+        // //If a binary tree is given, how to find Maximum path sum between two leaves of binary tree.
+        // //All should be numbers
+        // //The maximum sum path may or may not go through root.
+        // //For example, in the following binary tree, the maximum sum is 27(3 + 6 + 9 + 0 – 1 + 10). 
+        // //Expected time complexity is O(n).
+
+        // //               -15
+        // //               /  \
+        // //              5     6
+        // //             / \   / \
+        // //           -8   1  3  9
+        // //           / \      \ 
+        // //          2   6      0
+        // //             / \
+        // //            4  -1
+        // //           /
+        // //          10
+
+
+
+        // class Node{
+        //     constructor(val) {
+        //         this.val = val
+        //         this.left = null
+        //         this.right = null
+        //     }
+        // }
+
+        // const root = new Node(-15)
+        // root.left = new Node(5)
+        // root.right = new Node(6)
+        // root.left.left = new Node(-8)
+        // root.left.right = new Node(1)
+        // root.left.left.left = new Node(2)
+        // root.left.left.right = new Node(6)
+        // root.left.left.right.left = new Node(4)
+        // root.left.left.right.right = new Node(-1)
+        // root.left.left.right.left.left = new Node(10)
+        // root.right.left = new Node(3)
+        // root.right.right = new Node(9)
+        // root.right.left.right = new Node(0)
+
+
+        // function maxSum(root) {
+        //     let res = 0
+
+        //     function solve(node) {
+        //         if(node === null) return 0
+
+        //         let left = solve(node.left)
+        //         let right = solve(node.right)
+
+        //         let temp = Math.max(left, right) + node.val
+
+        //         if(node.left && node.right) {
+        //             let ans = left + right + node.val
+        //             res = Math.max(res, ans)
+        //         }
+
+        //         return temp
+        //     }
+        //     solve(root)
+
+        //     return res
+        // }
+
+
+        // console.log(maxSum(root));
+        
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////FIBIONACCI SEQUENCE///////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //FIBIONACCI RECURSIVE
+
+        // function fibionacci(num) {
+        //     if(num <= 1) {
+        //         return num
+        //     }
+
+        //     return fibionacci(num-2) + fibionacci(num-1)
+        // }
+
+
+        //FIBIONACCI MEMOIZED
+        // let num = 8
+        // const dp = new Array(num+1).fill(-1)
+        // console.log(dp);
+        
+        // function fibionacci(num) {
+        //     if(num <= 1) {
+        //         return num
+        //     }
+
+        //     if(dp[num] !== -1) {
+        //         return dp[num]
+        //     }
+        //     console.log(dp[num]);
+            
+
+        //     dp[num] = fibionacci(num-2) + fibionacci(num-1)
+
+        //     return dp[num]
+        // }
+
+
+        // //FIBIONACCI TABULATION
+        // let num = 8
+        // function fibionacci(num) {
+        //     const dp = []
+
+        //     for(let i = 0; i <= num; i++) {
+        //         if(i === 0) dp[i] = 0
+        //         if(i === 1) dp[i] = 1
+        //     }
+
+        //     for(let i = 2; i <= num; i++) {
+        //         dp[i] = dp[i-2] + dp[i-1]
+        //     }
+
+        //     console.log(dp);
+            
+        //     return dp[num]
+        // }
+
+        // //IMPROVED FIBIONACCI TABULATION
+        // let num = 8
+        // function fibionacci(num) {
+        //     //EDGE CASE
+        //     if(num <= 1) {
+        //         return num
+        //     }
+
+        //     const dp = []
+
+        //     dp[0] = 0
+        //     dp[1] = 1
+
+        //     for(let i = 2; i <= num; i++) {
+        //         dp[i] = dp[i-2] + dp[i-1]
+        //     }
+
+        //     // console.log(dp);
+            
+        //     return dp[num]
+        // }
+
+
+
+        // console.log(fibionacci(num));
+        
+        // 0, 1, 1, 2, 3, 5, 8, 13, 21 
+
+
+
+
+
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+
+        // //               -15
+        // //               /  \
+        // //              5     6
+        // //             / \   / \
+        // //           -8   1  3  9
+        // //           / \      \ 
+        // //          2   6      0
+        // //             / \
+        // //            4  -1
+        // //           /
+        // //          10
+
+        // class Node{
+        //     constructor(val) {
+        //         this.val = val
+        //         this.left = null
+        //         this.right = null
+        //     }
+        // }
+
+        // let root = new Node(-15)
+        // root.left = new Node(5)
+        // root.left.left = new Node(-8)
+        // root.left.left.left = new Node(2)
+        // root.left.left.right = new Node(6)
+        // root.left.left.right.right = new Node(-1)
+        // root.left.left.right.left = new Node(4)
+        // root.left.left.right.left.left = new Node(10)
+        // root.left.right = new Node(1)
+        // root.right = new Node(6)
+        // root.right.right = new Node(9)
+        // root.right.left = new Node(3)
+        // root.right.left.right = new Node(0)
+
+        // function maxSum(root) {
+        //     let res = 0
+
+        //     function solve(node) {
+        //         if(node === null) {
+        //             return 0
+        //         }
+
+        //         let left = solve(node.left)
+        //         let right = solve(node.right)
+
+        //         let temp = Math.max(left, right) + node.val
+
+        //         let ans = left + right + node.val
+
+        //         res = Math.max(ans, res)
+
+        //         return temp
+        //     }
+        //     solve(root)
+
+        //     return res
+        // }
+
+        function maxPathSum(root) {
+            let res = 0
+
+            function solve(node) {
+                if(node === null) {
+                    return 0
+                }
+
+                let left = solve(node.left)
+                let right = solve(node.right)
+            
+                let temp = Math.max(Math.max(left, right) + node.val, node.val)
+                let ans = Math.max(temp, (left + right + node.val))
+
+                res = Math.max(res, ans)
+
+                return temp
+            }
+            solve(root)
+
+            return res
+        }
+        
+        
+        console.log(maxSum(root));
+        
+
+
+
+
+
+
+        
+
+
+
+    </script>
+    
+</body>
+</html>

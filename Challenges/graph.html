@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRAPH</title>
+</head>
+<body>
+
+    <script>
+
+        //WHY IS IT A GRAPH PROBLEM: 
+        //“If I must visit all connected neighbors → it's definitely a graph.”
+
+        // Number of Islands 
+        // Given a 2D grid grid where '1' represents land and '0' represents water, count and return the number of islands.
+        // An island is formed by connecting adjacent lands horizontally or vertically and is surrounded by water. You may 
+        // assume water is surrounding the grid (i.e., all the edges are water).
+
+        // Example 1:
+        // Input: grid = [
+        //     ["0","1","1","1","0"],
+        //     ["0","1","0","1","0"],
+        //     ["1","1","0","0","0"],
+        //     ["0","0","0","0","0"]
+        // ]
+        // Output: 1
+
+        // Example 2:
+        // Input: grid = [
+        //     ["1","1","0","0","1"],
+        //     ["1","1","0","0","1"],
+        //     ["0","0","1","0","0"],
+        //     ["0","0","0","1","1"]
+        // ]
+        // Output: 4
+
+        // //SOLUTION-1 =>DFS-RECURSIVE
+        // function numIslands(grid) {
+        //     let ROWS = grid.length, COLS = grid[0].length
+        //     let islands = 0
+
+        //     function dfs(r, c) {
+        //         if(
+        //             r < 0 || c < 0 ||
+        //             r >= ROWS || c >= COLS || 
+        //             grid[r][c] === '0'
+        //         ) return 
+
+        //         grid[r][c] = '0'
+
+        //         dfs(r + 1, c);
+        //         dfs(r - 1, c);
+        //         dfs(r, c + 1);
+        //         dfs(r, c - 1);
+        //     }
+
+        //     for(let r = 0; r < ROWS; r++) {
+        //         for(let c = 0; c < COLS; c++) {
+        //             if(grid[r][c] === '1') {
+        //                 dfs(r, c)
+        //                 islands++
+        //             }
+        //         }
+        //     }
+
+        //     return islands
+        // }
+
+
+        // //SOLUTION-2 => DFS-RECURSIVE (ISS SOLUTION MEIN DFS KO 4 DAFAH CALL KRNY K BAJAYE LOOP KIYA HAI)
+        // function numIslands(grid) {
+        //     let directions = [
+        //         [1, 0], [-1, 0],
+        //         [0, 1], [0, -1]
+        //     ]
+
+        //     let ROWS = grid.length, COLS = grid[0].length
+        //     let islands = 0
+
+        //     function dfs(r, c) {
+        //         if (
+        //             r < 0 || c < 0 ||
+        //             r >= ROWS || c >= COLS ||
+        //             grid[r][c] === '0'
+        //         ) return 
+
+        //         grid[r][c] = '0'
+
+        //         for(let [dr, dc] of directions) {
+        //             dfs(r + dr, c + dc)
+        //         }
+        //     }
+
+        //     for(let r = 0; r < ROWS; r++) {
+        //         for(let c = 0; c < COLS; c++) {
+        //             if(grid[r][c] === '1') {
+        //                 dfs(r, c)
+        //                 islands++
+        //             }
+        //         }
+        //     }
+
+        //     return islands
+        // }
+
+
+        // //SOLUTION-3 => BFS-ITERATIVE
+        // function numIslands(grid) {
+        //     let ROWS = grid.length, COLS = grid[0].length
+        //     let islands = 0
+
+        //     function bfs(r, c) {
+        //         let queue = []
+        //         queue.push([r, c])
+
+                
+        //         while(queue.length > 0) {
+        //             let [rows, cols] = queue.shift()
+                    
+        //             if(
+        //                 rows < 0 || cols < 0 ||
+        //                 rows >= ROWS || cols >= COLS ||
+        //                 grid[rows][cols] === '0'
+        //             ) continue 
+
+        //             grid[rows][cols] = '0'
+
+        //             queue.push([rows+1, cols])
+        //             queue.push([rows-1, cols])
+        //             queue.push([rows, cols+1])
+        //             queue.push([rows, cols-1])
+        //         }
+        //     }
+
+        //     for(let r = 0; r < ROWS; r++) {
+        //         for(let c = 0; c < COLS; c++) {
+        //             if(grid[r][c] === '1') {
+        //                 bfs(r, c)
+        //                 islands++
+        //             }
+        //         }
+        //     }
+
+        //     return islands
+        // }
+
+
+
+        // //SOLUTION-4 => BFS-ITERATIVE
+        // function numIslands(grid) {
+        //     let directions = [
+        //         [1, 0], [-1, 0],
+        //         [0, 1], [0, -1]
+        //     ]
+
+        //     let ROWS = grid.length, COLS = grid[0].length
+        //     let islands = 0
+
+            
+        //     function bfs(r, c) {
+        //         let queue = [[r, c]]
+                
+        //         while(queue.length > 0) {
+        //             let [rows, cols] = queue.shift()
+
+        //             if(
+        //                 rows < 0 || cols < 0 ||
+        //                 rows >= ROWS || cols >= COLS ||
+        //                 grid[rows][cols] === '0' 
+        //             ) continue
+
+        //             grid[rows][cols] = '0'
+
+        //             for(let [dr, dc] of directions) {
+        //                 queue.push([rows+dr, cols+dc])
+        //             }
+        //         }
+
+        //     }
+        //     for(let r = 0; r < ROWS; r++) {
+        //         for(let c = 0; c < COLS; c++) {
+        //             if(grid[r][c] === '1'){
+        //                 bfs(r, c)
+        //                 islands++
+        //             }
+        //         }
+        //     }
+
+        //     return islands
+        // }
+
+
+        // console.log(numIslands( 
+        //     [
+        //         ["1","1","0","0","1"],
+        //         ["1","1","0","0","1"],
+        //         ["0","0","1","0","0"],
+        //         ["0","0","0","1","1"]
+        //     ]
+        // ));
+
+        // console.log(numIslands(
+        //     [
+        //         ["0","1","1","1","0"],
+        //         ["0","1","0","1","0"],
+        //         ["1","1","0","0","0"],
+        //         ["0","0","0","0","0"]
+        //     ]
+        // ));
+        
+        
+
+
+        // 2-Clone Graph
+
+        // Given a node in a connected undirected graph, return a deep copy of the graph.
+        // Each node in the graph contains an integer value and a list of its neighbors.
+
+        // class Node {
+        //     public int val;
+        //     public List<Node> neighbors;
+        // }
+        // The graph is shown in the test cases as an adjacency list. An adjacency list is a mapping of nodes to lists, used 
+        // to represent a finite graph. Each list describes the set of neighbors of a node in the graph.
+        // For simplicity, nodes values are numbered from 1 to n, where n is the total number of nodes in the graph. The 
+        // index of each node within the adjacency list is the same as the node's value (1-indexed).
+        // The input node will always be the first node in the graph and have 1 as the value.
+
+        // Example 1:
+        // Input: adjList = [[2],[1,3],[2]]
+        // Output: [[2],[1,3],[2]]
+        // Explanation: There are 3 nodes in the graph.
+        // Node 1: val = 1 and neighbors = [2].
+        // Node 2: val = 2 and neighbors = [1, 3].
+        // Node 3: val = 3 and neighbors = [2].
+
+        // Example 2:
+        // Input: adjList = [[]]
+        // Output: [[]]
+        // Explanation: The graph has one node with no neighbors.
+
+        // Example 3:
+        // Input: adjList = []
+        // Output: []
+        // Explanation: The graph is empty.
+
+        // //SOLUTION EXPLANATION:We clone the graph by recursively cloning nodes on demand, storing each clone 
+        // //in a map so that cycles reuse existing clones, and finally return the clone of the starting node — 
+        // //which now represents the entire cloned graph.
+        // //A graph is not returned as a list — it’s returned as a reference to a node.
+        
+        // class Node{
+        //     constructor(val = 0, neighbors = []) {
+        //         this.val = val
+        //         this.neighbors = neighbors
+        //     }
+        // }
+
+        // function cloneGraph(node) {
+        //     let oldToNew = new Map()
+
+        //     function dfs(node) {
+        //         if(!node) return null
+
+        //         if(oldToNew.has(node)) {
+        //             return oldToNew.get(node)
+        //         }
+
+        //         let copy = new Node(node.val)
+        //         // console.log(copy);
+                
+        //         oldToNew.set(node, copy)
+
+        //         for(let neighbor of node.neighbors) {
+        //             copy.neighbors.push(dfs(neighbor))
+        //         }
+
+        //         return copy
+        //     }
+
+        //     return dfs(node)
+        // }
+
+
+        // let node1 = new Node(1);
+        // let node2 = new Node(2);
+        // let node3 = new Node(3);
+
+        // node1.neighbors.push(node2);
+        // node2.neighbors.push(node1, node3);
+        // node3.neighbors.push(node2);
+
+        // let clone = cloneGraph(node1);
+        // console.log(clone);
+
+        //EXAMPLE EXPLANATION: adjList = [[2],[1,3],[2]]
+        //cloneGraph(1)
+        //oldToNew = new Map()
+
+        //call dfs(1)
+        //!oldToNew.has(1) -> continue
+        //clone = new Node(1)
+        //oldToNew.set(1, 1)
+        //for(let nei of 1.neighbors) =>
+        //1.neighbors.push(dfs(2))
+        //1.neighbors = [2]
+        //returns 1
+
+        //call dfs(2)
+        //!oldToNew.has(2) -> continue
+        //clone = new Node(2)
+        //oldToNew.set(2, 2)
+        //for(let nei of 2.neighbors) 
+        //2.neigbors.push(dfs(1)) 
+        //2.neigbors.push(dfs(3))
+        //2.neighbors = [1,3]
+        //returns 2
+
+        //call dfs(3)
+        //!oldToNew.has(3) -> continue
+        //clone = new Node(3)
+        //oldToNew(3, 3)
+        //for(let nei of 3.neighbors)
+        //3.neighbors.push(dfs(2)) 
+        //3.neighbors = [2]
+        //return 3
+
+        //dfs(3) returns 3
+        //dfs(2) returns 2
+        //dfs(1) returns 1
+        
+        //BFS ITERATIVE
+        function cloneGraph(node) {
+            if(!node) return null
+            const oldToNew = new Map()
+            const queue = []
+
+            oldToNew.set(node, new Node(node.val))
+            queue.push(node)
+
+            while(queue.length > 0) {
+                let curr = queue.shift()
+
+                for(let nei of curr.neighbors) {
+
+                    if(!oldToNew.has(nei)) {
+                        oldToNew.set(nei, new Node(nei.val))
+                        queue.push(nei)
+                    }
+
+                    oldToNew.get(curr).neighbors.push(oldToNew.get(nei))
+                }
+            }
+
+            return oldToNew.get(node)
+        }
+
+        //EXAMPLE EXPLANATION: node1.nei=[2], node2.nei=[1,3], node3.nei=[2]
+        //oldToNew = {node1: clone1}, queue = [node1]
+
+        //while-loop begins
+        //curr = queue.shift()
+        //for(let nei of curr.neighbors) =>
+        //oldToNew has no nei => oldToNew.set(nei, new Node(nei.val))
+        //oldToNew = {node1: clone1, node2: clone2}
+        //queue = [node2]
+        //oldToNew.get(curr).neighbors.push(oldToNew.get(nei)) =>
+        //clone1.neighbors.push(clone2) => clone1 -> [clone2]
+
+        //while-loop continues
+        //curr = queue.shift()
+        //for(let nei of curr.neighbors) => 
+        //node1 is already cloned, so we don’t enqueue it, but we still add the edge and move to 3
+        //oldToNew.set(node3, new Node(3)) => oldToNew= {node1: clone1, node2: clone2, node3: clone3}
+        //queue = [node3]
+        //oldToNew.get(curr).neighbors.push(oldToNew.get(nei))
+        //clone2.neighbors.push(clone1)
+        //clone2.neighbors.push(clone3)
+        //clone2 -> [clone1, clone3]
+
+        //while-loop continues
+        //curr = queue.shift()
+        //for(let nei of curr.neighbors)
+        //2 is already in oldToNew so it is not added to queue
+        //oldToNew.get(curr).neighbors.push(oldToNew.get(nei))
+        //clone3.neighbors.push(clone2)
+        //clone3 -> [clone2]
+
+        //return oldToNew.get(node) => clone1
+
+
+
+        //MAKING GRAPH NODES FROM GIVEN ADJACENCY LIST
+        //ADJACENCY LIST ZERO-BASED HAI BUT NODES OF GRAPH 1-INDEXED HN GY
+        // function buildGraph(adjList) {
+        //     if(!adjList.length) return null
+
+        //     let nodes = new Map()
+        //     // let nodes = {}
+
+        //     //Make Node
+        //     for(let i = 1; i <= adjList.length; i++) {
+        //         nodes.set(i, new Node(i))
+        //         // nodes[i] = new Node(i)
+        //     }
+
+        //     // console.log(nodes); // nodes => //Map(3) {1 => Node, 2 => Node, 3 => Node}
+            
+        //     //Add Neighbors
+        //     for(let i = 1; i <= adjList.length; i++) {
+        //         let node = nodes.get(i)
+        //         // let node = nodes[i]
+        //         // console.log(node);
+        //         for(let val of adjList[i-1]) {
+        //             // console.log(nodes.get(val));
+        //             node.neighbors.push(nodes.get(val))
+        //         }
+                
+        //     }
+        //     // console.log(nodes.values());
+            
+
+        //     return nodes.get(1)
+        // }
+
+        // let clone = buildGraph([[2],[1,3],[2]])
+        // // console.log(clone);
+        // console.log(cloneGraph(clone));
+        
+        //ADJACENCY-LIST: [ [2], [1, 3], [2] ] ==>> Each list describes the set of neighbors of a node in the graph.
+        //GRAPH:
+        //       1 -> 2
+        //           /
+        //          3
+
+        //yahan graph mein 3 nodes hain: NODE-1, NODE-2, NODE-3
+        //adjList[0] === NODE-1 k neighbors NODE-2 => [2]
+        //adjList[1] === NODE-2 k neighbors NODE-1 & NODE-3 => [1, 3]
+        //adjList[2] === NODE-3 k neighbors NODE-2 => [2]
+
+
+
+
+        // Pacific Atlantic Water Flow
+        // You are given a rectangular island heights where heights[r][c] represents the height above sea level of the cell 
+        // at coordinate (r, c). The islands borders the Pacific Ocean from the top and left sides, and borders the 
+        // Atlantic Ocean from the bottom and right sides.
+        // Water can flow in four directions (up, down, left, or right) from a cell to a neighboring cell with height equal 
+        // or lower. Water can also flow into the ocean from cells adjacent to the ocean.
+        // Find all cells where water can flow from that cell to both the Pacific and Atlantic oceans. 
+        // Return it as a 2D list where each element is a list [r, c] representing the row and column of the cell. 
+        // You may return the answer in any order.
+
+        // Example 1:
+        // Input: heights = [
+        // [4,2,7,3,4],
+        // [7,4,6,4,7],
+        // [6,3,5,3,6]
+        // ]
+        // Output: [[0,2],[0,4],[1,0],[1,1],[1,2],[1,3],[1,4],[2,0]]
+
+        // Example 2:
+        // Input: heights = [[1],[1]]
+        // Output: [[0,0],[0,1]]
+
+
+        // function pacificAtlantic(heights) {
+        //     let ROWS = heights.length, COLS = heights[0].length
+        //     let pac = new Set(), alt = new Set()
+            
+        //     function dfs(r, c, visited, prevHeight) {
+        //         if(
+        //             r < 0 || c < 0 ||
+        //             r >= ROWS || c >= COLS ||
+        //             visited.has(`${r}, ${c}`) ||
+        //             heights[r][c] < prevHeight
+        //         ) return 
+
+        //         visited.add(`${r}, ${c}`)
+
+        //         dfs(r+1, c, visited, heights[r][c]);
+        //         dfs(r-1, c, visited, heights[r][c]);
+        //         dfs(r, c+1, visited, heights[r][c]);
+        //         dfs(r, c-1, visited, heights[r][c]);
+
+        //         //yahan js column aur row ko visit kiya hai, ussy delete nai krna kyu k wo he chahiye end mein mujhe
+        //         // visited.delete(`${r}, ${c}`)
+        //     }
+
+        //     for(let c = 0; c < COLS; c++) {
+        //         dfs(0, c, pac, heights[0][c])
+        //         dfs(ROWS-1, c, alt, heights[ROWS-1][c])
+        //     }
+
+        //     for(let r = 0; r < ROWS; r++) {
+        //         dfs(r, 0, pac, heights[r][0])
+        //         dfs(r, COLS-1, alt, heights[r][COLS-1])
+        //     }
+
+        //     let res = []
+        //     for(let r = 0; r < ROWS; r++) {
+        //         for(let c = 0; c < COLS; c++) {
+        //             if(pac.has(`${r}, ${c}`) && alt.has(`${r}, ${c}`)) {
+        //                 res.push([r, c])
+        //             }
+        //         }
+        //     }
+
+        //     return res
+        // }
+
+
+
+        // console.log(pacificAtlantic([[4,2,7,3,4], [7,4,6,4,7], [6,3,5,3,6]]));
+        
+
+
+        // Course Schedule
+        // You are given an array prerequisites where prerequisites[i] = [a, b] indicates that you must take course b first 
+        // if you want to take course a.
+        // The pair [0, 1], indicates that must take course 1 before taking course 0.
+        // There are a total of numCourses courses you are required to take, labeled from 0 to numCourses - 1.
+        // Return true if it is possible to finish all courses, otherwise return false.
+
+        // Example 1:
+        // Input: numCourses = 2, prerequisites = [[0,1]]
+        // Output: true
+        // Explanation: First take course 1 (no prerequisites) and then take course 0.
+
+        // Example 2:
+        // Input: numCourses = 2, prerequisites = [[0,1],[1,0]]
+        // Output: false
+        // Explanation: In order to take course 1 you must take course 0, and to take course 0 you must take course 1. 
+        // So it is impossible.
+
+        // //SOLUTION-1 => USING SET TO DETECT CYCLE   
+        // function canFinish(numCourses, prerequisites) {
+        //     //ye graph problem hai, iss k liye adjacencyList ka use karon ga mein yahan
+        //     let adjacencyList = new Map()
+
+        //     //yahan hr course key ho ga aur uss course k prerequisite value jo k aik array mein hn gy
+        //     for(let i = 0; i < numCourses; i++) {
+        //         adjacencyList.set(i, [])
+        //     }
+
+        //     //yahan loop mein each prerequisite add karon ga array mein
+        //     for(let [crs, preReq] of prerequisites) {
+        //         adjacencyList.get(crs).push(preReq)
+        //     }
+
+        //     //aik set ln ga jo k mujhe cycle detect kr k dy ga matlab agar koi course already set mein hai tou wo
+        //     //course nai liya ja sakta
+        //     let visited = new Set()
+
+        //     //dfs function jo k recursively hr preReq pe chalay ga
+        //     function dfs(crs) {
+        //         //agar ye course already set mein hai tou false return ho ga kyu k course nai liya ja sakta
+        //         if(visited.has(crs)) return false
+
+        //         //agar course ki array empty hai tou true matlab k ye course lyny k liye koi preReq nai chahiye
+        //         if(adjacencyList.get(crs).length === 0) return true
+
+        //         //agar above condition nai chali tou set mein wo course add kr dn ga
+        //         visited.add(crs)
+
+        //         //yahan preReq ki array pe loop karon ga aur each preReq pe recursively dfs ko call karon ga
+        //         //agar dfs function false return krta hai tou return false
+        //         for(let pre of adjacencyList.get(crs)) {
+        //             if(dfs(pre) === false) return false
+        //         }
+
+        //         //yahan crs ko set sy remove kr dn kyu k wo visit ho chuka hai, ye remove krna zarori ha next
+        //         //step pe janay k liye
+        //         visited.delete(crs)
+        //         //agar loop sy false return nai hoa tou uss course ka preReq array empty kr dn ga, jo k above
+        //         //condition ban jye gi, matlab uss ko visit kiya ja sakta hai aur uss crs/node ka koi preReq 
+        //         //nai hai
+        //         adjacencyList.set(crs, [])
+
+        //         return true
+        //     }
+
+        //     //each course pe ye dfs function call ho ga aur agar aik bhi course false return krta hai tou 
+        //     //false return kr dn ga
+        //     for(let c = 0; c < numCourses; c++) {
+        //         if(dfs(c) === false) return false
+        //     }
+
+        //     return true
+        // }
+
+
+        // console.log(canFinish(2, [[0,1]]));
+        // console.log(canFinish(2, [[0,1],[1,0]]));
+        // console.log(canFinish(5, [ [0,1], [0,2], [1,3], [1,4], [3,4] ]));
+
+
+
+        // //SOLUTION-1 => USING TOPOLOGICAL ALGORITHM
+        // function canFinish(numCourses, prerequisites) {
+        //     const adjList = Array.from({length: numCourses}, () => [])
+        //     const indegree = new Array(numCourses).fill(0)
+
+        //     for(let [crs, prereq] of prerequisites) {
+        //         adjList[crs].push(prereq)
+        //         indegree[prereq]++
+        //     }
+
+        //     const queue = []
+        //     for(let crs = 0; crs < numCourses; crs++) {
+        //         if(indegree[crs] === 0) {
+        //             queue.push(crs)
+        //         }
+        //     }
+
+        //     const topoOrder = []
+        //     while(queue.length > 0) {
+        //         const node = queue.shift()
+        //         topoOrder.push(node)
+
+        //         for(let nei of adjList[node]) {
+        //             indegree[nei]--
+
+        //             if(indegree[nei] === 0) {
+        //                 queue.push(nei)
+        //             }
+        //         }
+        //     }
+
+        //     if(topoOrder.length !== numCourses) {
+        //         return false
+        //     }
+
+        //     return true
+        // }    
+
+        // console.log(canFinish(2, [[0,1]]));
+        // console.log(canFinish(2, [[0,1],[1,0]]));
+        // console.log(canFinish(5, [ [0,1], [0,2], [1,3], [1,4], [3,4] ]));
+        
+
+
+        // Graph Valid Tree
+        // Given n nodes labeled from 0 to n - 1 and a list of undirected edges (each edge is a pair of nodes), 
+        // write a function to check whether these edges make up a valid tree.
+
+        // Example 1:
+        // Input:
+        // n = 5
+        // edges = [[0, 1], [0, 2], [0, 3], [1, 4]]
+        // Output:
+        // true
+
+        // Example 2
+        // Input:
+        // n = 5
+        // edges = [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]]
+        // Output:
+        // false
+
+
+        // //VALID TREE: IT SHOULD NOT HAVE CYCLE AND ALL NODES SHOULD BE CONNECTED
+
+        // function validTree(n, edges) {
+        //     //EGDE CASE: AGAR KOI NODE NAI DIYA TOU RETURN TRUE BECAUSE EMPTY GRAPH IS A VALID TREE
+        //     if(!n) return true
+
+        //     const adjList = new Map()
+
+        //     for(let i = 0; i < n; i++) {
+        //         adjList.set(i, [])
+        //     }
+
+        //     //ye undirected graph hai, matlab each node dosray ka neigbor ho ga, pehle jo problem kiya tha uss men
+        //     //graph directed tha, issi liye neechay each node ka neighbor dosra node ho ga aur vice versa 
+        //     for(let [v1, v2] of edges) {
+        //         adjList.get(v1).push(v2)
+        //         adjList.get(v2).push(v1)
+        //     }
+
+        //     const visited = new Set()
+
+        //     //dfs function ko recursively call krna hai on each node/vertex, ye function check kary ga k given graph
+        //     //mein koi cycle to nai hai, function dfs k input aik present value ho gi matlab jo node mein visit kr
+        //     //rha hn aur dosra input previous value ho gi matlab present node/vrtex pe mein kahan sy aaya 
+        //     function dfs(i, prev) {
+        //         //agar present value already visited hai matlab set mein present hai tou False return kr dn ga
+        //         //iss ka matlab hai k cycle/loop present hai aur ye valid tree nai hai
+        //         if(visited.has(i)) return false
+
+        //         //agar set mein node nai hai tou ussy add kr dn ga set mein
+        //         visited.add(i)
+
+        //         //yahan mein uss node/vertex js ko visit kr rha hn hr neighbor pe ja k recursivley dfs call krn ga
+        //         for(let j of adjList.get(i)) {
+        //             //agar present value equal hai prev k tou mein continue krn ga ussy visit nai karon ga kyu k
+        //             //ye false positive for loop/cycle return krta hai, e.g '1' ka neigbor '0' and '4' hai, aur
+        //             //'1' ka prev '0' hai kyu k mein '1' pe '0' sy aaya hn
+        //             if(j === prev) continue
+
+        //             //abb mein dekhon ga k koi cycle tou nai hai, yahan j ka prev i ho jye ga kyu j ka parent i
+        //             //hai abb aur agar j already visited hai, matlab set mein present hai tou false return ho ga
+        //             if(!dfs(j, i)) return false
+        //         }
+
+        //         //agar koi cycle detect nai hoi tou true return kry ga ye recursive function
+        //         return true
+        //     }
+
+        //     //end mein mjhe two condition satisfy krni hai: 1- cycle/loop nai hai 2- n equal hai visited set size k
+        //     //issi liye set sy koi value delete nai ki
+        //     //node '0' ki prev value mein '-1' dn ga kyu start hamesha '0' sy he ho ga
+        //     console.log(visited)
+        //     return dfs(0, -1) && n === visited.size
+        // }
+
+        // console.log(validTree(5, [[0, 1], [0, 2], [0, 3], [1, 4]]));
+        // console.log(validTree(5, [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]]));
+        
+        //CODE EXPLANTION WITH EXAMPLE
+        //validTree(5, [[0, 1], [0, 2], [0, 3], [1, 4]])
+        //adjList[0]: [1, 2, 3] 
+        //adjList[1]: [0, 4] 
+        //adjList[2]: [0] 
+        //adjList[3]: [0] 
+        //adjList[4]: [1] 
+        
+
+        //first-call: dfs(i, prev) => dfs(0, -1)
+        //visited.has(0) => not present in set so continue to next step
+        //visited.add(0) => visited = {0}
+        //for(let j of adjList.get(0)) => [1, 2, 3]
+        //check-condition: (j === prev) => [1 === -1] => ignore and move on next step
+        //dfs(j, i) => dfs(1, 0)
+
+        //second-call: dfs(1, 0)
+        //visited.has(1) => not present in set so continue to next step
+        //visited.add(1) => visited = {0, 1}
+        //for(let j of adjList.get(1)) => [0, 4]
+        //check-condition: (j === prev) => (0 === 0) => continue to next value in the loop
+        //check-condition: (j === prev) => (4 === 0) => ignore and move on next step
+        //dfs(j, i) => dfs(4, 1)
+        
+        //third-call: dfs(4, 1)
+        //visited.has(4) => not present in set so continue to next step
+        //visited.add(4) => visited = {0, 1, 4}
+        //for(let j of adjList.get(4)) => [1]
+        //check-condition: (j === prev) => (1 === 1) => continue to next value in the loop
+        //adjList.get(4) does not has any other value so loop ends and this call dfs(4, 1) returns true
+
+        //return to second-call dfs(1, 0) also returns true because only neighbor we could visit is 4
+        //return to first call and loop continues to next value in adjList.get(0)
+
+        //fourth call: dfs(2, 0)
+        //visited.has(2) => not present in set so continue to next step
+        //visited.add(2) => visited = {0, 1, 4, 2}
+        //for(let j of adjList.get(2)) => [0]
+        //check-condition: (j === prev) => (0 === 0) => continue to next value in the loop
+        //adjList.get(2) does not has any other value so loop ends and this call dfs(2, 0) returns true
+
+        //return to first call and loop continues to next value in adjList.get(0)
+
+        //fifth-call: dfs(3, 0)
+        //visited.has(3) => not present in set so continue to next step
+        //visited.add(3) => visited = {0, 1, 4, 2, 3}
+        //for(let j of adjList.get(3)) => [0]
+        //check-condition: (j === prev) => (0 === 0) => continue to next value in the loop
+        //adjList.get(3) does not has any other value so loop ends and this call dfs(3, 0) returns true
+
+        //return to first call and loop ends as adjList.get(0) does not has any other value and dfs(0, -1) return true
+
+
+
+        
+
+        // Number of Connected Components in an Undirected Graph
+        // There is an undirected graph with n nodes. There is also an edges array, where edges[i] = [a, b] means 
+        // that there is an edge between node a and node b in the graph.
+        // The nodes are numbered from 0 to n - 1.
+        // Return the total number of connected components in that graph.
+
+        // Example 1:
+        // Input:
+        // n=3
+        // edges=[[0,1], [0,2]]
+        // Output: 1
+
+        // Example 2:
+        // Input:
+        // n=6
+        // edges=[[0,1], [1,2], [2,3], [4,5]]
+        // Output: 2
+
+
+        // //SOLUTION-1 USING DISJOINT-UNIT-SET CLASS
+        // class DSU{
+        //     constructor() {
+        //         this.parent = []
+        //         this.rank = []
+        //         // this.size = []
+        //     }
+
+        //     make(v) {
+        //         if(this.parent[v] !== undefined) return 
+        //         this.parent[v] = v
+        //         this.rank[v] = 0
+        //         // this.size[v] = 1
+        //     }
+
+        //     find(v) {
+        //         if(v !== this.parent[v]) {
+        //             this.parent[v] = this.find(this.parent[v])
+        //         }
+
+        //         return this.parent[v]
+        //     }
+
+        //     union(u, v) {
+        //         let rootU = this.find(u)
+        //         let rootV = this.find(v)
+
+        //         if(rootU === rootV) return
+
+        //         if(this.rank[rootU] < this.rank[rootV]) {
+        //             this.parent[rootU] = rootV
+        //         }else if(this.rank[rootU] > this.rank[rootV]) {
+        //             this.parent[rootV] = rootU
+        //         }else{
+        //             this.parent[rootV] = rootU
+        //             this.rank[rootU]++
+        //         }
+        //     }
+        //     // //UNION BY SIZE
+        //     // union(x, y) {
+        //     //     let rootX = this.find(x);
+        //     //     let rootY = this.find(y);
+
+        //     //     if (rootX === rootY) return;
+
+        //     //     if (this.size[rootX] < this.size[rootY]) {
+        //     //         this.parent[rootX] = rootY;
+        //     //         this.size[rootY] += this.size[rootX];
+        //     //     } else {
+        //     //         this.parent[rootY] = rootX;
+        //     //         this.size[rootX] += this.size[rootY];
+        //     //     }
+        //     // }
+
+        // }
+
+        // function countComponents(n, edges) {
+        //     const dsu = new DSU()
+        //     let count = 0
+
+        //     for(let i = 0; i < n; i++) {
+        //         dsu.make(i)
+        //     }
+
+        //     for(let [u, v] of edges) {
+        //         dsu.union(u, v)
+        //     }
+
+        //     for(let i = 0; i < n; i++) {
+        //         if(dsu.find(i) === i) {
+        //             count++
+        //         }
+        //     }
+
+        //     return count
+        // }
+
+
+        // console.log(countComponents(6, [[0,1], [1,2], [2,3], [4,5]]));
+        // console.log(countComponents(3, [[0,1], [0,2]]));
+        
+
+        // //SOLUTION-2 USING DFS - RECURSIVE
+        // function countComponents(n, edges) {
+        //     const adjList = Array.from({length: n}, () => [])
+        //     const visited = new Array(n).fill(false)
+            
+        //     for(let [u, v] of edges) {
+        //         adjList[u].push(v)
+        //         adjList[v].push(u)
+        //     }
+        //     // console.log(adjList, visited);
+
+        //     //iss loop ka maqsad hai each node k neighbor ko visit krna
+        //     const dfs = (node) => {
+        //         for(let nei of adjList[node]) {
+        //             if(!visited[nei]) {
+        //                 visited[nei] = true;
+        //                 dfs(nei);
+        //             }
+        //         }
+        //     };
+
+        //     let res = 0
+        //     //ye loop pehle chalay ga jo each node(independent) ko visit kr k dfs ko call kary ga
+        //     for(let node = 0; node < n; node++) {
+        //         if(!visited[node]) {
+        //             visited[node] = true;
+        //             dfs(node);
+        //             res++;
+        //         }
+        //     }
+
+        //     return res
+        // }
+
+        //EXAMPLE EXPLANTION: countComponents(6, [[0,1], [1,2], [2,3], [4,5]])
+        //adjList = [ [], [], [], [], [], [] ]
+        //visited = [ false, false, false, false, false, false ]
+
+        // adjList[u].push(v)
+        // adjList[v].push(u)
+        // adjList = [ [1], [0, 2], [1, 3], [2], [5], [4]]
+
+        //main loop visiting each node => node = 0
+        //visited[0] = false ===>>> visited[0] = true
+        //call dfs(0)
+        //res++ => res = 1
+        
+        // dfs(0)
+        // each nei of adjList[0] => [1]
+        // visited[1] = false ===>>> visited[1] = true
+        //recursive dfs(1)
+
+        //dfs(1)
+        //each nei of adjList[1] => [0, 2]
+        //visited[0] = true => skip
+        //visited[2] = false ===>>> visited[2] = true
+        //recursive dfs(2)
+
+        //dfs(2)
+        //each nei of adjList[2] => [1, 3]
+        //visited[1] = true => skip
+        //visited[3] = false ===>>> visited[3] = true
+        //recursive dfs(3)
+
+        //dfs(3)
+        //each nei of adjList[3] => [2]
+        //visited[2] = true => skip
+
+
+        // visited = [ true, true, true, true, false, false ]
+        //back to main loop => node = 1
+        //visited[1] = true => skip
+
+        //main loop => node = 2
+        //visited[2] = true => skip
+        
+        //main loop => node = 3
+        //visited[3] = true => skip
+        
+        //main loop => node = 4
+        //visited[4] = false => visited[4] = true
+        //call dfs(4)
+        //res++ => res = 2
+
+        // dfs(4)
+        //each nei of adjList[4] => [5]
+        //visited[5] = false => true
+        //recursive dfs(5)
+
+        // dfs(5)
+        //each nei of adjList[5] => [4]
+        //visited[4] = true => skip
+
+        //main loop => node = 5
+        //visited[5] = true => skip
+
+        // visited = [ true, true, true, true, true, true ]
+        // res = 2
+
+
+        // //SOLUTION-3 BFS - ITERATIVE
+        // function countComponents(n, edges) {
+        //     const adjList = Array.from({length: n}, () => [])
+        //     const visited = new Array(n).fill(false)
+
+        //     for(let [u, v] of edges) {
+        //         adjList[u].push(v)
+        //         adjList[v].push(u)
+        //     }
+
+        //     const bfs = (node) => {
+        //         const queue = [[node]]
+        //         visited[node] = true
+
+        //         while(queue.length > 0) {
+        //             const curr = queue.shift()
+        //             for(const nei of adjList[curr]) {
+        //                 if(!visited[nei]) {
+        //                     visited[nei] = true
+        //                     queue.push(nei)
+        //                 }
+        //             }
+        //         }
+        //     }
+
+        //     let res = 0
+        //     for(let node = 0; node < n; node++) {
+        //         if(!visited[node]) {
+        //             visited[node] = true
+        //             bfs(node)
+        //             res++
+        //         }
+        //     }
+
+        //     return res
+        // }
+
+        // console.log(countComponents(6, [[0,1], [1,2], [2,3], [4,5]]));
+        // console.log(countComponents(3, [[0,1], [0,2]]));
+
+
+        
+        // Alien Dictionary
+        // There is a foreign language which uses the latin alphabet, but the order among letters is not "a", "b", "c" 
+        // ... "z" as in English.
+        // You receive a list of non-empty strings words from the dictionary, where the words are sorted 
+        // lexicographically based on the rules of this new language.
+        // Derive the order of letters in this language. If the order is invalid, return an empty string. 
+        // If there are multiple valid order of letters, return any of them.
+        // A string a is lexicographically smaller than a string b if either of the following is true:
+        // The first letter where they differ is smaller in a than in b.
+        // a is a prefix of b and a.length < b.length.
+
+        // Example 1:
+        // Input: ["z","o"]
+        // Output: "zo"
+        // Explanation:
+        // From "z" and "o", we know 'z' < 'o', so return "zo".
+
+        // Example 2:
+        // Input: ["hrn","hrf","er","enn","rfnn"]
+        // Output: "hernf"
+        // Explanation:
+        // from "hrn" and "hrf", we know 'n' < 'f'
+        // from "hrf" and "er", we know 'h' < 'e'
+        // from "er" and "enn", we know get 'r' < 'n'
+        // from "enn" and "rfnn" we know 'e'<'r'
+        // so one possibile solution is "hernf"
+
+
+        // function foreignDictionary(words) {
+        //     //graph build krna hai tou adjList banaon ga, js mein each char point kary ga to other char
+        //     //matlab order pta krna hai k koun sa char pehle aaye ga aur koun sa baad mein
+        //     const adjList = {}
+
+        //     for(let word of words) {
+        //         for(let char of word) {
+        //             //yahan each char ko set banaya jo duplicate chars add nai honay dy ga
+        //             //matlab 'h' agar point kr rha hai to 'e' to agar baad mein agar phr sy koi 
+        //             //combination of word mein chaeck kr rha hn js mein phr 'h' aur 'e' hain tou
+        //             // 'e' dobara 'h' k set mein nai add ho ga
+        //             //We use Set to ensure each directed edge (dependency) appears only once in the graph.
+        //             // no duplicate dependency
+        //             adjList[char] = new Set()
+        //         }
+        //     }
+        //     // console.log(adjList);
+            
+        //     //yahan mein words pe loop karon ga to make pairs of words to be compared
+        //     for(let i = 0; i < words.length - 1; i++) { //loop words.length-1 tk chlay ga kyu w2 words[i+1] hai
+        //         let w1 = words[i], w2 = words[i+1]
+        //         //yahan minimum length ka word ln ga jo k limiting factor ho ga comparison mein
+        //         let minLen = Math.min(w1.length, w2.length)
+        //         //pehle base case check karon ga matlab agar given words sahe sy sorted nai hai matlab second
+        //         //word chota hai first word sy aur dono prefix bhi hain tou empty string return kr dn ga
+        //         if(
+        //             w1.length > w2.length && 
+        //             w1.slice(0, minLen) === w2.slice(0, minLen)
+        //         ) {
+        //             return ""
+        //         }
+
+        //         //yahan mein minlen tk loop karon ga for comparison, mujhe sirf first differing char chahiye
+        //         for(let j = 0; j < minLen; j++) {
+        //             //agar ksi index pe mjhe different chars mil jatay hain tou mein dosray char ko pehle 
+        //             //word k set mein add kr k break kr dn ga loop ko
+        //             if(w1[j] !== w2[j]) {
+        //                 adjList[w1[j]].add(w2[j])
+        //                 break
+        //             }
+        //         }
+        //     }
+        //     console.log(adjList);
+        //     // for(let [key, val] of Object.entries(adjList)) {
+        //     //     console.log(`${key}, ${val}`);
+        //     // }
+            
+        //     //yahan tk mere pas adjacencyList ban chuki hai jo basically representation hai graph ki, abb
+        //     //mein POSTORDER DFS traversal karon ga through this graph to built an output in reverse order
+        //     //POSTORDER DFS ka matlab hai k agar ksi character ki koi dependency hai tou pehle uss dependency ko
+        //     //process karon ga phr last mein jb uss character ki dependency khatam ho jye gi tou wo character
+        //     //process ho ga, ye similar process hai topological sorting wala js mein BFS traversal mein queue
+        //     //use hota hai aur indegree check ki jati hai, js ki indegree zero ho matlab koi dependency nai ho
+        //     //wo pehle process hota hai
+        //     // .. e.g => e -> r, h -> e, n -> f, r -> n, f -> null
+            
+        //     //dfs() traversal with an object representing state
+        //     //ye visited object mjhe btaye ga k koi cycle/contradiction hai graph mein ya nai
+        //     //visited ki 3 states hain => true(being visited, not processed), false(processed), undefined(never seen)
+        //     const visited = {}
+        //     const res = []
+        //     //basically what is happening in dfs: 
+        //     // “visited[c] = true → explore neighbors → visited[c] = false → res.push(c)”
+        //     function dfs(c) {
+        //         if(c in visited) return visited[c]
+
+        //         visited[c] = true
+
+        //         for(let nei of adjList[c]) {
+        //             if(dfs(nei)) return true
+        //         }
+
+        //         visited[c] = false
+        //         res.push(c)
+        //         return false
+        //     }
+
+        //     //dfs() traversal with two set variables
+        //     // const visited = new Set(), res = [], visiting = new Set()
+        //    // function dfs(c) {
+        //    //     if(visiting.has(c)) return true  //=> detect cycle
+        //    //     if(visited.has(c)) return false //=> already visited
+
+        //    //     visiting.add(c)
+
+        //    //     for(let nei of adjList[c]) {
+        //    //         if(dfs(nei)) return true
+        //    //     }
+
+        //    //     visiting.delete(c)
+        //    //     visited.add(c)
+        //    //     res.push(c)
+
+        //    //     return false
+        //    // }
+
+
+        //     for(let c in adjList) {
+        //         if(dfs(c)) return ""
+        //     }
+
+        //     res.reverse()
+
+        //     return res.join('')
+        // }
+
+
+
+        // console.log(foreignDictionary(["z","o"]));
+        // console.log(foreignDictionary(["hrn","hrf","er","enn","rfnn"]));
+    
+        //EXAMPLE EXPLANATION: adjList = {e: 'r', f: '', h: 'e', n: 'f', r: 'n'}
+        // outer-loop: for(let c in adjList) => dfs(e)
+
+        //dfs(e)
+        //e is not in visited => visited[e]= true
+        //looping over neighbor of e => dfs(r)
+        
+        //dfs(r)
+        //r is not in visited => visited[r]= true
+        //looping over neighbor of r => dfs(n)
+
+        //dfs(n)
+        //n is not in visited => visited[n]= true
+        //looping over neigbor of n => dfs(f)
+
+        //dfs(f)
+        //f is not in visited => visited[f]= true
+        //looping over neighbor of f => f has no neighbor exit loop
+
+        //visited[f]= false
+        //res.push('f') => res = [f,]
+
+        //recursion unwinding back to dfs(n) 
+        //all neighbors visited exit loop
+        //visited[n]= false
+        //res.push('n') => res = [f, n]
+
+        //recursion unwinding back to dfs(r) 
+        //all neighbors visited exit loop
+        //visited[r]= false
+        //res.push('r') => res = [f, n, r]
+
+        //recursion unwinding back to dfs(e) 
+        //all neighbors visited exit loop
+        //visited[e]= false
+        //res.push('e') => res = [f, n, r, e]
+
+        //dfs completed now outer loop again run
+        // outer-loop: for(let c in adjList) => dfs(f) => already done
+        // outer-loop: for(let c in adjList) => dfs(h)
+
+        //dfs(h)
+        //h is not in visited => visited[h] = true
+        //looping over neighbor of h => dfs(e)
+
+        //dfs(e) => visited[e] = false => returns false exit loop
+        //visited[h]= false
+        //res.push('h') => res = [f, n, r, e, h]
+
+        //res.reverse() => res = [h, e, r, n, f]
+        //res= "hernf"
+
+
+
+        // //SOLUTION-2 TOPOLOGICAL SORT USING KAHN'S ALGORITHM
+        function foreignDictionary(words) {
+            const adjList = {}, indegree = {}
+
+            for(let w of words) {
+                for(let c of w) {
+                    adjList[c] = new Set()
+                    indegree[c] = 0
+                }
+            }
+
+            for(let i = 0; i < words.length - 1; i++) {
+                let w1 = words[i], w2 = words[i+1]
+                let minLen = Math.min(w1.length, w2.length)
+
+                if(
+                    w1.length > w2.length &&
+                    w1.slice(0, minLen) === w2.slice(0, minLen)
+                ) return ""
+
+                for(let j = 0; j < minLen; j++) {
+                    if(w1[j] !== w2[j]){
+                        //ye check indegree k liye perform ho rha hai, adjList for each letter set hai jo k 
+                        //automatically duplicate remove kr deta hai, pr indegree jo aik simple object hai 
+                        //increment kr jye ga agr koi duplicate letter phr sy add hoa tou, aur ye crucial 
+                        //hai kahn's alogorithm k BFS traversal k liye kyu k queue mein sirf wohi letter add
+                        //ho ga js ki indegree 0 hai
+                        if(!adjList[w1[j]].has(w2[j])) {
+                            adjList[w1[j]].add(w2[j])
+                            indegree[w2[j]]++
+                        }
+                        break
+                    }
+                }
+
+            }
+            console.log(adjList);
+            
+            console.log(indegree);
+            //js ki indegree zero hai matlab jo independent hai, js ki koi dependency nai hai matlab k jo ksi bhi
+            //dependent nai hai pehle wo queue mein jaye ga aur remove/process (res mein jye ga) ho ga, phr jb wo
+            //element jo pehle walay pe dependent tha abb wo independent ho jye ga kyu k abb next element ki
+            //dependency khatam ho gi hai, ye wala element queue mein jye ga aur process ho ga and so on...
+            const queue = []
+            for(let c in indegree) {
+                if(indegree[c] === 0) {
+                    queue.push(c)
+                }
+            }
+
+            // const res = []
+            // while(queue.length > 0) {
+            //     const node = queue.shift()
+            //     res.push(node)
+
+            //     for(let nei of adjList[node]) {
+            //         indegree[nei]--
+
+            //         if(indegree[nei] === 0) {
+            //             queue.push(nei)
+            //         }
+            //     }
+            // }
+
+            // if(res.length !== Object.keys(indegree).length) {
+            //     return ""
+            // }
+
+            // return res.join("")
+        }
+        
+
+        // console.log(foreignDictionary(["z","o"]));
+        console.log(foreignDictionary(["hrn","hrf","er","enn","rfnn"]));
+        //h -> e -> r -> n -> f === hernf
+
+    </script>
+    
+</body>
+</html>

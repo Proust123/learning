@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trie/Prefix Tree</title>
+</head>
+<body>
+    
+
+    <script>
+
+        // Implement Trie (Prefix Tree) 
+        // A prefix tree (also known as a trie) is a tree data structure used to efficiently store and retrieve keys in a 
+        // set of strings. Some applications of this data structure include auto-complete and spell checker systems.
+        // Implement the PrefixTree class:
+
+        // PrefixTree() Initializes the prefix tree object.
+        // void insert(String word) Inserts the string word into the prefix tree.
+        // boolean search(String word) Returns true if the string word is in the prefix tree (i.e., was inserted before), 
+        // and false otherwise.
+        // boolean startsWith(String prefix) Returns true if there is a previously inserted string word that has the prefix 
+        // prefix, and false otherwise.
+
+        // Example 1:
+        // Input: 
+        // ["Trie", "insert", "dog", "search", "dog", "search", "do", "startsWith", "do", "insert", "do", "search", "do"]
+        // Output:
+        // [null, null, true, false, true, null, true]
+        // Explanation:
+        // PrefixTree prefixTree = new PrefixTree();
+        // prefixTree.insert("dog");
+        // prefixTree.search("dog");    // return true
+        // prefixTree.search("do");     // return false
+        // prefixTree.startsWith("do"); // return true
+        // prefixTree.insert("do");
+        // prefixTree.search("do");     // return true
+
+
+        // //TRIE NODE WITH MAP
+        // class TrieNode{
+        //     constructor() {
+        //         this.children = new Map()
+        //         this.endsWith = false
+        //     }
+        // }
+
+        // class PrefixTree{
+        //     constructor() {
+        //         this.root = new TrieNode()
+        //     }
+
+        //     insert(str) {
+        //         let curr = this.root
+
+        //         for(let c of str) {
+        //             if(!curr.children.has(c)) {
+        //                 curr.children.set(c, new TrieNode())
+        //             }
+
+        //             curr = curr.children.get(c)
+        //         }
+
+        //         curr.endsWith = true
+        //     }
+
+        //     search(str) {
+        //         let curr = this.root
+
+        //         for(let c of str) {
+        //             if(!curr.children.has(c)) {
+        //                 return false
+        //             }
+
+        //             curr = curr.children.get(c)
+        //         }
+
+        //         return curr.endsWith
+        //     }
+
+        //     startsWith(prefix) {
+        //         let curr = this.root
+
+        //         for(let c of prefix) {
+        //             if(!curr.children.has(c)) {
+        //                 return false
+        //             }
+
+        //             curr = curr.children.get(c)
+        //         }
+
+        //         return true
+        //     }
+        // }
+
+
+
+        // //TRIENODE WITH ARRAY
+        // class TrieNode {
+        //     constructor() {
+        //         this.children = new Array(26).fill(null)
+        //         this.endsWith = false
+        //     }
+        // } 
+
+        // class PrefixTree{
+        //     constructor() {
+        //         this.root = new TrieNode()
+        //     }
+
+        //     insert(str) {
+        //         let curr = this.root
+
+        //         for(let c of str) {
+        //             let i = c.charCodeAt(0) - 97
+        //             if(curr.children[i] === null) {
+        //                 curr.children[i] = new TrieNode()
+        //             }
+
+        //             curr = curr.children[i]
+        //         }
+
+        //         curr.endsWith = true
+        //     }
+
+        //     search(str) {
+        //         let curr = this.root
+
+        //         for(let c of str) {
+        //             let i = c.charCodeAt(0) - 97
+        //             if(curr.children[i] === null) {
+        //                 return false
+        //             }
+
+        //             curr = curr.children[i]
+        //         }
+
+        //         return curr.endsWith
+        //     }
+
+        //     startsWith(prefix) {
+        //         let curr = this.root
+
+        //         for(let c of prefix) {
+        //             let i = c.charCodeAt(0) - 97
+        //             if(curr.children[i] === null) {
+        //                 return false
+        //             }
+
+        //             curr = curr.children[i]
+        //         }
+
+        //         return true
+        //     }
+        // }
+        
+        
+
+        
+        // let prefixTree = new PrefixTree();
+        // prefixTree.insert("dog");
+        // console.log(prefixTree.search("dog"));
+        // console.log(prefixTree.search("do"));
+        // console.log(prefixTree.startsWith("do"));
+        // prefixTree.insert("do");
+        // console.log(prefixTree.search("do"));
+
+
+
+        // Design Add and Search Word Data Structure 
+        // Design a data structure that supports adding new words and searching for existing words.
+        // Implement the WordDictionary class:
+        // void addWord(word) Adds word to the data structure.
+        // bool search(word) Returns true if there is any string in the data structure that matches word or false otherwise. 
+        // word may contain dots '.' where dots can be matched with any letter.
+
+        // Example 1:
+        // Input:
+        // ["WordDictionary", "addWord", "day", "addWord", "bay", "addWord", "may", "search", "say", "search", "day", "search", ".ay", "search", "b.."]
+        // Output:
+        // [null, null, null, null, false, true, true, true]
+        // Explanation:
+        // WordDictionary wordDictionary = new WordDictionary();
+        // wordDictionary.addWord("day");
+        // wordDictionary.addWord("bay");
+        // wordDictionary.addWord("may");
+        // wordDictionary.search("say"); // return false
+        // wordDictionary.search("day"); // return true
+        // wordDictionary.search(".ay"); // return true
+        // wordDictionary.search("b.."); // return true
+
+
+        // class TrieNode{
+        //     constructor() {
+        //         this.children = new Map()
+        //         this.endsWith = false
+        //     }
+        // }
+
+        // class WordDictionary{
+        //     constructor() {
+        //         this.root = new TrieNode()
+        //     }
+
+        //     addWord(word) {
+        //         let curr = this.root
+
+        //         for(let c of word) {
+        //             if(!curr.children.has(c)) {
+        //                 curr.children.set(c, new TrieNode())
+        //             }
+        //             curr = curr.children.get(c)
+        //         }
+
+        //         curr.endsWith = true
+        //     }
+
+            // search(word) {
+            //     function dfs(j, root) {
+            //         let curr = root
+
+            //         for(let i = j; i < word.length; i++) {
+            //             let c = word[i]
+
+            //             if(c === '.') {
+
+            //                 for(let child of curr.children.values()) {
+            //                     if(dfs(i+1, child)) {
+            //                         return true
+            //                     }
+            //                 }
+            //                 return false
+
+            //             }else{
+            //                 if(!curr.children.has(c)) {
+            //                     return false
+            //                 }
+            //                 curr = curr.children.get(c)
+            //             }
+            //         }
+            //         return curr.endsWith
+            //     }
+
+            //    return dfs(0, this.root)
+            // }
+        // }
+
+
+        // let wordDictionary = new WordDictionary();
+        // wordDictionary.addWord("day");
+        // wordDictionary.addWord("bay");
+        // wordDictionary.addWord("may");
+        // console.log(wordDictionary.search("say")) // return false
+        // console.log(wordDictionary.search("day")) // return true
+        // console.log(wordDictionary.search(".ay")) // return true
+        // console.log(wordDictionary.search("b..")) // return true
+        
+        // class TrieNode {
+      //   constructor() {
+      //     this.children = new Map()
+      //     this.endsWith = false
+      //   }
+      // }
+
+      // class WordDictionary {
+      //   constructor() {
+      //     this.root = new TrieNode()
+      //   }
+
+      //   addWord(word) {
+      //     let curr = this.root
+      //     // console.log(curr);  //TrieNode {children: Map(0), endsWith: false}
+      //     // console.log(curr.children); //Map(0) {size: 0}
+      //     // console.log([...curr.children.values()]); //MapIterator {}
+      //     // console.log(Array.from(curr.children.keys())); //MapIterator {}
+          
+      //     // console.log(curr);
+      //     for(let c of word) {
+      //       if(!curr.children.has(c)) {
+      //         curr.children.set(c, new TrieNode())
+      //       }
+      //       // console.log(curr);
+      //       console.log(Array.from(curr.children.keys()))
+      //       console.log([...curr.children.values()]);
+      //       curr = curr.children.get(c)
+      //     }
+
+      //      // console.log("ROOT children:", [...this.root.children.keys()]);
+      //      // console.log("d children:", [...this.root.children.get('d').children.keys()]);
+      //      // console.log("d children:", [...this.root.children.get('d').children.values()]);
+      //     // console.log("a children:", [...this.root.children.get('d').children.get('a').children.keys()]);
+      //      //agar yahan mein 'e' k children log karwaon ga tou mjhe error milay ga kyu k 'e' under 'd' aata hai, 
+      //      //addWord function aik word k liye pehle complete hota hai phr dosray word pe jata hai aur ye sb console logs
+      //      //abi word jo add ho rha hai uss k beech mein chalay gy, so pehle 'day' add ho ga phr 'dead', aur agar mein
+      //      //yahan he 'e' k childs log kron ga tou error milay ga, iss k liye mein end mein sb words add honay k baad
+      //      //log krwa sakta hn
+      //      // console.log("e children:", [...this.root.children.get('d').children.get('e').children.keys()]);
+      //     curr.endsWith = true
+      //   }
+  
+      //   search(word) {
+      //     function dfs(i, root) {
+      //       let curr = root
+
+      //       for(let j = i; j < word.length; j++) {
+      //         let c = word[j]
+
+      //         if(c === '.') {
+      //           for(let child of curr.children.values()) {
+      //             console.log(child);
+                  
+      //             if(dfs(j+1, child)) return true
+      //           }
+
+      //           return false
+      //         }else{
+      //             if(!curr.children.has(c)) {
+      //               return false
+      //             }
+      //             curr = curr.children.get(c)
+      //         }
+      //       }
+
+      //       return curr.endsWith
+      //     }
+
+      //     return dfs(0, this.root)
+      //   }
+
+      // //SEARCH WITH PLAIN OBJECT
+      // //search(word) {
+      // // function dfs(j, root) {
+      // //     let curr = root
+      // //     for(let i = j; i < word.length; i++) {
+      // //         let c = word[i]
+      // //         if(c === '.') {
+      // //             for(let key in curr.children) {
+      // //                 if(dfs(i+1), curr.children[key]) return true
+      // //             }
+      // //          return false
+      // //         }else{
+      // //             if(!curr.children[c]) {
+      // //                 return false
+      // //             }
+      // //             curr = curr.children[c]
+      // //         }
+      // //     }
+      // // return curr.endsWith
+      // // }
+      // // return dfs(0, this.root) 
+      // //}
+      // }
+
+
+      // let wordDictionary = new WordDictionary();
+      // wordDictionary.addWord("day");
+      // wordDictionary.addWord("dead");
+      // // wordDictionary.addWord("bay");
+      // // wordDictionary.addWord("may");
+      // // console.log(wordDictionary.search("say")) // return false
+      // // console.log(wordDictionary.search("day")) // return true
+      // console.log(wordDictionary.search(".ay")) // return true
+      // // console.log(wordDictionary.search("b..")) // return true
+
+      // console.log("ROOT children:", [...this.root.children.keys()]);
+          // console.log("d children:", [...this.root.children.get('d').children.keys()]);
+          // console.log("d children:", [...this.root.children.get('d').children.values()]);
+          // console.log("a children:", [...this.root.children.get('d').children.get('a').children.keys()]);
+          //agar yahan mein 'e' k children log karwaon ga tou mjhe error milay ga kyu k 'e' under 'd' aata hai, 
+          //addWord function aik word k liye pehle complete hota hai phr dosray word pe jata hai aur ye sb console logs
+          //abi word jo add ho rha hai uss k beech mein chalay gy, so pehle 'day' add ho ga phr 'dead', aur agar mein
+          //yahan he 'e' k childs log kron ga tou error milay ga, iss k liye mein end mein sb words add honay k baad
+          //log krwa sakta hn
+          // console.log("e children:", [...this.root.children.get('d').children.get('e').children.keys()]);
+
+
+      // // addWord(day)
+      // //let curr = this.root =>  {this.children: new Map(), this.endsWith:false}
+      // //for(let c of day) => 
+      // //curr.children.has('d') => false
+      // //curr.children.set('d', new TrieNode()) => root ---- 'd'
+      // //curr = curr.children.get('d') => curr = 'd' (TrieNode) 
+
+      // //for-loop continues
+      // //d.children.has('a') => false
+      // //d.children.set('a', new TrieNode()) => root ---- 'd' -- 'a'
+      // //d = d.children.get('a') => curr = 'a' (TrieNode)
+
+      // //for-loop continues
+      // //a.children.has('y') => false
+      // //a.children.set('y', new TrieNode()) => root ---- 'd' -- 'a' --'y'
+      // //a = a.children.get('y') => curr = 'y' (TrieNode)
+      
+      // //loop-ends => y.endsWith = true
+
+      // //addWord(dead)
+      // //let curr = this.root
+      // //for(let c of dead) =>
+      // //curr.children.has('d') => true
+      // //curr = curr.children.get('d') => curr = 'd'
+
+      // //for-loop continues
+      // //d.children.has('e') => false
+      // //d.children.set('e', new TrieNode()) => root ---- 'd' -- 'a' -- 'y'
+      // //                                                  |__ 'e'
+      // //d = d.children.get('e') => curr = 'e'
+      
+      // //for-loop continues
+      // //e.children.has('a') => false
+      // //e.children.set('a', new TrieNode()) => root ---- 'd' -- 'a' -- 'y'
+      // //                                                  |__ 'e' -- 'a'
+      // //e.children.get('a') => curr = 'a'
+
+      // //for-loop continues
+      // //a.children.has('d') => false
+      // //a.children.set('d', new TrieNode()) => root ---- 'd' -- 'a' -- 'y'
+      // //                                                  |__ 'e' -- 'a' -- 'd'
+      // //e.children.get('d') => curr = 'd'
+
+      // //for-loop ends d.endsWith = true
+
+
+      // //root = { {'d' => new TrieNode()}, endsWith: false }
+      // //           |__ d = { {'a' => new TrieNode()}, endsWith: false }, { {'e' => new TrieNode()}, endsWith: false }
+      // //                       |__ a = { {'y' => TrieNode()}, endsWith: true}|
+      // //                                                                     |__ e = {{'a' => new TrieNode()}, endsWith: false}
+      // //                                                                                |__ a = {{'d' => new TrieNode()}, endsWith: true}
+
+
+        // Word Search II
+        // Given a 2-D grid of characters board and a list of strings words, return all words that are present in the grid.
+        // For a word to be present it must be possible to form the word with a path in the board with horizontally or 
+        // vertically neighboring cells. The same cell may not be used more than once in a word.
+
+        // Example 1:
+        // Input:
+        // board = [
+        // ["a","b","c","d"],
+        // ["s","a","a","t"],
+        // ["a","c","k","e"],
+        // ["a","c","d","n"]
+        // ],
+        // words = ["bat","cat","back","backend","stack"]
+        // Output: ["cat","back","backend"]
+
+        // Example 2:
+        // Input:
+        // board = [
+        // ["x","o"],
+        // ["x","o"]
+        // ],
+        // words = ["xoxo"]
+        // Output: []
+          
+        
+        //yahan TrieNode ki class banai js ko use kr k hr word ka first character aik node banay ga 
+        class TrieNode {
+            constructor () {
+                this.children = new Map()
+                this.endsWith = false
+            }
+
+            addWords(word) {
+                let curr = this
+                // console.log(curr);
+                
+                for(let c of word) {
+                    if(!curr.children.has(c)) {
+                        curr.children.set(c, new TrieNode())
+                    }
+                    
+                    curr = curr.children.get(c)
+                    // console.log(curr);
+                }
+                
+                curr.endsWith = true
+                // console.log(curr);
+            }
+        }
+        
+        // let trie = new TrieNode()
+        // trie.addWords('app')
+        // trie.addWords('ace')
+        // trie.addWords('bar')
+        // console.log([...trie.children.get('a').children.keys()]);
+        
+        
+
+        class Solution {
+            
+            findWords(board, words) {
+                let root = new TrieNode()
+                for(let word of words) {
+                    root.addWords(word)
+                }
+                // console.log([...root.children.keys()]);
+                // console.log([...root.children.values()]);
+                
+                let ROWS = board.length, COLS = board[0].length
+                // console.log(ROWS, COLS);
+                let res = new Set()
+                let visited = new Set()
+
+                function dfs(r, c, node, word) {
+                    if( r < 0 || c < 0 ||
+                        r >= ROWS || c >= COLS ||
+                        visited.has(`${r}, ${c}`) || !node.children.has(board[r][c])
+                    ) return 
+
+                    visited.add(`${r}, ${c}`)
+                    
+                    node = node.children.get(board[r][c])
+                    word += board[r][c]
+
+                    if(node.endsWith) {
+                        res.add(word)
+                    }
+
+                    dfs(r + 1, c, node, word);
+                    dfs(r - 1, c, node, word);
+                    dfs(r, c + 1, node, word);
+                    dfs(r, c - 1, node, word);
+                    
+                    visited.delete(`${r}, ${c}`)
+                }
+
+                for(let r = 0; r < ROWS; r++) {
+                    for(let c = 0; c < COLS; c++) {
+                        dfs(r, c, root, '')
+                    }
+                }
+
+                return Array.from(res)
+            }
+
+        }
+
+        let sol = new Solution()
+        console.log(sol.findWords([["a","b","c","d"],["s","a","a","t"],["a","c","k","e"],["a","c","d","n"]],
+            ["bat","cat","back","backend","stack"]
+        ));
+        
+
+        // //ONLY BACKTRACKING
+        //   class Solution{
+        //     findWords(board, words) {
+        //       const ROWS = board.length, COLS = board[0].length
+        //       const res = [] 
+        //       // const visited = new Set()
+
+        //       function backtrack(r, c, word, i) {
+        //         if(i === word.length) return true
+
+        //         if(
+        //           r < 0 || c < 0 ||
+        //           r >= ROWS || c >= COLS ||
+        //           board[r][c] !== word[i] 
+        //           // visited.has(`${r}, ${c}`)
+        //         ) return false
+
+        //         let temp = board[r][c]
+        //         board[r][c] = '*'
+        //         // visited.add(`${r}, ${c}`)
+                
+        //         let ret = (
+        //           backtrack(r+1, c, word, i+1) ||
+        //           backtrack(r-1, c, word, i+1) ||
+        //           backtrack(r, c+1, word, i+1) ||
+        //           backtrack(r, c-1, word, i+1) 
+        //         )
+                
+        //         board[r][c] = temp
+        //         // visited.delete(`${r}, ${c}`)
+
+        //         return ret
+        //       }
+
+        //       // //USING MUTABLE VARIABLE FLAG
+        //       // for(let word of words) {
+        //       //   let flag = false
+
+        //       //   for(let r = 0; r < ROWS; r++) {
+        //       //     if(flag) break
+
+        //       //     for(let c = 0; c < COLS; c++) {
+        //       //       if(board[r][c] !== word[0]) continue
+        //       //       if(backtrack(r, c, word, 0)) {
+        //       //         res.push(word)
+        //       //         flag = true
+        //       //         break
+        //       //       }
+        //       //     }
+        //       //   }
+        //       // }
+
+        //       // //USING HELPER FUNCTION 
+        //       function exists(word) {
+        //         for(let r = 0; r < ROWS; r++) {
+        //           for(let c = 0; c < COLS; c++) {
+        //             if(board[r][c] !== word[0]) continue
+        //             if(backtrack(r, c, word, 0)) {
+        //               return true
+        //             }
+        //           }
+        //         }
+        //         return false
+        //       }
+
+        //       for(let word of words) {
+        //         if(exists(word)) {
+        //           res.push(word)
+        //         }
+        //       }
+
+        //       return res
+        //     }
+        //   }
+
+
+    </script>
+    
+
+</body>
+</html>
